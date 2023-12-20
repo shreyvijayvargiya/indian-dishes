@@ -72,7 +72,7 @@ const IndianCuisineComponent = () => {
 	const RenderActiveDish = ({ item }) => {
 		const activeDish = item;
 		return (
-			<div className="my-10 rounded-xl w-full shadow-2xl" ref={ref}>
+			<div className="my-10 rounded-xl w-full shadow-2xl bg-gray-900" ref={ref}>
 				{isLoading && !activeDish ? (
 					<>Loading the cards</>
 				) : (
