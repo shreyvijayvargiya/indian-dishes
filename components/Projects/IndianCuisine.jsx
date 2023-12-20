@@ -1,9 +1,8 @@
-import { IconButton, makeStyles, useMediaQuery } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
 import { supabaseApp } from "utils";
-import { animated, useSpring } from "react-spring";
 import { ImFire } from "react-icons/im";
 import {
 	FaCookieBite,
@@ -12,8 +11,7 @@ import {
 	FaRegSmile,
 	FaUtensilSpoon,
 } from "react-icons/fa";
-import { IoFastFood, IoGiftSharp, IoGitMerge } from "react-icons/io5";
-import { AiFillCloseCircle } from "react-icons/ai";
+import { IoFastFood, IoGiftSharp } from "react-icons/io5";
 import GridLines from "react-gridlines";
 
 const IndianCuisineComponent = () => {
@@ -34,20 +32,10 @@ const IndianCuisineComponent = () => {
 		dishFeeds?.length > 0 ? dishFeeds[active] : null
 	);
 
-	const [scrollHeight, setScrollHeight] = useState(0);
-
 	const [show, setShow] = useState(false);
+	const styles = useStyles({ position });
 
-	const { opacity, scale } = useSpring({
-		scale: show ? 1 : 0,
-		opacity: show ? 1 : 0,
-		config: { tension: 300, friction: 20 },
-	});
-
-	const styles = useStyles({ position, scrollHeight });
-
-	let lastScrollPosition = window?.scrollY;
-	const handleScroll = () => {
+	const handleScroll = (lastScrollPosition) => {
 		const scrollPosition = window?.scrollY;
 		const childIndex = Math.floor(scrollPosition / 500);
 		setShow(true);
@@ -71,10 +59,13 @@ const IndianCuisineComponent = () => {
 	};
 
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
+		let lastScrollPosition = window?.scrollY;
+		window.addEventListener("scroll", () => handleScroll(lastScrollPosition));
 
 		return () => {
-			window.removeEventListener("scroll", handleScroll);
+			window.removeEventListener("scroll", () =>
+				handleScroll(lastScrollPosition)
+			);
 		};
 	}, []);
 
@@ -153,8 +144,6 @@ const IndianCuisineComponent = () => {
 			</div>
 		);
 	};
-
-	const isMobile = useMediaQuery("max-width: 600px");
 
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
