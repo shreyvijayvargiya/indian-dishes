@@ -1,4 +1,4 @@
 # Indian Dishes
 
-### Showcase gallery for verities of indian dishes
+### Showcase gallery for varieties of Indian dishes
 
