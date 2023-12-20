@@ -4,13 +4,9 @@ import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
 import { supabaseApp } from "utils";
 import { animated, useSpring } from "react-spring";
-import { color, useScroll } from "framer-motion";
-import { motion } from "framer-motion";
 import { ImFire } from "react-icons/im";
 import {
-	FaBowlingBall,
 	FaCookieBite,
-	FaMapMarker,
 	FaMapMarkerAlt,
 	FaRegClock,
 	FaRegSmile,
@@ -24,7 +20,7 @@ const IndianCuisineComponent = () => {
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 
 	const [active, setActive] = useState(0);
-	const styles = useStyles({ position, scrollHeight });
+
 	const ref = useRef(null);
 
 	const fetchData = async () => {
@@ -48,10 +44,11 @@ const IndianCuisineComponent = () => {
 		config: { tension: 300, friction: 20 },
 	});
 
-	let lastScrollPosition = window.scrollY;
+	const styles = useStyles({ position, scrollHeight });
 
+	let lastScrollPosition = window?.scrollY;
 	const handleScroll = () => {
-		const scrollPosition = window.scrollY;
+		const scrollPosition = window?.scrollY;
 		const childIndex = Math.floor(scrollPosition / 500);
 		setShow(true);
 		if (active < 0) {
@@ -80,13 +77,6 @@ const IndianCuisineComponent = () => {
 			window.removeEventListener("scroll", handleScroll);
 		};
 	}, []);
-
-	const { scrollY } = useScroll({
-		target: ref,
-		offset: ["start end", "end end"],
-	});
-
-	const scrollYVal = scrollY.get();
 
 	const RenderActiveDish = ({ item }) => {
 		const activeDish = item;
@@ -172,42 +162,29 @@ const IndianCuisineComponent = () => {
 				lineColor={colors.gray[400]}
 				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100 "
 			/>
-			<div
-				className="md:w-2/5 sm:w-full mx-auto"
-				onMouseMoveCapture={(e) => {
-					setPosition({ x: e.clientX, y: e.clientY });
-				}}
-				onMouseDown={(e) => {
-					setPosition({ x: 0, y: 0 });
-				}}
-				onMouseOut={() => setShow(false)}
-			>
+			<div className="md:w-2/5 sm:w-full mx-auto">
 				<div
 					style={{
 						position: "fixed",
 						top: 0,
 						height: (active / dishFeeds?.length) * 100 + "%",
-						bottom: 0,
 					}}
 					className="w-2 border-l-4 border-dotted border-green-500 mx-3"
 				/>
 				{dishFeeds?.map((item, index) => (
 					<div
-						className="font-sans font-semibold p-2 mx-3 w-full flex flex-row justify-between items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500"
+						className="font-sans font-semibold p-2 mx-3 w-full flex flex-row justify-between 
+						items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500"
 						style={{
 							height: "500px",
 						}}
 						key={item.name}
-						onClick={() => setShow(true)}
 						onMouseOver={(e) => {
 							setActive(index);
 							setActiveDish(dishFeeds[index]);
 						}}
 					>
-						<div
-							className="flex flex-col justify-center items-start relative pl-6 pb-10"
-							onClick={() => setShow(true)}
-						>
+						<div className="flex flex-col justify-center items-start relative pl-6 pb-10">
 							{item.image && (
 								<img
 									// src={item.image}
@@ -224,25 +201,9 @@ const IndianCuisineComponent = () => {
 					</div>
 				))}
 			</div>
-
 			<div className={styles.previewbox}>
 				<RenderActiveDish item={activeDish} />
 			</div>
-			{position.x > 0 && position.y > 0 && !isMobile && (
-				<div
-					className="w-auto h-auto p-1 rounded-md z-100"
-					style={{
-						position: "fixed",
-						width: "500px",
-						top: position.y - 100 + "px",
-						left: position.x + 200 + "px",
-						opacity: position.x > 0 ? 1 : 0,
-						transition: "top 0.5s ease-in-out",
-					}}
-				>
-					<RenderActiveDish item={activeDish} />
-				</div>
-			)}
 			<div className="fixed bottom-10 right-10 w-auto px-4 py-2 bg-gray-800 shadow-2xl rounded-xl">
 				<p>
 					Made by{" "}
@@ -275,10 +236,13 @@ const useStyles = makeStyles((theme) => ({
 		},
 	},
 	previewbox: {
-		overflowX: "scroll",
 		padding: theme.spacing(1),
 		zIndex: 50,
-		transition: "height 0.5s ease-in-out",
+		position: "fixed",
+		top: "15%",
+		left: "50%",
+		width: "500px",
+		height: "500px",
 		[theme.breakpoints.down("md")]: {
 			display: "block",
 			position: "fixed",
@@ -287,9 +251,6 @@ const useStyles = makeStyles((theme) => ({
 			transform: "translate(-50%, -50%)",
 			width: "90vw",
 			height: "90vh",
-		},
-		[theme.breakpoints.up("md")]: {
-			display: "none",
 		},
 	},
 
