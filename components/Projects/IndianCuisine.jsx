@@ -1,7 +1,9 @@
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
 import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
+import { useTransition, animated, useSpring, config } from "react-spring";
+import { emojiCursor } from "cursor-effects";
 import { supabaseApp } from "utils";
 import { ImFire } from "react-icons/im";
 import {
@@ -13,13 +15,23 @@ import {
 } from "react-icons/fa";
 import { IoFastFood, IoGiftSharp } from "react-icons/io5";
 import GridLines from "react-gridlines";
+import { TextInput } from "@mantine/core";
 
 const IndianCuisineComponent = () => {
-	const [position, setPosition] = useState({ x: 0, y: 0 });
+	const ref = useRef(null);
 
 	const [active, setActive] = useState(0);
+	const [indexValue, setIndexValue] = useState(active);
+	const [position, setPosition] = useState({ x: 0, y: 0 });
+	const [show, setShow] = useState(false);
 
-	const ref = useRef(null);
+	const isMobile = useMediaQuery("(max-width:767px)");
+	const perDishHeight = isMobile ? "auto" : "700px";
+
+	const springWidth = useSpring({
+		width: show ? "100%" : "0%",
+		config: config.molasses,
+	});
 
 	const fetchData = async () => {
 		const result = await supabaseApp.from("Indian-Food").select("*");
@@ -32,145 +44,134 @@ const IndianCuisineComponent = () => {
 		dishFeeds?.length > 0 ? dishFeeds[active] : null
 	);
 
-	const [show, setShow] = useState(false);
 	const styles = useStyles({ position });
-
-	const handleScroll = (lastScrollPosition) => {
-		const scrollPosition = window?.scrollY;
-		const childIndex = Math.floor(scrollPosition / 500);
-		setShow(true);
-		if (active < 0) {
-			setActiveDish(dishFeeds[0]);
-			setActive(0);
-		}
-		if (lastScrollPosition > scrollPosition) {
-			setShow(true);
-			// scrolling up
-			setActive(childIndex - 1);
-			if (dishFeeds && childIndex > 0) setActiveDish(dishFeeds[childIndex - 1]);
-		} else if (lastScrollPosition < scrollPosition) {
-			setActive(childIndex + 1);
-			if (dishFeeds) setActiveDish(dishFeeds[childIndex + 1]);
-		} else {
-			setActive(0);
-			if (dishFeeds) setActiveDish(dishFeeds[0]);
-		}
-		setShow(false);
-	};
-
-	useEffect(() => {
-		let lastScrollPosition = window?.scrollY;
-		window.addEventListener("scroll", () => handleScroll(lastScrollPosition));
-
-		return () => {
-			window.removeEventListener("scroll", () =>
-				handleScroll(lastScrollPosition)
-			);
-		};
-	}, []);
 
 	const RenderActiveDish = ({ item }) => {
 		const activeDish = item;
 		return (
-			<div className="my-10 rounded-xl w-full shadow-2xl bg-gray-900" ref={ref}>
-				{isLoading && !activeDish ? (
-					<>Loading the cards</>
-				) : (
-					<div className={styles.box}>
-						<p className="text-4xl font-sans font-semibold p-2 my-2 border-b border-gray-700">
-							{activeDish?.name}
-						</p>
+			<div className="w-full relative border border-gray-500 rounded-md my-4">
+				<div className={styles.box}>
+					<p className="text-2xl font-semibold p-2 my-2 border-b border-gray-500 font-serif z-50">
+						{activeDish?.name}
+					</p>
 
-						<div className="w-full my-4 px-4">
-							<div className="p-2">
-								<div className="flex justify-start gap-2 items-center">
-									<IoFastFood size={20} color={colors.indigo[400]} />
-									<p className="font-bold text-md">Ingredients</p>
-								</div>
-								{activeDish?.ingredients && (
-									<ul className="mx-8 my-2 list-decimal">
-										{activeDish?.ingredients?.split(",")?.map((item) => (
-											<li>{item}</li>
-										))}
-									</ul>
-								)}
+					<div className="w-full my-4 px-4">
+						<div className="bg-gray-900 z-50 border border-gray-800 rounded-md">
+							<div className="flex justify-start gap-2 items-center border-b border-gray-500 p-2">
+								<IoFastFood size={20} color={colors.indigo[400]} />
+								<p className="font-bold text-md">Ingredients</p>
 							</div>
-							<div className="py-4 mt-2">
-								<div className="flex justify-start gap-2 items-center my-1">
-									<FaRegSmile size={20} color={colors.yellow[400]} />
-									<p className="font-bold text-md">Flavour</p>
-								</div>
-								<div className="flex justify-between items-start w-full p-2">
-									<div className="text-xs flex justify-between items-center gap-1">
-										{activeDish?.flavor_profile === "spicy" && (
-											<ImFire size={20} color={colors.red[500]} />
-										)}
-										{activeDish?.flavor_profile === "bitter" && (
-											<FaCookieBite size={20} color={colors.indigo[500]} />
-										)}
-										{activeDish?.flavor_profile === "sweet" && (
-											<IoGiftSharp size={20} color={colors.green[500]} />
-										)}
-										{activeDish?.flavor_profile === "-1" && (
-											<FaUtensilSpoon size={20} color={colors.gray[500]} />
-										)}
-										{activeDish?.flavor_profile !== "-1"
-											? "No specific taste"
-											: activeDish?.flavor_profile}
-									</div>
-								</div>
+							{activeDish?.ingredients && (
+								<ul className="mx-10 my-2 list-decimal">
+									{activeDish?.ingredients?.split(",")?.map((item) => (
+										<li>{item}</li>
+									))}
+								</ul>
+							)}
+						</div>
+						<div className="border border-gray-500 rounded-md bg-gray-900 my-2 z-50">
+							<div className="flex justify-start gap-2 items-center my-1 border-b border-gray-500 p-2">
+								<FaRegSmile size={20} color={colors.yellow[400]} />
+								<p className="font-bold text-md">Flavour</p>
 							</div>
-							<div className="py-2">
-								<div className="flex justify-start gap-2 items-center">
-									<FaRegClock size={20} color={colors.pink[400]} />
-									<p className="font-bold text-md">Cooking time</p>
+							<div className="flex justify-between items-start w-full p-4">
+								<div className="text-xs flex justify-between items-center gap-1">
+									{activeDish?.flavor_profile === "spicy" && (
+										<ImFire size={20} color={colors.red[500]} />
+									)}
+									{activeDish?.flavor_profile === "bitter" && (
+										<FaCookieBite size={20} color={colors.indigo[500]} />
+									)}
+									{activeDish?.flavor_profile === "sweet" && (
+										<IoGiftSharp size={20} color={colors.green[500]} />
+									)}
+									{activeDish?.flavor_profile === "-1" && (
+										<FaUtensilSpoon size={20} color={colors.gray[500]} />
+									)}
+									{activeDish?.flavor_profile !== "-1"
+										? "No specific taste"
+										: activeDish?.flavor_profile}
 								</div>
-								<p className="m-3">{activeDish?.cook_time} minutes</p>
-							</div>
-							<div>
-								{activeDish?.state !== "-1" && (
-									<div className="py-2">
-										<div className="flex justify-start gap-2 items-center">
-											<FaMapMarkerAlt size={20} color={colors.teal[400]} />
-											<p className="font-bold text-md ">Origination</p>
-										</div>
-										<p className="mx-4">{activeDish?.state}, India</p>
-									</div>
-								)}
 							</div>
 						</div>
+						<div className="bg-gray-900 z-50 border border-gray-800 rounded-md my-2">
+							<div className="flex justify-start gap-2 items-center border-b border-gray-500 p-2">
+								<FaRegClock size={20} color={colors.pink[400]} />
+								<p className="font-bold text-md">Cooking time</p>
+							</div>
+							<p className="m-3">{activeDish?.cook_time} minutes</p>
+						</div>
+						<div className="bg-gray-900 z-50 border border-gray-800 rounded-md my-2">
+							{activeDish?.state !== "-1" && (
+								<div className="py-2">
+									<div className="flex justify-start gap-2 items-center border-b border-gray-500 p-2">
+										<FaMapMarkerAlt size={20} color={colors.teal[400]} />
+										<p className="font-bold text-md ">Origination</p>
+									</div>
+									<p className="m-4">{activeDish?.state}, India</p>
+								</div>
+							)}
+						</div>
 					</div>
-				)}
+				</div>
 			</div>
 		);
+	};
+
+	const scrollToIndex = (e) => {
+		const val = e.target.value;
+		if (window !== undefined) {
+			window.scrollTo({
+				left: 0,
+				top: Number(Number(val) * 700),
+				behavior: "smooth",
+			});
+			setActiveDish(dishFeeds[Number(val)]);
+			setActive(Number(val));
+		}
 	};
 
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
 			<GridLines
 				lineColor={colors.gray[400]}
-				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100 "
+				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100"
 			/>
-			<div className="md:w-2/5 sm:w-full mx-auto">
+			<div
+				className="md:w-full sm:w-full lg:w-3/6 xl:3/6 2xl:w-3/6 mx-auto"
+				onMouseOver={() => {
+					if (!show) {
+						setShow(true);
+					}
+				}}
+			>
 				<div
 					style={{
 						position: "fixed",
-						top: 0,
 						height: (active / dishFeeds?.length) * 100 + "%",
 					}}
-					className="w-2 border-l-4 border-dotted border-green-500 mx-3"
+					className="w-2 border-l-2 border-dotted border-green-400 mx-3"
 				/>
 				{dishFeeds?.map((item, index) => (
 					<div
-						className="font-sans font-semibold p-2 mx-3 w-full flex flex-row justify-between 
+						className="font-sans font-semibold p-2 mx-3 w-full flex lg:flex-row justify-between md:flex-col 
+						sm:flex-col xxs:flex-col xs:flex-col
 						items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500"
 						style={{
-							height: "500px",
+							height: perDishHeight,
+							width: "100%",
 						}}
 						key={item.name}
 						onMouseOver={(e) => {
-							setActive(index);
+							setActive(index + 1);
+							setIndexValue(index + 1);
 							setActiveDish(dishFeeds[index]);
+						}}
+						onMouseMoveCapture={(e) => {
+							setPosition({ x: e.clientX, y: e.clientY });
+						}}
+						onMouseDown={(e) => {
+							setPosition({ x: 0, y: 0 });
 						}}
 					>
 						<div className="flex flex-col justify-center items-start relative pl-6 pb-10">
@@ -182,28 +183,99 @@ const IndianCuisineComponent = () => {
 									style={{ position: "absolute", left: "-20px", top: "4px" }}
 								/>
 							)}
-							<span className="text-green-400 text-sm">{index + 1}</span>{" "}
-							<p className="text-gray-300 hover:text-white font-light md:text-xl sm:text-3xl xs:text-xs xxs:text-xs border-b border-gray-700">
+							<span
+								className={`${
+									active === index + 1 ? "text-green-400" : "text-gray-400"
+								} text-sm`}
+							>
+								{index + 1}
+							</span>{" "}
+							<p
+								className={`hover:text-white font-light md:text-xl sm:text-3xl xs:text-xs xxs:text-xs border-b border-gray-700 ${
+									active === index + 1 ? "text-green-200" : "text-gray-200"
+								}`}
+							>
 								{item?.name}
 							</p>
+						</div>
+						<div>
+							{!isMobile ? (
+								<div
+									className={
+										active === index + 1
+											? styles.previewbox
+											: styles.unpreviewbox
+									}
+								>
+									<RenderActiveDish item={item} />
+								</div>
+							) : (
+								<div className={styles.simplePreviewBox}>
+									<RenderActiveDish item={item} />
+								</div>
+							)}
 						</div>
 					</div>
 				))}
 			</div>
-			<div className={styles.previewbox}>
-				<RenderActiveDish item={activeDish} />
-			</div>
-			<div className="fixed bottom-10 right-10 w-auto px-4 py-2 bg-gray-800 shadow-2xl rounded-xl">
-				<p>
-					Made by{" "}
-					<a
-						href="https://shreys-portfolio.vercel.app/"
-						target="_blank"
-						className="text-orange-300 underline font-semibold"
-					>
-						Shrey
-					</a>
-				</p>
+			{position.x > 0 && position.y > 0 && !isMobile && (
+				<div
+					className="w-auto h-auto p-1 rounded-md z-100"
+					style={{
+						position: "fixed",
+						width: "500px",
+						top: position.y + "px",
+						left: position.x + "px",
+						transition: "top 0.5s ease-in-out",
+					}}
+				>
+					{activeDish && (
+						<img
+							// src={activeDish.image}
+							src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-hHIaQKhHoGjeyQIs4R75BJvf/user-selfNgrZQO3HcV1BxwhTUJUS/img-HVnHz2SCDU8JsMa52PlnOsbm.png?st=2023-12-20T13%3A22%3A02Z&se=2023-12-20T15%3A22%3A02Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T01%3A04%3A43Z&ske=2023-12-21T01%3A04%3A43Z&sks=b&skv=2021-08-06&sig=mgbfOM5fSNfv//m8dP650ZJYnbt22FfXJWv4/0GCQO8%3D"
+							className="w-10 h-10 rounded-md absolute top-4"
+							style={{ position: "absolute", left: "-20px", top: "4px" }}
+						/>
+					)}
+				</div>
+			)}
+			<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-100 p-4">
+				<div className="w-auto px-4 py-2 shadow-2xl rounded-xl text-4xl text-pink-400 font-mono flex justify-center items-center">
+					{"["}
+					<TextInput
+						type="number"
+						value={indexValue}
+						color="dark"
+						onChange={(e) => {
+							const val = e.target.value;
+							setIndexValue(Number(val));
+						}}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								scrollToIndex(e);
+							}
+						}}
+						classNames={{
+							input:
+								"bg-gray-900 w-10 border-none text-pink-400 text-2xl px-0 text-center",
+							root: "bg-transparent mx-0 px-0",
+						}}
+					/>
+					{"]"}
+				</div>
+				<div className="w-auto px-4 py-2 bg-gray-800 shadow-2xl rounded-xl">
+					<p className="text-sm">
+						Made by{" "}
+						<a
+							href="https://shreys-portfolio.vercel.app/"
+							target="_blank"
+							className="text-orange-300 underline font-semibold"
+						>
+							Shrey
+						</a>
+					</p>
+				</div>
+
 			</div>
 		</div>
 	);
@@ -215,72 +287,65 @@ const useStyles = makeStyles((theme) => ({
 		height: "100%",
 		width: "100%",
 		position: "relative",
-		border: `1px solid ${colors.gray[700]}`,
-		backgroundColor: colors.gray[900],
-		borderRadius: 10,
 		[theme.breakpoints.down("lg")]: {
-			height: "auto",
-			width: "auto",
+			height: "100%",
+			width: "100%",
 			margin: "auto",
 		},
 	},
+	simplePreviewBox: {
+		height: "auto",
+		width: "90vw",
+		overflow: "scroll",
+	},
 	previewbox: {
-		padding: theme.spacing(1),
 		zIndex: 50,
-		position: "fixed",
-		top: "15%",
-		left: "50%",
+		height: "auto",
+		position: "sticky",
 		width: "500px",
-		height: "500px",
+		overflow: "scroll",
+		animation: "$flip 0.2s ease-in-out",
+		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
 		[theme.breakpoints.down("md")]: {
 			display: "block",
-			position: "fixed",
-			top: "50%",
-			left: "50%",
-			transform: "translate(-50%, -50%)",
-			width: "90vw",
 			height: "90vh",
 		},
 	},
+	unpreviewbox: {
+		display: "none",
+		animation: "$unflip 0.5s ease-in-out",
+		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
+	},
 
-	hoizontalLine: {
-		borderBottom: `1px solid ${colors.indigo[400]}`,
-		height: "1px",
-		width: "500px",
-		zIndex: 100,
-		position: "fixed",
-		top: "19%",
-		left: "50%",
-		padding: "1px",
-		display: "flex",
-		justifyContent: "space-between",
-		alignItems: "center",
+	"@keyframes unflip": {
+		"0%": {
+			opacity: 1,
+			scale: 1,
+			display: "block",
+		},
+		"50%": {
+			opacity: 0.6,
+			scale: "0.5",
+			display: "block",
+		},
+		"100%": {
+			opacity: 0,
+			scale: 0,
+			display: "none",
+		},
 	},
-	previewContainer: {
-		position: "fixed",
-		left: "50%",
-		bottom: "15%",
-		width: "500px",
-		height: "auto",
-		overflowX: "scroll",
-		padding: theme.spacing(1),
-	},
-	zigzagContainer: {
-		position: "relative",
-		overflow: "hidden",
-	},
-	zigzagContent: {
-		padding: theme.spacing(2), // Adjust the padding as needed
-	},
-	zigzagBorder: {
-		position: "absolute",
-		top: 0,
-		left: 0,
-		width: "100%",
-		height: "100%",
-		border: `2px solid ${theme.palette.text.primary}`, // Border color
-		borderRadius: theme.spacing(1), // Adjust the border-radius to control the curvature
-		clipPath:
-			"polygon(0% 0%, 10% 100%, 20% 0%, 30% 100%, 40% 0%, 50% 100%, 60% 0%, 70% 100%, 80% 0%, 90% 100%, 100% 0%)",
+	"@keyframes flip": {
+		"0%": {
+			opacity: 0.2,
+			scale: "0.1",
+		},
+		"50%": {
+			opacity: 0.6,
+			scale: "0.7",
+		},
+		"100%": {
+			opacity: 1,
+			scale: 1,
+		},
 	},
 }));
