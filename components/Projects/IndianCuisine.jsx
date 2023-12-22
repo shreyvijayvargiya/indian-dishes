@@ -286,43 +286,45 @@ const IndianCuisineComponent = () => {
 					)}
 				</div>
 			)}
-			<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-50 p-4">
-				<div className="w-auto px-4 py-2 shadow-2xl rounded-xl text-4xl text-pink-400 font-mono flex justify-center items-center">
-					{"["}
-					<TextInput
-						type="number"
-						value={indexValue}
-						color="dark"
-						onChange={(e) => {
-							const val = e.target.value;
-							setIndexValue(Number(val));
-						}}
-						onKeyDown={(e) => {
-							if (e.key === "Enter") {
-								scrollToIndex(e);
-							}
-						}}
-						classNames={{
-							input:
-								"bg-gray-900 w-10 border-none text-pink-400 text-2xl px-0 text-center",
-							root: "bg-transparent mx-0 px-0",
-						}}
-					/>
-					{"]"}
+			{loadingProgress === 100 && (
+				<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-50 p-4">
+					<div className="w-auto px-4 py-2 shadow-2xl rounded-xl text-4xl text-pink-400 font-mono flex justify-center items-center">
+						{"["}
+						<TextInput
+							type="number"
+							value={indexValue}
+							color="dark"
+							onChange={(e) => {
+								const val = e.target.value;
+								setIndexValue(Number(val));
+							}}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") {
+									scrollToIndex(e);
+								}
+							}}
+							classNames={{
+								input:
+									"bg-gray-900 w-10 border-none text-pink-400 text-2xl px-0 text-center",
+								root: "bg-transparent mx-0 px-0",
+							}}
+						/>
+						{"]"}
+					</div>
+					<div className="w-auto px-4 py-2 bg-gray-800 shadow-2xl rounded-xl">
+						<p className="text-sm">
+							Made by{" "}
+							<a
+								href="https://shreys-portfolio.vercel.app/"
+								target="_blank"
+								className="text-orange-300 underline font-semibold"
+							>
+								Shrey
+							</a>
+						</p>
+					</div>
 				</div>
-				<div className="w-auto px-4 py-2 bg-gray-800 shadow-2xl rounded-xl">
-					<p className="text-sm">
-						Made by{" "}
-						<a
-							href="https://shreys-portfolio.vercel.app/"
-							target="_blank"
-							className="text-orange-300 underline font-semibold"
-						>
-							Shrey
-						</a>
-					</p>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 };
