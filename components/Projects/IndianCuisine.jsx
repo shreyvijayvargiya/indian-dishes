@@ -28,11 +28,6 @@ const IndianCuisineComponent = () => {
 	const isMobile = useMediaQuery("(max-width:767px)");
 	const perDishHeight = isMobile ? "auto" : "700px";
 
-	const springWidth = useSpring({
-		width: show ? "100%" : "0%",
-		config: config.molasses,
-	});
-
 	const fetchData = async () => {
 		const result = await supabaseApp.from("Indian-Food").select("*");
 		const feed = result.data;
@@ -131,93 +126,145 @@ const IndianCuisineComponent = () => {
 		}
 	};
 
+	const [loadingProgress, setLoadingProgress] = useState(0);
+
+	const { loadingWidth } = useSpring({
+		from: { loadingWidth: 0 },
+		to: { loadingWidth: 100 },
+	});
+
+	console.log(loadingProgress);
+
+	useEffect(() => {
+		const loadingInterval = setInterval(() => {
+			if (loadingProgress < 100) {
+				setLoadingProgress(loadingProgress < 100 ? loadingProgress + 10 : 5);
+			} else {
+				setLoadingProgress(100);
+			}
+		}, 500);
+		return () => {
+			clearInterval(loadingInterval);
+		};
+	}, [isLoading, loadingProgress]);
+
+	const LoadingPage = () => {
+		return (
+			<div className="fixed top-0 bottom-0 left-0 right-0 w-full h-screen bg-black flex flex-col justify-center items-center p-80">
+				<div>
+					<p className="text-7xl font-mono text-center">
+						Welcome to Indian Dishes
+					</p>
+					{loadingProgress < 100 && (
+						<div className="w-96 h-8 bg-gray-900 my-5 mx-auto">
+							<animated.div
+								style={{
+									width: loadingProgress + "%",
+								}}
+								className="bg-gray-800 h-8"
+							>
+								<p className="font-mono text-sm text-center p-1">
+									{loadingProgress}%
+								</p>
+							</animated.div>
+						</div>
+					)}
+				</div>
+			</div>
+		);
+	};
+
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100"
 			/>
-			<div
-				className="md:w-full sm:w-full lg:w-3/6 xl:3/6 2xl:w-3/6 mx-auto"
-				onMouseOver={() => {
-					if (!show) {
-						setShow(true);
-					}
-				}}
-			>
+			{loadingProgress < 100 ? (
+				<LoadingPage />
+			) : (
 				<div
-					style={{
-						position: "fixed",
-						height: (active / dishFeeds?.length) * 100 + "%",
+					className="md:w-full sm:w-full lg:w-3/6 xl:3/6 2xl:w-3/6 mx-auto"
+					onMouseOver={() => {
+						if (!show) {
+							setShow(true);
+						}
 					}}
-					className="w-2 border-l-2 border-dotted border-green-400 mx-3"
-				/>
-				{dishFeeds?.map((item, index) => (
+				>
 					<div
-						className="font-sans font-semibold p-2 mx-3 w-full flex lg:flex-row justify-between md:flex-col 
-						sm:flex-col xxs:flex-col xs:flex-col
-						items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500"
 						style={{
-							height: perDishHeight,
-							width: "100%",
+							position: "fixed",
+							height: (active / dishFeeds?.length) * 100 + "%",
 						}}
-						key={item.name}
-						onMouseOver={(e) => {
-							setActive(index + 1);
-							setIndexValue(index + 1);
-							setActiveDish(dishFeeds[index]);
-						}}
-						onMouseMoveCapture={(e) => {
-							setPosition({ x: e.clientX, y: e.clientY });
-						}}
-						onMouseDown={(e) => {
-							setPosition({ x: 0, y: 0 });
-						}}
-					>
-						<div className="flex flex-col justify-center items-start relative pl-6 pb-10">
-							{item.image && (
-								<img
-									// src={item.image}
-									src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-hHIaQKhHoGjeyQIs4R75BJvf/user-selfNgrZQO3HcV1BxwhTUJUS/img-HVnHz2SCDU8JsMa52PlnOsbm.png?st=2023-12-20T13%3A22%3A02Z&se=2023-12-20T15%3A22%3A02Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T01%3A04%3A43Z&ske=2023-12-21T01%3A04%3A43Z&sks=b&skv=2021-08-06&sig=mgbfOM5fSNfv//m8dP650ZJYnbt22FfXJWv4/0GCQO8%3D"
-									className="w-10 h-10 rounded-md absolute top-4"
-									style={{ position: "absolute", left: "-20px", top: "4px" }}
-								/>
-							)}
-							<span
-								className={`${
-									active === index + 1 ? "text-green-400" : "text-gray-400"
-								} text-sm`}
-							>
-								{index + 1}
-							</span>{" "}
-							<p
-								className={`hover:text-white font-light md:text-xl sm:text-3xl xs:text-xs xxs:text-xs border-b border-gray-700 ${
-									active === index + 1 ? "text-green-200" : "text-gray-200"
-								}`}
-							>
-								{item?.name}
-							</p>
-						</div>
-						<div>
-							{!isMobile ? (
-								<div
-									className={
-										active === index + 1
-											? styles.previewbox
-											: styles.unpreviewbox
-									}
+						className="w-2 border-l-2 border-dotted border-green-400 mx-3"
+					/>
+					{dishFeeds?.map((item, index) => (
+						<div
+							className="font-sans font-semibold p-2 mx-3 w-full flex lg:flex-row justify-between md:flex-col 
+						sm:flex-col xxs:flex-col xs:flex-col
+						items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500 pt-20"
+							style={{
+								height: perDishHeight,
+								width: "100%",
+							}}
+							key={item.name}
+							onMouseOver={(e) => {
+								setActive(index + 1);
+								setIndexValue(index + 1);
+								setActiveDish(dishFeeds[index]);
+							}}
+							onMouseMoveCapture={(e) => {
+								setPosition({ x: e.clientX, y: e.clientY });
+							}}
+							onMouseDown={(e) => {
+								setPosition({ x: 0, y: 0 });
+							}}
+						>
+							<div className="flex flex-col justify-center items-start relative pl-6 pb-10">
+								{item.image && (
+									<img
+										// src={item.image}
+										src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-hHIaQKhHoGjeyQIs4R75BJvf/user-selfNgrZQO3HcV1BxwhTUJUS/img-HVnHz2SCDU8JsMa52PlnOsbm.png?st=2023-12-20T13%3A22%3A02Z&se=2023-12-20T15%3A22%3A02Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T01%3A04%3A43Z&ske=2023-12-21T01%3A04%3A43Z&sks=b&skv=2021-08-06&sig=mgbfOM5fSNfv//m8dP650ZJYnbt22FfXJWv4/0GCQO8%3D"
+										className="w-10 h-10 rounded-md absolute top-4"
+										style={{ position: "absolute", left: "-20px", top: "4px" }}
+									/>
+								)}
+								<span
+									className={`${
+										active === index + 1 ? "text-green-400" : "text-gray-400"
+									} text-sm`}
 								>
-									<RenderActiveDish item={item} />
-								</div>
-							) : (
-								<div className={styles.simplePreviewBox}>
-									<RenderActiveDish item={item} />
-								</div>
-							)}
+									{index + 1}
+								</span>{" "}
+								<p
+									className={`hover:text-white font-light md:text-xl sm:text-3xl xs:text-xs xxs:text-xs border-b border-gray-700 ${
+										active === index + 1 ? "text-green-200" : "text-gray-200"
+									}`}
+								>
+									{item?.name}
+								</p>
+							</div>
+							<div>
+								{!isMobile ? (
+									<div
+										className={
+											active === index + 1
+												? styles.previewbox
+												: styles.unpreviewbox
+										}
+									>
+										<RenderActiveDish item={item} />
+									</div>
+								) : (
+									<div className={styles.simplePreviewBox}>
+										<RenderActiveDish item={item} />
+									</div>
+								)}
+							</div>
 						</div>
-					</div>
-				))}
-			</div>
+					))}
+				</div>
+			)}
 			{position.x > 0 && position.y > 0 && !isMobile && (
 				<div
 					className="w-auto h-auto p-1 rounded-md z-100"
@@ -239,7 +286,7 @@ const IndianCuisineComponent = () => {
 					)}
 				</div>
 			)}
-			<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-100 p-4">
+			<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-50 p-4">
 				<div className="w-auto px-4 py-2 shadow-2xl rounded-xl text-4xl text-pink-400 font-mono flex justify-center items-center">
 					{"["}
 					<TextInput
@@ -275,7 +322,6 @@ const IndianCuisineComponent = () => {
 						</a>
 					</p>
 				</div>
-
 			</div>
 		</div>
 	);
