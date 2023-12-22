@@ -258,7 +258,7 @@ const IndianCuisineComponent = () => {
 								)}
 								<span
 									className={`${
-										active === index + 1 ? "text-green-400" : "text-gray-400"
+										active === index + 1 ? "text-green-300" : "text-gray-400"
 									} text-sm`}
 								>
 									{index + 1}
@@ -271,27 +271,30 @@ const IndianCuisineComponent = () => {
 									{item?.name}
 								</p>
 							</div>
-							<div>
-								{!isMobile ? (
-									<div
-										className={
-											active === index + 1
-												? styles.previewbox
-												: styles.unpreviewbox
-										}
-									>
-										<RenderActiveDish item={item} />
-									</div>
-								) : (
-									<div className={styles.simplePreviewBox}>
-										<RenderActiveDish item={item} />
-									</div>
-								)}
+							<div className={styles.previewContainer}>
+								<div>
+									{!isMobile ? (
+										<div
+											className={
+												active === index + 1
+													? styles.previewbox
+													: styles.unpreviewbox
+											}
+										>
+											<RenderActiveDish item={item} />
+										</div>
+									) : (
+										<div className={styles.simplePreviewBox}>
+											<RenderActiveDish item={item} />
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
 					))}
 				</div>
 			)}
+
 			{position.x > 0 && position.y > 0 && !isMobile && (
 				<div
 					className="w-auto h-auto p-1 rounded-md z-100"
@@ -304,10 +307,11 @@ const IndianCuisineComponent = () => {
 					}}
 				>
 					{activeDish && (
-						<div className="w-60 h-auto border rounded-md border-gray-700 p-2">
+						<div className="w-40 h-auto border rounded-md border-gray-700 p-2">
+							<p>{activeDish.name}</p>
 							<img
 								src={`https://picsum.photos/${active}/300`}
-								className="rounded-md h-40 w-full"
+								className="rounded-md h-24 w-full"
 							/>
 						</div>
 					)}
@@ -384,6 +388,11 @@ const useStyles = makeStyles((theme) => ({
 		width: "90vw",
 		overflow: "scroll",
 	},
+	previewContainer: {
+		position: "fixed",
+		top: "20%",
+		left: "50%",
+	},
 	previewbox: {
 		zIndex: 50,
 		height: "auto",
@@ -399,20 +408,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 	"@keyframes flip": {
 		"0%": {
-			opacity: 0.2,
-			scale: "0.1",
+			transform: "translateX(100%)",
 		},
 		"50%": {
-			opacity: 0.6,
-			scale: "0.7",
+			transform: "translateX(50%)",
 		},
 		"100%": {
-			opacity: 1,
-			scale: 1,
+			transform: "translateX(0%)",
 		},
 	},
 	animatedText: {
-		animation: "$flip 0.2s ease-in-out",
+		animation: "$textAnimation 0.2s ease-in-out",
 		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
 	},
 	"@keyframes textAnimation": {
@@ -439,17 +445,20 @@ const useStyles = makeStyles((theme) => ({
 		"0%": {
 			opacity: 1,
 			display: "block",
-			transform: "translateX(-20%)",
+			scale: 1,
+			transform: "translateX(-100%)",
 		},
 		"50%": {
-			opacity: 0.6,
+			opacity: 0.3,
 			display: "block",
+			scale: 0.5,
 			transform: "translateX(-50%)",
 		},
 		"100%": {
 			opacity: 0,
 			display: "none",
-			transform: "translateX(-100%)",
+			scale: 0,
+			transform: "translateX(0%)",
 		},
 	},
 }));
