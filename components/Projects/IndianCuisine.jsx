@@ -3,9 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
 import { useTransition, animated, useSpring, config } from "react-spring";
-import { motion } from "framer-motion";
-import { Parallax } from "react-scroll-parallax";
-import Wave from "react-wavify";
+import { Typewriter } from "react-simple-typewriter";
 
 import { supabaseApp } from "utils";
 import { ImFire } from "react-icons/im";
@@ -52,12 +50,14 @@ const IndianCuisineComponent = () => {
 					<p className="text-2xl font-semibold p-2 my-2 border-b border-gray-500 font-serif z-50">
 						{activeDish?.name}
 					</p>
-					<div className="w-auto rounded-md m-4">
-						<img
-							src={`https://picsum.photos/${active}/300`}
-							className="rounded-md h-40 w-full"
-						/>
-					</div>
+					{showImage && (
+						<div className="w-auto rounded-md m-4">
+							<img
+								src={`https://picsum.photos/${active}/300`}
+								className="rounded-md h-40 w-full object-fill"
+							/>
+						</div>
+					)}
 					<div className="w-full my-4 px-4">
 						<div className="bg-gray-900 z-50 border border-gray-800 rounded-md">
 							<div className="flex justify-start gap-2 items-center border-b border-gray-500 p-2">
@@ -149,39 +149,25 @@ const IndianCuisineComponent = () => {
 		};
 	}, [isLoading, loadingProgress]);
 
-	const ScrollWave = () => {
+	const LoadingText = () => {
 		return (
-			<div
-				className="fixed left-0 top-0 bottom-0"
-				style={{ translate: "rotateX(90deg)" }}
+			<p
+				style={{
+					width: loadingProgress + "%",
+					transition: "width 1s ease",
+					whiteSpace: "nowrap",
+					overflow: "hidden",
+				}}
 			>
-				<Wave mask="url(#mask)" fill="#1277b0">
-					<defs>
-						<linearGradient id="gradient" gradientTransform="rotate(90)">
-							<stop offset="0" stopColor="white" />
-							<stop offset="0.5" stopColor="black" />
-						</linearGradient>
-						<mask id="mask">
-							<rect
-								x="0"
-								y="0"
-								width="20"
-								height="1000"
-								fill="url(#gradient)"
-							/>
-						</mask>
-					</defs>
-				</Wave>
-			</div>
+				Welcome to Indian Dishes
+			</p>
 		);
 	};
 	const LoadingPage = () => {
 		return (
 			<div className="fixed top-0 bottom-0 left-0 right-0 w-full h-screen bg-black flex flex-col justify-center items-center p-80">
-				<div>
-					<p className="text-7xl font-mono text-center">
-						Welcome to Indian Dishes
-					</p>
+				<div className="text-7xl font-serif">
+					<LoadingText />
 					{loadingProgress < 100 && (
 						<div className="w-96 h-8 bg-gray-900 my-5 mx-auto">
 							<animated.div
@@ -204,6 +190,17 @@ const IndianCuisineComponent = () => {
 	const [modal, setModal] = useState(false);
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
+			<div
+				style={{
+					position: "fixed",
+					top: 0,
+					left: 0,
+					height: (active / dishFeeds?.length) * 100 + "%",
+					bottom: 0,
+					transition: "height 0.5s ease-in-out",
+				}}
+				className="w-1 rounded-b-xl bg-gradient-to-r from-blue-800 via-purple-500 to-pink-500"
+			/>
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100"
@@ -364,9 +361,7 @@ const IndianCuisineComponent = () => {
 					modal: "bg-black text-white",
 				}}
 			>
-				<div>
-					<RenderActiveDish item={activeDish} />
-				</div>
+				<RenderActiveDish showImage item={activeDish} />
 			</Modal>
 		</div>
 	);
@@ -416,7 +411,24 @@ const useStyles = makeStyles((theme) => ({
 			scale: 1,
 		},
 	},
-
+	animatedText: {
+		animation: "$flip 0.2s ease-in-out",
+		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
+	},
+	"@keyframes textAnimation": {
+		"0%": {
+			opacity: 0.2,
+			width: "20%",
+		},
+		"50%": {
+			opacity: 0.6,
+			width: "60%",
+		},
+		"100%": {
+			opacity: 1,
+			width: "100%",
+		},
+	},
 	unpreviewbox: {
 		display: "none",
 		animation: "$unflip 1s ease-in-out",
