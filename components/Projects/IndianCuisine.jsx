@@ -3,7 +3,10 @@ import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
 import { useTransition, animated, useSpring, config } from "react-spring";
-import { emojiCursor } from "cursor-effects";
+import { motion } from "framer-motion";
+import { Parallax } from "react-scroll-parallax";
+import Wave from "react-wavify";
+
 import { supabaseApp } from "utils";
 import { ImFire } from "react-icons/im";
 import {
@@ -15,7 +18,7 @@ import {
 } from "react-icons/fa";
 import { IoFastFood, IoGiftSharp } from "react-icons/io5";
 import GridLines from "react-gridlines";
-import { TextInput } from "@mantine/core";
+import { Modal, TextInput } from "@mantine/core";
 
 const IndianCuisineComponent = () => {
 	const ref = useRef(null);
@@ -41,7 +44,7 @@ const IndianCuisineComponent = () => {
 
 	const styles = useStyles({ position });
 
-	const RenderActiveDish = ({ item }) => {
+	const RenderActiveDish = ({ item, showImage }) => {
 		const activeDish = item;
 		return (
 			<div className="w-full relative border border-gray-500 rounded-md my-4">
@@ -49,7 +52,12 @@ const IndianCuisineComponent = () => {
 					<p className="text-2xl font-semibold p-2 my-2 border-b border-gray-500 font-serif z-50">
 						{activeDish?.name}
 					</p>
-
+					<div className="w-auto rounded-md m-4">
+						<img
+							src={`https://picsum.photos/${active}/300`}
+							className="rounded-md h-40 w-full"
+						/>
+					</div>
 					<div className="w-full my-4 px-4">
 						<div className="bg-gray-900 z-50 border border-gray-800 rounded-md">
 							<div className="flex justify-start gap-2 items-center border-b border-gray-500 p-2">
@@ -128,13 +136,6 @@ const IndianCuisineComponent = () => {
 
 	const [loadingProgress, setLoadingProgress] = useState(0);
 
-	const { loadingWidth } = useSpring({
-		from: { loadingWidth: 0 },
-		to: { loadingWidth: 100 },
-	});
-
-	console.log(loadingProgress);
-
 	useEffect(() => {
 		const loadingInterval = setInterval(() => {
 			if (loadingProgress < 100) {
@@ -148,6 +149,32 @@ const IndianCuisineComponent = () => {
 		};
 	}, [isLoading, loadingProgress]);
 
+	const ScrollWave = () => {
+		return (
+			<div
+				className="fixed left-0 top-0 bottom-0"
+				style={{ translate: "rotateX(90deg)" }}
+			>
+				<Wave mask="url(#mask)" fill="#1277b0">
+					<defs>
+						<linearGradient id="gradient" gradientTransform="rotate(90)">
+							<stop offset="0" stopColor="white" />
+							<stop offset="0.5" stopColor="black" />
+						</linearGradient>
+						<mask id="mask">
+							<rect
+								x="0"
+								y="0"
+								width="20"
+								height="1000"
+								fill="url(#gradient)"
+							/>
+						</mask>
+					</defs>
+				</Wave>
+			</div>
+		);
+	};
 	const LoadingPage = () => {
 		return (
 			<div className="fixed top-0 bottom-0 left-0 right-0 w-full h-screen bg-black flex flex-col justify-center items-center p-80">
@@ -174,6 +201,7 @@ const IndianCuisineComponent = () => {
 		);
 	};
 
+	const [modal, setModal] = useState(false);
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
 			<GridLines
@@ -220,11 +248,13 @@ const IndianCuisineComponent = () => {
 								setPosition({ x: 0, y: 0 });
 							}}
 						>
-							<div className="flex flex-col justify-center items-start relative pl-6 pb-10">
+							<div
+								className="flex flex-col justify-center items-start relative pl-6 pb-10"
+								onClick={() => setModal(true)}
+							>
 								{item.image && (
 									<img
-										// src={item.image}
-										src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-hHIaQKhHoGjeyQIs4R75BJvf/user-selfNgrZQO3HcV1BxwhTUJUS/img-HVnHz2SCDU8JsMa52PlnOsbm.png?st=2023-12-20T13%3A22%3A02Z&se=2023-12-20T15%3A22%3A02Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T01%3A04%3A43Z&ske=2023-12-21T01%3A04%3A43Z&sks=b&skv=2021-08-06&sig=mgbfOM5fSNfv//m8dP650ZJYnbt22FfXJWv4/0GCQO8%3D"
+										src={`https://picsum.photos/${index + 1}/300`}
 										className="w-10 h-10 rounded-md absolute top-4"
 										style={{ position: "absolute", left: "-20px", top: "4px" }}
 									/>
@@ -277,12 +307,12 @@ const IndianCuisineComponent = () => {
 					}}
 				>
 					{activeDish && (
-						<img
-							// src={activeDish.image}
-							src="https://oaidalleapiprodscus.blob.core.windows.net/private/org-hHIaQKhHoGjeyQIs4R75BJvf/user-selfNgrZQO3HcV1BxwhTUJUS/img-HVnHz2SCDU8JsMa52PlnOsbm.png?st=2023-12-20T13%3A22%3A02Z&se=2023-12-20T15%3A22%3A02Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-12-20T01%3A04%3A43Z&ske=2023-12-21T01%3A04%3A43Z&sks=b&skv=2021-08-06&sig=mgbfOM5fSNfv//m8dP650ZJYnbt22FfXJWv4/0GCQO8%3D"
-							className="w-10 h-10 rounded-md absolute top-4"
-							style={{ position: "absolute", left: "-20px", top: "4px" }}
-						/>
+						<div className="w-60 h-auto border rounded-md border-gray-700 p-2">
+							<img
+								src={`https://picsum.photos/${active}/300`}
+								className="rounded-md h-40 w-full"
+							/>
+						</div>
 					)}
 				</div>
 			)}
@@ -325,6 +355,19 @@ const IndianCuisineComponent = () => {
 					</div>
 				</div>
 			)}
+			<Modal
+				onClose={() => setModal(false)}
+				opened={modal}
+				classNames={{
+					header: "none",
+					root: "bg-black w-full h-full mx-0 p-40",
+					modal: "bg-black text-white",
+				}}
+			>
+				<div>
+					<RenderActiveDish item={activeDish} />
+				</div>
+			</Modal>
 		</div>
 	);
 };
@@ -359,29 +402,6 @@ const useStyles = makeStyles((theme) => ({
 			height: "90vh",
 		},
 	},
-	unpreviewbox: {
-		display: "none",
-		animation: "$unflip 0.5s ease-in-out",
-		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
-	},
-
-	"@keyframes unflip": {
-		"0%": {
-			opacity: 1,
-			scale: 1,
-			display: "block",
-		},
-		"50%": {
-			opacity: 0.6,
-			scale: "0.5",
-			display: "block",
-		},
-		"100%": {
-			opacity: 0,
-			scale: 0,
-			display: "none",
-		},
-	},
 	"@keyframes flip": {
 		"0%": {
 			opacity: 0.2,
@@ -394,6 +414,30 @@ const useStyles = makeStyles((theme) => ({
 		"100%": {
 			opacity: 1,
 			scale: 1,
+		},
+	},
+
+	unpreviewbox: {
+		display: "none",
+		animation: "$unflip 1s ease-in-out",
+		animationTimingFunction: "cubic-bezier(0.42, 0, 0.58, 1)",
+	},
+
+	"@keyframes unflip": {
+		"0%": {
+			opacity: 1,
+			display: "block",
+			transform: "translateX(-20%)",
+		},
+		"50%": {
+			opacity: 0.6,
+			display: "block",
+			transform: "translateX(-50%)",
+		},
+		"100%": {
+			opacity: 0,
+			display: "none",
+			transform: "translateX(-100%)",
 		},
 	},
 }));

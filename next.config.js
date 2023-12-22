@@ -41,6 +41,7 @@ module.exports = (phase) => {
 				"firebasestorage.googleapis.com",
 				"static.toiimg.com",
 				"oaidalleapiprodscus.blob.core.windows.net",
+				"picsum.photos",
 			],
 		},
 		webpack: (config) => {
