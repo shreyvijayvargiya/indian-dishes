@@ -2,9 +2,7 @@ import { makeStyles, useMediaQuery } from "@material-ui/core";
 import React, { useEffect, useState, useRef } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
-import { useTransition, animated, useSpring, config } from "react-spring";
-import { Typewriter } from "react-simple-typewriter";
-
+import { animated, useSpring } from "react-spring";
 import { supabaseApp } from "utils";
 import { ImFire } from "react-icons/im";
 import {
@@ -17,14 +15,12 @@ import {
 import { IoFastFood, IoGiftSharp } from "react-icons/io5";
 import GridLines from "react-gridlines";
 import { Modal, TextInput } from "@mantine/core";
+import { ParallaxLayer, Parallax } from "@react-spring/parallax";
 
 const IndianCuisineComponent = () => {
-	const ref = useRef(null);
-
 	const [active, setActive] = useState(0);
 	const [indexValue, setIndexValue] = useState(active);
 	const [position, setPosition] = useState({ x: 0, y: 0 });
-	const [show, setShow] = useState(false);
 
 	const isMobile = useMediaQuery("(max-width:767px)");
 	const perDishHeight = isMobile ? "auto" : "700px";
@@ -45,7 +41,10 @@ const IndianCuisineComponent = () => {
 	const RenderActiveDish = ({ item, showImage }) => {
 		const activeDish = item;
 		return (
-			<div className="w-full relative border border-gray-500 rounded-md my-4">
+			<div
+				className="w-full relative border border-gray-500 rounded-md my-4"
+				key={item.name}
+			>
 				<div className={styles.box}>
 					<p className="text-2xl font-semibold p-2 my-2 border-b border-gray-500 font-serif z-50">
 						{activeDish?.name}
@@ -53,7 +52,7 @@ const IndianCuisineComponent = () => {
 					{showImage && (
 						<div className="w-auto rounded-md m-4">
 							<img
-								src={`https://picsum.photos/${active}/300`}
+								src={`77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QXV0aGVudGljYXRpb25GYWlsZWQ8L0NvZGU+PE1lc3NhZ2U+U2VydmVyIGZhaWxlZCB0byBhdXRoZW50aWNhdGUgdGhlIHJlcXVlc3QuIE1ha2Ugc3VyZSB0aGUgdmFsdWUgb2YgQXV0aG9yaXphdGlvbiBoZWFkZXIgaXMgZm9ybWVkIGNvcnJlY3RseSBpbmNsdWRpbmcgdGhlIHNpZ25hdHVyZS4KUmVxdWVzdElkOmYxNDExMWU2LTQwMWUtMDAyNy0xZDg1LTNjNWIzOTAwMDAwMApUaW1lOjIwMjQtMDEtMDFUMDc6Mzg6NDQuNDI0MjM0MFo8L01lc3NhZ2U+PEF1dGhlbnRpY2F0aW9uRXJyb3JEZXRhaWw+U2lnbmF0dXJlIG5vdCB2YWxpZCBpbiB0aGUgc3BlY2lmaWVkIHRpbWUgZnJhbWU6IFN0YXJ0IFtUdWUsIDE5IERlYyAyMDIzIDE4OjAwOjU3IEdNVF0gLSBFeHBpcnkgW1R1ZSwgMTkgRGVjIDIwMjMgMjA6MDA6NTcgR01UXSAtIEN1cnJlbnQgW01vbiwgMDEgSmFuIDIwMjQgMDc6Mzg6NDQgR01UXTwvQXV0aGVudGljYXRpb25FcnJvckRldGFpbD48L0Vycm9yPg==`}
 								className="rounded-md h-40 w-full object-fill"
 							/>
 						</div>
@@ -67,7 +66,7 @@ const IndianCuisineComponent = () => {
 							{activeDish?.ingredients && (
 								<ul className="mx-10 my-2 list-decimal">
 									{activeDish?.ingredients?.split(",")?.map((item) => (
-										<li>{item}</li>
+										<li key={item}>{item}</li>
 									))}
 								</ul>
 							)}
@@ -134,60 +133,78 @@ const IndianCuisineComponent = () => {
 		}
 	};
 
-	const [loadingProgress, setLoadingProgress] = useState(0);
+	const [loading, setLoading] = useState(false);
 
-	useEffect(() => {
-		const loadingInterval = setInterval(() => {
-			if (loadingProgress < 100) {
-				setLoadingProgress(loadingProgress < 100 ? loadingProgress + 10 : 5);
-			} else {
-				setLoadingProgress(100);
-			}
-		}, 500);
-		return () => {
-			clearInterval(loadingInterval);
-		};
-	}, [isLoading, loadingProgress]);
+	const [progress, setProgress] = useState(0);
+
+	const loadingSpring = useSpring({
+		from: { width: "0%" },
+		to: { width: "100%" },
+		onStart: () => setLoading(true),
+		onRest: () => setLoading(false),
+		onChange: (val) => setProgress(val?.value?.width?.split("%")[0]),
+		config: {
+			duration: 3000,
+		},
+		exitBeforeEnter: false,
+	});
 
 	const LoadingText = () => {
 		return (
 			<p
 				style={{
-					width: loadingProgress + "%",
+					width: progress,
 					transition: "width 1s ease",
 					whiteSpace: "nowrap",
 					overflow: "hidden",
 				}}
+				className="md:text-7xl sm:text-5xl xs:text-xl font-serif"
 			>
 				Welcome to Indian Dishes
 			</p>
 		);
 	};
+
 	const LoadingPage = () => {
 		return (
-			<div className="fixed top-0 bottom-0 left-0 right-0 w-full h-screen bg-black flex flex-col justify-center items-center p-80">
-				<div className="text-7xl font-serif">
+			<div className="fixed top-0 bottom-0 left-0 right-0 w-full bg-black flex flex-col justify-center items-center p-80 z-100">
+				<div className="font-serif">
 					<LoadingText />
-					{loadingProgress < 100 && (
-						<div className="w-96 h-8 bg-gray-900 my-5 mx-auto">
-							<animated.div
-								style={{
-									width: loadingProgress + "%",
-								}}
-								className="bg-gray-800 h-8"
-							>
-								<p className="font-mono text-sm text-center p-1">
-									{loadingProgress}%
-								</p>
-							</animated.div>
-						</div>
-					)}
+					<div className="w-96 h-8 bg-gray-900 my-5 mx-auto">
+						<animated.div style={loadingSpring} className="bg-indigo-600 h-8">
+							<p className="font-mono text-sm text-center text-white p-1">
+								{Math.round(progress.toString())}%
+							</p>
+						</animated.div>
+					</div>
 				</div>
 			</div>
 		);
 	};
 
 	const [modal, setModal] = useState(false);
+	const [scrollPos, setScrollPos] = useState();
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollPos = window.scrollY;
+			// if scroll up move element from left -50% to 0% left to right
+			// if scroll down move element from 0% to 50% from right to left
+
+			if (currentScrollPos > scrollPos) {
+				console.log("moving down");
+			} else {
+				console.log("moving up");
+			}
+			setScrollPos(window.scrollY);
+		};
+		window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
 	return (
 		<div className="h-full w-full bg-gray-900 text-white relative">
 			<div
@@ -205,17 +222,10 @@ const IndianCuisineComponent = () => {
 				lineColor={colors.gray[400]}
 				className="h-screen fixed w-full transform rotate-5 opacity-5 z-100"
 			/>
-			{loadingProgress < 100 ? (
+			{loading ? (
 				<LoadingPage />
 			) : (
-				<div
-					className="md:w-full sm:w-full lg:w-3/6 xl:3/6 2xl:w-3/6 mx-auto"
-					onMouseOver={() => {
-						if (!show) {
-							setShow(true);
-						}
-					}}
-				>
+				<div className="md:w-full sm:w-full lg:w-3/6 xl:3/6 2xl:w-3/6 mx-auto">
 					<div
 						style={{
 							position: "fixed",
@@ -228,11 +238,11 @@ const IndianCuisineComponent = () => {
 							className="font-sans font-semibold p-2 mx-3 w-full flex lg:flex-row justify-between md:flex-col 
 						sm:flex-col xxs:flex-col xs:flex-col
 						items-start relative cursor-pointer z-20 border-l-2 border-dotted border-gray-500 pt-20"
+							key={item.name}
 							style={{
 								height: perDishHeight,
 								width: "100%",
 							}}
-							key={item.name}
 							onMouseOver={(e) => {
 								setActive(index + 1);
 								setIndexValue(index + 1);
@@ -253,7 +263,11 @@ const IndianCuisineComponent = () => {
 									<img
 										src={`https://picsum.photos/${index + 1}/300`}
 										className="w-10 h-10 rounded-md absolute top-4"
-										style={{ position: "absolute", left: "-20px", top: "4px" }}
+										style={{
+											position: "absolute",
+											left: "-20px",
+											top: "4px",
+										}}
 									/>
 								)}
 								<span
@@ -281,11 +295,11 @@ const IndianCuisineComponent = () => {
 													: styles.unpreviewbox
 											}
 										>
-											<RenderActiveDish item={item} />
+											<RenderActiveDish item={item} key={item.name} />
 										</div>
 									) : (
 										<div className={styles.simplePreviewBox}>
-											<RenderActiveDish item={item} />
+											<RenderActiveDish item={item} key={item.name} />
 										</div>
 									)}
 								</div>
@@ -310,14 +324,14 @@ const IndianCuisineComponent = () => {
 						<div className="w-40 h-auto border rounded-md border-gray-700 p-2">
 							<p>{activeDish.name}</p>
 							<img
-								src={`https://picsum.photos/${active}/300`}
+								src={`77u/PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48RXJyb3I+PENvZGU+QXV0aGVudGljYXRpb25GYWlsZWQ8L0NvZGU+PE1lc3NhZ2U+U2VydmVyIGZhaWxlZCB0byBhdXRoZW50aWNhdGUgdGhlIHJlcXVlc3QuIE1ha2Ugc3VyZSB0aGUgdmFsdWUgb2YgQXV0aG9yaXphdGlvbiBoZWFkZXIgaXMgZm9ybWVkIGNvcnJlY3RseSBpbmNsdWRpbmcgdGhlIHNpZ25hdHVyZS4KUmVxdWVzdElkOmYxNDExMWU2LTQwMWUtMDAyNy0xZDg1LTNjNWIzOTAwMDAwMApUaW1lOjIwMjQtMDEtMDFUMDc6Mzg6NDQuNDI0MjM0MFo8L01lc3NhZ2U+PEF1dGhlbnRpY2F0aW9uRXJyb3JEZXRhaWw+U2lnbmF0dXJlIG5vdCB2YWxpZCBpbiB0aGUgc3BlY2lmaWVkIHRpbWUgZnJhbWU6IFN0YXJ0IFtUdWUsIDE5IERlYyAyMDIzIDE4OjAwOjU3IEdNVF0gLSBFeHBpcnkgW1R1ZSwgMTkgRGVjIDIwMjMgMjA6MDA6NTcgR01UXSAtIEN1cnJlbnQgW01vbiwgMDEgSmFuIDIwMjQgMDc6Mzg6NDQgR01UXTwvQXV0aGVudGljYXRpb25FcnJvckRldGFpbD48L0Vycm9yPg==`}
 								className="rounded-md h-24 w-full"
 							/>
 						</div>
 					)}
 				</div>
 			)}
-			{loadingProgress === 100 && (
+			{!loading && (
 				<div className="flex justify-between items-center fixed bottom-0 right-0 left-0 z-50 p-4">
 					<div className="w-auto px-4 py-2 shadow-2xl rounded-xl text-4xl text-pink-400 font-mono flex justify-center items-center">
 						{"["}
@@ -337,7 +351,7 @@ const IndianCuisineComponent = () => {
 							classNames={{
 								input:
 									"bg-gray-900 w-10 border-none text-pink-400 text-2xl px-0 text-center",
-								root: "bg-transparent mx-0 px-0",
+								root: "bg-transparent mx-0 px-0 ",
 							}}
 						/>
 						{"]"}
@@ -389,9 +403,7 @@ const useStyles = makeStyles((theme) => ({
 		overflow: "scroll",
 	},
 	previewContainer: {
-		position: "fixed",
-		top: "20%",
-		left: "50%",
+		position: "relative",
 	},
 	previewbox: {
 		zIndex: 50,
