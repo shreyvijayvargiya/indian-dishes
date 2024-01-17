@@ -1,8 +1,8 @@
 import React from "react";
 import { Home } from "components";
-import IndianCuisineComponent from "components/Projects/IndianCuisine";
-import AnimatedDrawers from "components/Projects/AnimatedText";
-import AnimatedText from "components/Projects/AnimatedText";
+import OnPressLoader from "components/Projects/onPressLoader";
+import HierarchyDrawer from "components/Projects/HierarchyDrawer";
+import GlowyNavbar from "components/Projects/GlowyNavbar";
 
-const HomePage = () => <AnimatedText />;
+const HomePage = () => <GlowyNavbar />;
 export default HomePage;
