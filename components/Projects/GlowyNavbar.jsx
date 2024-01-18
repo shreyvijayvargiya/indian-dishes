@@ -54,15 +54,18 @@ const GlowyNavbar = () => {
 		setShow(!show);
 	};
 
+	const bounceTheBar = () => {
+		const tl = gsap.timeline();
+		tl.fromTo(bar.current, { rotate: "180deg" }, { rotate: "0deg" });
+	};
+
 	return (
 		<div className="bg-black h-screen w-full" style={{}}>
-			<div
-				className="relative h-auto mx-auto rounded-full bg-black bg-opacity-25 bg-none cursor-pointer"
-				onClick={toggleNavbar}
-			>
+			<div className="relative w-2/5 mx-auto">
 				<div
-					className="flex justify-around items-center gap-4 fixed bottom-20 left-0 right-0 text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full"
+					className="flex justify-around items-center gap-4 fixed bottom-20 left-60 right-60 w-2/5 mx-auto text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full cursor-pointer"
 					ref={ref}
+					onClick={toggleNavbar}
 				>
 					<p className="text">Home</p>
 					<p className="text">Work Experience</p>
@@ -74,7 +77,9 @@ const GlowyNavbar = () => {
 				</div>
 				<div
 					ref={bar}
-					className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2"
+					className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2 cursor-pointer"
+					onMouseEnter={bounceTheBar}
+					onClick={toggleNavbar}
 				>
 					<div className="border border-gray-500 rounded-full p-3 hover:border-gray-400 hover:rotate-x-10 hover:scale-105">
 						<FaBars
