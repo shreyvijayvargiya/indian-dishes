@@ -5,7 +5,7 @@ import { IoClose } from "react-icons/io5";
 import { useSpring, animated } from "@react-spring/web";
 import colors from "tailwindcss/colors";
 
-const HierarchyDrawer = () => {
+const ProjectsDrawer = () => {
 	const tree = [
 		{
 			id: 1,
@@ -84,7 +84,7 @@ const HierarchyDrawer = () => {
 			className="bg-black h-screen w-full bg-opacity-95"
 			onMouseMoveCapture={handleMouseMove}
 		>
-			<div className="rounded-xl mx-auto fixed xl:top-40 md:top-40 sm:top-20 xxs:top-20 xs:top-20 sm:bottom-20 xxs:bottom-20 xs:bottom-20 md:bottom-40 xxl:left-80 xxl:right-80 md:left-40 md:right-40">
+			<div className="rounded-xl mx-auto md:fixed flex-col xl:top-40 md:top-40 sm:top-20 xxs:top-20 xs:top-20 sm:bottom-20 xxs:bottom-20 xs:bottom-20 md:bottom-40 xxl:left-80 xxl:right-80 md:left-40 md:right-40">
 				<div
 					className="flex flex-row justify-between items-start w-full h-full gap-4"
 					onMouseMoveCapture={(e) => {
@@ -147,7 +147,7 @@ const HierarchyDrawer = () => {
 				className="w-auto h-auto fixed bottom-20 left-20 p-4 rounded-full border-gray-500 border bg-black bg-opacity-5 bg-none cursor-pointer hover:border-gray-400"
 				style={{
 					transform: show ? "": "translateX(200px) translateY(-100px)",
-					transition: "transform 0.5s ease",
+					transition: "transform 2s ease",
 				}}
 			>
 				{show ? (
@@ -159,5 +159,5 @@ const HierarchyDrawer = () => {
 		</div>
 	);
 };
-export default HierarchyDrawer;
+export default ProjectsDrawer;
 

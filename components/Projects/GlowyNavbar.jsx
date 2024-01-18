@@ -1,63 +1,89 @@
-import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import React, { useState, useRef } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
-import { useSpring, animated } from "@react-spring/web";
 import colors from "tailwindcss/colors";
+import gsap from "gsap";
 
 const GlowyNavbar = () => {
 	const [show, setShow] = useState(true);
-	const [visible, setVisible] = useState(true);
+	const ref = useRef(null);
+	const bar = useRef(null);
 
-	const { width } = useSpring({
-		width: show ? "40%" : "3%",
-		config: {
-			duration: 1000,
-			decay: 0.5,
-		},
-	});
+	const toggleNavbar = () => {
+		const tl = gsap.timeline();
+		if (show) {
+			tl.fromTo(
+				ref.current,
+				{
+					width: "40%",
+					scale: 1,
+					opacity: 1,
+				},
+				{ width: "0%", scale: 0, opacity: 0 }
+			);
+			tl.fromTo(
+				bar.current,
+				{ opacity: 0, y: "-100px", rotate: "-360deg" },
+				{ opacity: 1, y: "0px", rotate: "0deg" }
+			);
+			tl.fromTo(".text", { visibility: "visible" }, { visibility: "hidden" });
+		} else {
+			tl.fromTo(
+				bar.current,
+				{ rotateZ: "360deg", opacity: 1, y: "0px" },
+				{ rotateZ: "0deg", opacity: 0, y: "-100px" }
+			);
+			tl.fromTo(
+				ref.current,
+				{
+					opacity: 0,
+					display: "none",
+					width: "0%",
+					scale: 0,
+				},
+				{
+					opacity: 1,
+					display: "flex",
+					width: "40%",
+					margin: "auto",
+					scale: 1,
+				}
+			);
+			tl.fromTo(".text", { visibility: "hidden" }, { visibility: "visible" });
+		}
+		setShow(!show);
+	};
 
 	return (
-		<div className="bg-black bg-opacity-90 h-screen w-full ">
+		<div className="bg-black h-screen w-full" style={{}}>
 			<div
-				className="h-auto mx-auto rounded-full bg-black bg-opacity-10 bg-none cursor-pointer"
-				style={{
-					transition: "width 0.1s ease",
-				}}
-				onClick={() => {
-					setShow(!show);
-				}}
+				className="relative h-auto mx-auto rounded-full bg-black bg-opacity-25 bg-none cursor-pointer"
+				onClick={toggleNavbar}
 			>
-				<animated.div
+				<div
 					className="flex justify-around items-center gap-4 fixed bottom-20 left-0 right-0 text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full"
-					style={{
-						width: width.to((o) => o),
-						display: show ? "flex" : "none",
-						margin: "auto",
-						transition: "display width 0.1s ease-in-out",
-					}}
+					ref={ref}
 				>
-					<p>Home</p>
-					<p>Work Experience</p>
-					<p className="border border-gray-500 rounded-full ">
+					<p className="text">Home</p>
+					<p className="text">Work Experience</p>
+					<p className="border border-gray-500 rounded-full hover:border-gray-300">
 						<IoClose size={24} color={colors.gray[400]} />
 					</p>
-					<p>Projects</p>
-					<p>Contact Me</p>
-				</animated.div>
-				<animated.div
-					style={{
-						display: show ? "none" : "block",
-						width: width.to((o) => o),
-						transition: "visibility 0.5 ease",
-						transform: show ? "rotateX(180deg)" : "",
-					}}
-					className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center"
+					<p className="text">Projects</p>
+					<p className="text">Contact Me</p>
+				</div>
+				<div
+					ref={bar}
+					className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2"
 				>
-					<div className="border border-gray-700 rounded-full p-4">
-						<FaBars size={24} color={colors.gray[400]} />
+					<div className="border border-gray-500 rounded-full p-3 hover:border-gray-400 hover:rotate-x-10 hover:scale-105">
+						<FaBars
+							size={24}
+							color={colors.gray[400]}
+							className="hover:scale-105"
+						/>
 					</div>
-				</animated.div>
+				</div>
 			</div>
 		</div>
 	);
