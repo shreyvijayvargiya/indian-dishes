@@ -61,33 +61,31 @@ const GlowyNavbar = () => {
 
 	return (
 		<div className="bg-black h-screen w-full" style={{}}>
-			<div className="relative w-2/5 mx-auto">
-				<div
-					className="flex justify-around items-center gap-4 fixed bottom-20 left-60 right-60 w-2/5 mx-auto text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full cursor-pointer"
-					ref={ref}
-					onClick={toggleNavbar}
-				>
-					<p className="text">Home</p>
-					<p className="text">Work Experience</p>
-					<p className="border border-gray-500 rounded-full hover:border-gray-300">
-						<IoClose size={24} color={colors.gray[400]} />
-					</p>
-					<p className="text">Projects</p>
-					<p className="text">Contact Me</p>
-				</div>
-				<div
-					ref={bar}
-					className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2 cursor-pointer"
-					onMouseEnter={bounceTheBar}
-					onClick={toggleNavbar}
-				>
-					<div className="border border-gray-500 rounded-full p-3 hover:border-gray-400 hover:rotate-x-10 hover:scale-105">
-						<FaBars
-							size={24}
-							color={colors.gray[400]}
-							className="hover:scale-105"
-						/>
-					</div>
+			<div
+				className="flex justify-around items-center gap-4 fixed bottom-20 left-60 right-60 w-2/5 mx-auto text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full cursor-pointer"
+				ref={ref}
+				onClick={toggleNavbar}
+			>
+				<p className="text">Home</p>
+				<p className="text">Work Experience</p>
+				<p className="border border-gray-500 rounded-full hover:border-gray-300">
+					<IoClose size={24} color={colors.gray[400]} />
+				</p>
+				<p className="text">Projects</p>
+				<p className="text">Contact Me</p>
+			</div>
+			<div
+				ref={bar}
+				className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2 cursor-pointer"
+				onMouseEnter={bounceTheBar}
+				onClick={toggleNavbar}
+			>
+				<div className="border border-gray-500 rounded-full p-3 hover:border-gray-400 hover:rotate-x-10 hover:scale-105">
+					<FaBars
+						size={24}
+						color={colors.gray[400]}
+						className="hover:scale-105"
+					/>
 				</div>
 			</div>
 		</div>
