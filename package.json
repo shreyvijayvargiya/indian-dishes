@@ -6,7 +6,8 @@
 		"dev": "next -p 3001",
 		"build": "next build ",
 		"start": "next start",
-		"analyze": "ANALYZE=true yarn build"
+		"analyze": "ANALYZE=true yarn build",
+		"clean": "yarn cache clean"
 	},
 	"dependencies": {
 		"9": "^0.0.1",
