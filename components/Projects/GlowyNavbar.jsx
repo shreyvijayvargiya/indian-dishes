@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
@@ -23,15 +23,15 @@ const GlowyNavbar = () => {
 			);
 			tl.fromTo(
 				bar.current,
-				{ opacity: 0, y: "-100px", rotate: "-360deg" },
-				{ opacity: 1, y: "0px", rotate: "0deg" }
+				{ opacity: 0, rotate: "-360deg" },
+				{ opacity: 1, rotate: "0deg" }
 			);
 			tl.fromTo(".text", { visibility: "visible" }, { visibility: "hidden" });
 		} else {
 			tl.fromTo(
 				bar.current,
-				{ rotateZ: "360deg", opacity: 1, y: "0px" },
-				{ rotateZ: "0deg", opacity: 0, y: "-100px" }
+				{ rotateZ: "360deg", opacity: 1 },
+				{ rotateZ: "0deg", opacity: 0 }
 			);
 			tl.fromTo(
 				ref.current,
@@ -54,16 +54,27 @@ const GlowyNavbar = () => {
 		setShow(!show);
 	};
 
+	useLayoutEffect(() => {
+		gsap.fromTo(ref.current, { width: "0%" }, { width: "40%" });
+		gsap.fromTo(
+			bar.current,
+			{
+				opacity: 0,
+			},
+			{ opacity: 0 }
+		);
+	}, []);
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
 		tl.fromTo(bar.current, { rotate: "180deg" }, { rotate: "0deg" });
 	};
 
 	return (
-		<div className="bg-black h-screen w-full" style={{}}>
+		<div className="bg-black bg-opacity-95 h-screen w-full flex flex-col justify-center items-center">
 			<div
-				className="flex justify-around items-center gap-4 fixed bottom-20 left-60 right-60 w-2/5 mx-auto text-gray-400 hover:text-gray-200 border border-gray-600 p-4 rounded-full cursor-pointer"
+				className="flex justify-around items-center gap-4 w-2/5 mx-auto h-auto text-gray-400 hover:border-gray-500 border border-gray-600 p-4 rounded-full cursor-pointer bg-black bg-opacity-20"
 				ref={ref}
+				style={{ boxShadow: "0px 0px 100px rgb(255, 255, 255, 0.2)" }}
 				onClick={toggleNavbar}
 			>
 				<p className="text">Home</p>
@@ -76,16 +87,15 @@ const GlowyNavbar = () => {
 			</div>
 			<div
 				ref={bar}
-				className="fixed bottom-20 left-0 right-0 mx-auto flex justify-center items-center mb-2 cursor-pointer"
+				className="cursor-pointer rounded-full flex justify-center items-center bg-none fixed top-1/2 left-1/2 right-1/2 bottom-1/2"
 				onMouseEnter={bounceTheBar}
 				onClick={toggleNavbar}
 			>
-				<div className="border border-gray-500 rounded-full p-3 hover:border-gray-400 hover:rotate-x-10 hover:scale-105">
-					<FaBars
-						size={24}
-						color={colors.gray[400]}
-						className="hover:scale-105"
-					/>
+				<div
+					className="border border-gray-500 rounded-full p-3 hover:border-gray-400"
+					style={{ boxShadow: "0px 0px 100px rgb(255, 255, 255, 0.1)" }}
+				>
+					<FaBars size={24} color={colors.gray[400]} />
 				</div>
 			</div>
 		</div>

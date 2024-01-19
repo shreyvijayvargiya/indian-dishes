@@ -23,7 +23,7 @@ const Home = () => {
 				backgroundPosition: "center center",
 				backgroundRepeat: "repeat",
 				backgroundAttachment: "fixed",
-				backgroundColor: "rgb(0, 0, 0, 0.5)",
+				backgroundColor: "rgb(0, 0, 0, 0.7)",
 				backgroundBlendMode: "darken",
 			}}
 		>
@@ -51,6 +51,9 @@ const Home = () => {
 					experience in developing websites, mobile apps, blockchain wallets,
 					smart contracts and backend services{" "}
 				</p>
+				<p className="text-xs w-28 py-2 px-2 rounded-md text-gray-300 my-2 bg-opacity-5 bg-gray-900 border border-gray-700 font-serif mx-auto">
+					Hover the card
+				</p>
 				{toggle ? (
 					<div
 						style={{
@@ -60,17 +63,16 @@ const Home = () => {
 							width: toggle ? "50vw" : "0px",
 							height: toggle ? "50vh" : "0px",
 							borderRadius: 10,
-							transition: "all 0.2s ease-in-out",
+							transition: "all 0.5s ease-in-out",
 						}}
-						onMouseMoveCapture={() => console.log("moved")}
-						className="box-1 text-gray-1000 font-semibold w-full h-full border-2 border-dashed border-gray-300 p-2 flex justify-center items-center bg-transparent"
+						className="box-1 text-gray-900 font-semibold w-full h-full border-2 border-dashed border-gray-300 p-2 flex justify-center items-center bg-transparent"
 					>
 						<iframe
 							src="https://www.iamshrey.me/"
 							width="100%"
 							height="100%"
 							style={{ borderRadius: 10 }}
-							title="IamShrey Website"
+							title="iamShrey portfolio website"
 						/>
 					</div>
 				) : (

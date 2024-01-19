@@ -129,12 +129,12 @@ const ProjectsDrawer = () => {
 						})}
 					</animated.div>
 					<animated.div
-						className="p-10 h-full rounded-xl border-gray-600 border bg-black bg-opacity-10"
+						className="p-10 h-full rounded-xl border-gray-600 border bg-blackShade"
 						style={{
 							width: width.to((value) => `calc(100% - ${value})`),
 							boxShadow: `0 0 ${
 								mouse.x > 200 ? mouse.x : 50
-							}px rgba(255, 255, 255, 0.5)`,
+							}px rgba(255, 255, 255, 0.2)`,
 							transition: "all 1s ease",
 						}}
 					>
