@@ -20,6 +20,10 @@ const projects = [
 		device: "desktop",
 	},
 	{
+		url: "https://indian-dishes.vercel.app/pin-image",
+		device: "desktop",
+	},
+	{
 		url: "https://indian-dishes.vercel.app/link-preview",
 		device: "desktop",
 	},
@@ -57,14 +61,14 @@ const ProjectsGallery = () => {
 	}, []);
 
 	return (
-		<div className="h-full bg-opacity-95 bg-black w-full">
+		<div className="h-full bg-opacity-95 bg-black w-full p-10">
 			<div className={classes.projectContainer}>
 				{projects.map((project, index) => (
 					<div
 						key={index}
-						className="flex justify-between items-center w-full m-10 p-10"
+						className="flex justify-between items-center w-full border-l border-dashed border-gray-700"
 					>
-						<div>
+						<div className="px-10">
 							<p className="text-5xl text-pink-400">Project #{index + 1}</p>
 							<a
 								className="text-indigo-500 hover:text-indigo-600 text-xl underline"
@@ -74,14 +78,23 @@ const ProjectsGallery = () => {
 								Reach website
 							</a>
 						</div>
-						<div className={`project ${classes.frame}`}>
+						<div>
+							<br />
 							<iframe
 								src={project.url}
 								title={`Project ${index + 1}`}
 								className={classes.iframe}
 								loading="lazy"
-								style={{ width: "60vw", height: "800px", aspectRatio: "auto" }}
+								style={{
+									width: "60vw",
+									height: "800px",
+									aspectRatio: "auto",
+									borderRadius: 10,
+									scale: 0.80,
+									border: `1px solid ${colors.gray[500]}`,
+								}}
 							/>
+							<br />
 						</div>
 					</div>
 				))}
@@ -92,13 +105,7 @@ const ProjectsGallery = () => {
 
 const useStyles = makeStyles((theme) => ({
 	projectContainer: {
-		display: "flex",
-		justifyContent: "flex-start",
-		alignItems: "flex-start",
-		flexDirection: "column",
-		flexWrap: "wrap",
-		gap: theme.spacing(2),
-		padding: theme.spacing(10),
+		padding: theme.spacing(0),
 	},
 	iframe: {
 		width: "100%",
