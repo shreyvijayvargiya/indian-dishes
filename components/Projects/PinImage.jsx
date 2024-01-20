@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core";
 import colors from "tailwindcss/colors";
 
@@ -15,8 +15,8 @@ const PinImage = () => {
 
 	const cards = [1];
 	return (
-		<div className="w-screen h-screen bg-black bg-opacity-95 flex flex-col justify-center items-center p-10">
-			<div className="flex flex-wrap w-1/5 mx-auto justify-center items-center gap-10 relative border-t-2 border-dashed border-gray-800 z-70">
+		<div className="w-screen h-screen bg-black bg-opacity-95 flex flex-col justify-center items-center md:p-10">
+			<div className="flex flex-wrap md:w-1/5 sm:w-full xxs:w-full xs:w-full mx-auto justify-center items-center gap-10 relative border-t-2 border-dashed border-gray-800 z-70">
 				{cards.map((item) => {
 					return (
 						<div className={styles.card} key={item}>
