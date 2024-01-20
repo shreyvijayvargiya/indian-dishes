@@ -36,13 +36,13 @@ const AnimatedText = () => {
 	};
 
 	return (
-		<div className="bg-gray-900 text-gray-200 flex flex-col justify-center items-center h-screen">
-			<p
-				className="p-4 text-7xl font-medium bg-gray-800 text-white rounded-md"
+		<div className="bg-black bg-opacity-95 text-gray-200 flex flex-col justify-center items-center h-screen">
+			<div
+				className="p-4 md:text-7xl font-medium border-2 border-dashed border-gray-800 bg-gray-900 text-white rounded-md"
 				onMouseEnter={startShuffle}
 			>
 				{char}
-			</p>
+			</div>
 			<span className="text-center p-2 rounded-md bg-gray-800 text-white my-2 bg-opacity-10 border border-gray-700">
 				Hover the card
 			</span>
