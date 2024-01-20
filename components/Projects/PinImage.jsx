@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import colors from "tailwindcss/colors";
-import { TiPin } from "react-icons/ti";
 
 const translations = {
 	1: "rotateZ(-90deg) rotateY(-10deg)",
@@ -17,13 +16,10 @@ const PinImage = () => {
 	const cards = [1];
 	return (
 		<div className="w-screen h-screen bg-black bg-opacity-95 flex flex-col justify-center items-center p-10">
-			<div className="flex flex-wrap w-3/5 mx-auto justify-center items-center gap-10 relative">
+			<div className="flex flex-wrap w-1/5 mx-auto justify-center items-center gap-10 relative border-t-2 border-dashed border-gray-800 z-70">
 				{cards.map((item) => {
 					return (
 						<div className={styles.card} key={item}>
-							<div className={styles.pinIcon}>
-								<TiPin size={24} color={colors.pink[400]} />
-							</div>
 							<div className={styles.cardFront}>
 								<img
 									src="./avatar.png"
@@ -59,16 +55,23 @@ const useStyles = makeStyles((theme) => ({
 		position: "relative",
 		cursor: "pointer",
 		transformStyle: "preserve-3d",
+		transition: "all 0.2s ease",
+		"&:hover": {
+			"& .cardBlock": {
+				transform: "rotateZ(-4deg) translateY(3px)",
+			},
+		},
 	},
 	cardFront: {
 		border: `1px solid ${colors.gray[700]}`,
-		borderRadius: 10,
+		borderRadius: 16,
 		padding: 10,
-		zIndex: 100,
+		zIndex: 50,
 		transformOrigin: "top left",
 		backfaceVisibility: "hidden",
 		background: `linear-gradient(100deg, ${colors.gray[900]}, ${colors.gray[800]})`,
 		transition: "all 1s ease",
+		transform: "rotateZ(12deg) translateY(-4px)",
 		"&:hover": {
 			transform: getTranslation(1),
 			transformOrigin: "top left",
@@ -82,14 +85,21 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		height: "100%",
 		zIndex: -10,
-		borderRadius: 10,
+		borderRadius: 16,
 		backfaceVisibility: "hidden",
 		background: `linear-gradient(45deg, ${colors.gray[900]}, ${colors.gray[800]})`,
+		transformOrigin: "top left",
+		transition: "all 0.2s ease",
 		pointerEvents: "auto",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+		transform: "rotateZ(4deg) translateY(-3px)",
 	},
 	pinIcon: {
 		position: "absolute",
-		top: "-10px",
+		top: "-18px",
 		left: "-10px",
 		zIndex: 200,
 		rotate: "-90deg",
