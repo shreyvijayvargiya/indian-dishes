@@ -1,5 +1,5 @@
 import { makeStyles, useMediaQuery } from "@material-ui/core";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import colors from "tailwindcss/colors";
 import { animated, useSpring } from "react-spring";
@@ -15,7 +15,6 @@ import {
 import { IoFastFood, IoGiftSharp } from "react-icons/io5";
 import GridLines from "react-gridlines";
 import { Modal, TextInput } from "@mantine/core";
-import { ParallaxLayer, Parallax } from "@react-spring/parallax";
 
 const IndianCuisineComponent = () => {
 	const [active, setActive] = useState(0);
