@@ -83,15 +83,13 @@ const ProjectsGallery = () => {
 	const [show, setShow] = useState(false);
 
 	return (
-		<div className="h-screen bg-opacity-95 bg-black w-full py-10 px-4">
+		<div className="h-screen bg-opacity-95 bg-black w-full py-10">
 			<div className="flex flex-row justify-around items-center w-full h-full ">
-				<div
-					className={`${classes.projectListContainer} border-l border-r border-dashed border-gray-700`}
-				>
+				<div className={`${classes.projectListContainer}`}>
 					{projects.map((project, index) => (
 						<div
 							key={index}
-							className="relative flex justify-between items-center w-full my-5"
+							className="relative w-full my-5"
 							onMouseOver={() => {
 								setTimeout(() => {
 									setActive(project);
@@ -104,7 +102,7 @@ const ProjectsGallery = () => {
 							}}
 						>
 							{active?.url === project?.url && (
-								<div className="absolute top-4 left-0 right-0 border-t border-b w-full border-dashed border-gray-700 h-1 z-0" />
+								<div className="absolute top-4 left-0 right-0 border-t border-b w-full border-dashed border-gray-400 h-1 z-0" />
 							)}
 							<div
 								className={`px-10 cursor-pointer ${
@@ -134,13 +132,9 @@ const ProjectsGallery = () => {
 					))}
 				</div>
 				<div ref={frameRef} className={classes.frameContainer}>
-					{show && active ? (
+					{active && (
 						<div
 							className="w-full h-full"
-							style={{
-								boxShadow: "0px 0px 40px rgb(200, 200, 200, 0.4)",
-								borderRadius: 10,
-							}}
 						>
 							<iframe
 								src={active?.url}
@@ -153,20 +147,7 @@ const ProjectsGallery = () => {
 									height: "100%",
 								}}
 							/>
-						</div>
-					) : (
-						<iframe
-							src={active?.url}
-							title={active?.title}
-							className={classes.iframe}
-							loading="lazy"
-							ref={frameRef}
-							style={{
-								width: "100%",
-								height: "100%",
-							}}
-						/>
-					)}
+						</div>)}
 				</div>
 			</div>
 		</div>
@@ -178,18 +159,19 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: theme.spacing(10),
 		paddingBottom: theme.spacing(10),
 		overflow: "scroll",
-		maxWidth: "20%",
+		maxWidth: "15%",
 	},
 	frameContainer: {
-		width: "75%",
+		width: "85%",
 		margin: "auto",
 		height: "80vh",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "column",
-
-		borderRadius: 10,
+		borderTop: `1px dotted ${colors.gray[400]}`,
+		borderBottom: `1px dotted ${colors.gray[400]}`,
+		borderLeft: `1px dotted ${colors.gray[400]}`,
 		[theme.breakpoints.down("sm")]: {
 			width: "100%",
 		},
@@ -197,8 +179,7 @@ const useStyles = makeStyles((theme) => ({
 	iframe: {
 		width: "100%",
 		height: "100%",
-		borderRadius: 10,
-		border: `1px solid ${colors.gray[500]}`,
+		padding: theme.spacing(1),
 	},
 	desktopIframe: {
 		width: "100%",
