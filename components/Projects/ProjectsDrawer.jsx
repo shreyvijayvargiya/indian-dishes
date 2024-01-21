@@ -139,7 +139,6 @@ const ProjectsDrawer = () => {
 						}}
 					>
 						<p className="text-white text-7xl font-serif">{active.content}</p>
-					
 					</animated.div>
 				</div>
 			</div>
