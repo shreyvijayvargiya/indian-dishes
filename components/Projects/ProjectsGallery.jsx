@@ -80,7 +80,6 @@ const ProjectsGallery = () => {
 	const classes = useStyles();
 	const frameRef = useRef(null);
 	const [active, setActive] = useState();
-	const [show, setShow] = useState(false);
 
 	return (
 		<div className="h-screen bg-opacity-95 bg-black w-full py-10">
