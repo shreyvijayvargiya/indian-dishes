@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { StylesProvider, makeStyles } from "@material-ui/core";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
+import GridLines from "react-gridlines";
 
 const projects = [
 	{
@@ -83,7 +84,11 @@ const ProjectsGallery = () => {
 
 	return (
 		<div className="h-screen bg-opacity-95 bg-black w-full py-10">
-			<div className="flex flex-row justify-around items-center w-full h-full ">
+			<GridLines
+				lineColor={colors.gray[400]}
+				className="h-full w-full fixed top-0 right-0 left-0 bottom-0 transform opacity-5"
+			/>
+			<div className="flex flex-row justify-around items-center w-full h-full">
 				<div className={`${classes.projectListContainer}`}>
 					{projects.map((project, index) => (
 						<div
@@ -130,11 +135,12 @@ const ProjectsGallery = () => {
 						</div>
 					))}
 				</div>
-				<div ref={frameRef} className={classes.frameContainer}>
+				<div
+					ref={frameRef}
+					className={`${classes.frameContainer} bg-black bg-opacity-10`}
+				>
 					{active && (
-						<div
-							className="w-full h-full"
-						>
+						<div className="relative w-full h-full">
 							<iframe
 								src={active?.url}
 								title={active?.title}
@@ -144,9 +150,11 @@ const ProjectsGallery = () => {
 								style={{
 									width: "100%",
 									height: "100%",
+									zIndex: 100,
 								}}
 							/>
-						</div>)}
+						</div>
+					)}
 				</div>
 			</div>
 		</div>
@@ -155,15 +163,13 @@ const ProjectsGallery = () => {
 
 const useStyles = makeStyles((theme) => ({
 	projectListContainer: {
-		paddingTop: theme.spacing(10),
-		paddingBottom: theme.spacing(10),
 		overflow: "scroll",
 		maxWidth: "15%",
 	},
 	frameContainer: {
 		width: "85%",
 		margin: "auto",
-		height: "80vh",
+		height: "90vh",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
@@ -178,7 +184,7 @@ const useStyles = makeStyles((theme) => ({
 	iframe: {
 		width: "100%",
 		height: "100%",
-		padding: theme.spacing(1),
+		overflow: "scroll"
 	},
 	desktopIframe: {
 		width: "100%",

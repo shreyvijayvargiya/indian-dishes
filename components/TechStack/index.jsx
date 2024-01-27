@@ -1,6 +1,8 @@
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import gsap from "gsap";
-import { useEffect } from "react";
+import colors from "tailwindcss/colors";
+import BackgroundDots from "components/Projects/BackgroundDots";
 
 const TechStack = () => {
 	const images = [
@@ -13,9 +15,11 @@ const TechStack = () => {
 		"firebase",
 	];
 
-	useEffect(() => {
+	const [active, setActive] = useState(0);
+
+	useLayoutEffect(() => {
+		const tl = gsap.timeline();
 		images.map((item, index) => {
-			const tl = gsap.timeline();
 			tl.fromTo(
 				`.icon-container-${item}`,
 				{ y: "-" + index + "10px", scale: 0.2 },
@@ -24,15 +28,49 @@ const TechStack = () => {
 			);
 		});
 	}, []);
+	useEffect(() => {
+		const tl = gsap.timeline();
+		// tl.to(`.image-item-${Number(active) + 1}`, { scale: 1.1, y: "10px" });
+		// tl.to(`.image-item-${Number(active) + 2}`, { scale: 1.2, y: "12px" });
+		// tl.to(`.image-item-${Number(active) - 1}`, { scale: 0.9, y: "0px" });
+		// tl.to(`.image-item-${Number(active) - 2}`, { scale: 0.8, y: "0px" });
+
+		gsap.fromTo(
+			".wave",
+			{
+				x: "0%",
+			},
+			{
+				x: "-5%",
+				duration: 10,
+				repeat: -1,
+				ease: "linear",
+				yoyo: true,
+			}
+		);
+		gsap.fromTo(
+			".wave-shadow",
+			{
+				x: "0%",
+			},
+			{
+				x: "-4%",
+				duration: 10,
+				repeat: -1,
+				ease: "linear",
+				yoyo: true,
+			}
+		);
+	}, [active]);
 
 	const animateIcons = () => {
 		images.map((item, index) => {
 			const tl = gsap.timeline();
 			tl.fromTo(
 				`.icon-container-${item}`,
-				{ y: "-" + index + "10px", scale: 0.2 },
-				{ y: "0px", scale: 1 },
-				{ delay: 0.2 * index, duration: 4, ease: "power2.out" }
+				{ y: "-" + index + "10px", scale: 0.2, opacity: 0.1 },
+				{ y: "0px", scale: 1, opacity: 1, stagger: 1 },
+				{ delay: 1 * index, duration: 4, ease: "power2.out", stagger: 1 }
 			);
 		});
 	};
@@ -42,14 +80,15 @@ const TechStack = () => {
 			const tl = gsap.timeline();
 			tl.fromTo(
 				`.icon-container-${item}`,
-				{ x: "-" + index + "10px", scale: 0.2 },
-				{ x: "0px", scale: 1 },
-				{ delay: 0.2 * index, duration: 4, ease: "power2.out" }
+				{ x: "-" + index + "10px", scale: 0.2, opacity: 0.1 },
+				{ x: "0px", scale: 1, opacity: 1, stagger: 1 },
+				{ delay: index, duration: 4, ease: "power2.out", stagger: 1 }
 			);
 		});
 	};
+
 	return (
-		<div className="bg-black bg-opacity-95 h-screen w-full flex flex-col justify-center items-center">
+		<div className="bg-black bg-opacity-95 h-screen flex flex-col justify-center items-center relative">
 			<p className="text-gray-400 text-3xl">Tech Stack</p>
 			<br />
 			<div
@@ -60,26 +99,43 @@ const TechStack = () => {
 					return (
 						<div
 							key={item}
-							className="p-2 cursor-pointer"
+							onClick={() => setActive(index)}
+							className={`p-2 cursor-pointer py-4`}
 							onMouseEnter={() => {
+								setActive(index);
 								gsap.fromTo(
 									`.icon-container-${item}`,
-									{ scale: 0.8, y: "0px", rotateX: "0deg" },
-									{ scale: 1.2, y: "-30px", rotateX: "360deg" }
+									{
+										scale: 0.8,
+										y: "0px",
+										rotateX: "0deg",
+									},
+									{
+										scale: 1.1,
+										y: "-20px",
+										rotateX: "0deg",
+									}
 								);
 							}}
 							onMouseLeave={() => {
+								setActive(false);
 								gsap.fromTo(
 									`.icon-container-${item}`,
-									{ scale: 1.2, y: "-40px", rotateX: "360deg" },
+									{ scale: 1.1, y: "-30px", rotateX: "360deg" },
 									{ scale: 1, y: "0px", rotateX: "0deg" }
 								);
 							}}
 						>
 							<img
-								className={`border border-gray-500 hover:border-gray-500 w-20 h-20 object-contain bg-blend-darken rounded-2xl icon-container-${item}`}
+								className={`border border-gray-500 hover:border-gray-500 w-20 h-20 object-contain bg-blend-darken rounded-2xl icon-container-${item}
+								image-item-${index}`}
 								src={`./logos/${item}.svg`}
 							/>
+							{active === index && (
+								<div className="mx-auto text-xs text-center text-gray-500">
+									{item}
+								</div>
+							)}
 						</div>
 					);
 				})}
@@ -95,6 +151,34 @@ const TechStack = () => {
 					Left Animation
 				</Button>
 			</div>
+			<div
+				className="wave"
+				style={{
+					backgroundImage:
+						"url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)",
+					backgroundRepeat: "repeat-x",
+					width: "6400px",
+					position: "absolute",
+					left: "0px",
+					bottom: "0px",
+					right: "0px",
+					height: "200px",
+				}}
+			/>
+			<div
+				className="wave-shadow"
+				style={{
+					backgroundImage:
+						"url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)",
+					backgroundRepeat: "repeat-x",
+					width: "6400px",
+					position: "absolute",
+					left: "0px",
+					bottom: "0px",
+					right: "0px",
+					height: "220px",
+				}}
+			/>
 		</div>
 	);
 };
