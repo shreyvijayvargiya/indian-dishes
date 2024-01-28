@@ -1,5 +1,6 @@
-import router from "next/router";
 import React, { useState } from "react";
+import router from "next/router";
+
 
 const Home = () => {
 	const [toggle, setToggle] = useState(false);

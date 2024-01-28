@@ -1,9 +1,9 @@
 import React from "react";
-import ProjectsGallery from "components/Projects/ProjectsGallery";
+import HomeComponent from "components/Home/Home";
 
 const HomePage = () => (
 	<div className="bg-black bg-opacity-5 h-full">
-		<ProjectsGallery />
+		<HomeComponent />
 	</div>
 );
 export default HomePage;

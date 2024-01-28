@@ -11,7 +11,7 @@ const GlowyNavbar = () => {
 	const bar = useRef(null);
 
 	const isMobile = useMediaQuery("(max-width: 600px)");
-	console.log(isMobile);
+	
 	const toggleNavbar = () => {
 		const tl = gsap.timeline();
 		if (show) {

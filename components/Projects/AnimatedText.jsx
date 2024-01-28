@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useSpring, animated } from "@react-spring/web";
 
 const AnimatedText = () => {
-	const [show, setShow] = useState(false);
-	const [scrollPercent, setScrollPercent] = useState(0);
-
-	const { props, set } = useSpring(() => ({
-		from: { width: "0%" },
-	}));
-
 	const [char, setChar] = useState("Shrey vijayvargiya");
 
 	React.useEffect(() => {
