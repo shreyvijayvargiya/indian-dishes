@@ -5,6 +5,10 @@ import StickyNavbar from "./Navbar";
 import { Typewriter } from "react-simple-typewriter";
 import ScrollingIntro from "./ScrollingIntro";
 import gsap from "gsap";
+import WorkExperience from "components/WorkExperience";
+import ProjectsGallery from "components/Projects/ProjectsGallery";
+import ContactMe from "components/ContactMe";
+import TechStack from "components/TechStack";
 
 const HomeComponent = () => {
 	const styles = useStyles();
@@ -14,7 +18,11 @@ const HomeComponent = () => {
 	React.useEffect(() => {
 		startShuffle();
 
-		gsap.fromTo(".bg-image", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8 });
+		gsap.fromTo(
+			".bg-image",
+			{ scale: 0.7, opacity: 0 },
+			{ scale: 1, opacity: 1, duration: 0.8 }
+		);
 	}, []);
 
 	const startShuffle = () => {
@@ -38,10 +46,7 @@ const HomeComponent = () => {
 	};
 
 	return (
-		<div
-			className="h-full w-full relative"
-			style={{ height: "120vh" }}
-		>
+		<div className="h-full w-full relative" style={{ height: "120vh" }}>
 			<div
 				className="bg-image"
 				style={{
@@ -71,6 +76,12 @@ const HomeComponent = () => {
 			<br />
 			<br />
 			<br />
+			<WorkExperience />
+			<div style={{ zIndex: 1000 }} className="relative">
+				<ProjectsGallery />
+			</div>
+			<TechStack />
+			<ContactMe />
 		</div>
 	);
 };

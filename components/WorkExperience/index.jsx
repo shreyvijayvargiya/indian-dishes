@@ -1,0 +1,167 @@
+import React, { useEffect, useRef } from "react";
+import { makeStyles } from "@material-ui/core";
+import gsap from "gsap";
+import colors from "tailwindcss/colors";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const workExperience = [
+	{
+		name: "Mobile app developer",
+		date: "ChainGPT",
+		content:
+			"My job is to developer web3 non-custodial wallet app for crypto users",
+	},
+	{
+		name: "Freelancer",
+		date: "iHateReading",
+		content:
+			"Developing and Running Full Stack website iHateReading along with Writing Blogs and Making online content",
+	},
+	{
+		name: "Senior Frontend Developer - Koo",
+		date: "August 2021 - September 2022",
+		content:
+			"Lead frontend team of 6 members. My job is to develop and manage Koo website along with dashboard or admin panel for non-technical team to manage koos users.",
+	},
+	{
+		name: "Mobile App Developer - CoinSwitch",
+		date: "March 20 - jan 21",
+		content:
+			"Developed cryptocurrency trading application for millions of users. Successfully improved app(APK) bundle size by 40%. Increased Application runtime speed by 25%. Integration of GraphQL to enhance performance by 50%. Implementation of Graphs, Flatlists, Animations Firebase and Amplitude software tools.",
+	},
+	{
+		name: "Frontend Developer - Cogoport",
+		date: "April 19- Feb 20",
+		content: `Developed React UI library of 72 components (https:// nautical.cogoport.com). Developed the packages like React reusable hooks,React realtime editable Spreadsheet, CMS(Content management system) & UI Library. Worked on Babel, Webpack, Next JS, Redux, Gatsby`,
+	},
+];
+
+const WorkExperience = () => {
+	const containerRef = useRef();
+
+	const handleScroll = () => {
+		const scrollY = window.scrollY;
+
+		const percent =
+			(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) *
+			100;
+	};
+	useEffect(() => {
+		gsap.fromTo(
+			".intro-container",
+			{ scale: 0, opacity: 0 },
+			{ scale: 1, opacity: 1 }
+		);
+
+		gsap.to(".list-container", {
+			x: () => -(containerRef.current.offsetWidth - window.innerWidth) + '%',
+			ease: "none",
+			scrollTrigger: {
+				trigger: ".container",
+				start: "top center",
+				end: "bottom center",
+				scrub: 0.5,
+			},
+		});
+		// window.addEventListener("scroll", handleScroll);
+
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	const styles = useStyles();
+
+	return (
+		<div
+			className="h-screen relative container px-40"
+			style={{ scrollBehavior: "smooth" }}
+			ref={containerRef}
+		>
+			<p className="text-3xl text-gray-400 font-mono text-center">
+				I had an experience in working small size startups to big MNC
+			</p>
+			<div
+				className="list-container top-1/3 left-40 px-40"
+				style={{ width: "200%" }}
+			>
+				<div
+					className={`ml-20 flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-500 py-4`}
+				>
+					{workExperience.map((item) => {
+						return (
+							<div
+								className={`${styles.card} w-80 h-80 rounded-xl`}
+								key={item.date}
+							>
+								<div className={styles.cardFront}>
+									<p className="text-4xl">{item.name}</p>
+								</div>
+								<div className={styles.cardBack}>{item.content}</div>
+							</div>
+						);
+					})}
+				</div>
+			</div>
+		</div>
+	);
+};
+export default WorkExperience;
+
+const useStyles = makeStyles((theme) => ({
+	listContainer: {
+		width: "100%",
+		position: "absolute",
+	},
+	card: {
+		position: "relative",
+		cursor: "pointer",
+		transformStyle: "preserve-3d",
+		color: colors.gray[400],
+		transition: "all 0.2s ease",
+		"&:hover": {
+			"& .cardBlock": {
+				transform: "rotateZ(-4deg) translateY(3px)",
+			},
+		},
+	},
+	cardFront: {
+		borderRadius: 16,
+		padding: 10,
+		border: `1px dotted ${colors.indigo[600]}`,
+		zIndex: 50,
+		transformOrigin: "top left",
+		backfaceVisibility: "hidden",
+		background: `linear-gradient(100deg, ${colors.gray[900]}, ${colors.gray[800]})`,
+		transition: "all 1s ease",
+		transform: "rotateZ(12deg) translateY(-4px)",
+		"&:hover": {
+			transform: "rotateZ(-90deg) rotateY(-10deg)",
+			transformOrigin: "top left",
+		},
+	},
+	cardBack: {
+		position: "absolute",
+		top: 0,
+		left: 0,
+		padding: 20,
+		lineBreak: "auto",
+		width: "100%",
+		height: "100%",
+		zIndex: -10,
+		border: `1px dotted ${colors.pink[600]}`,
+		borderRadius: 16,
+		backfaceVisibility: "hidden",
+		background: `linear-gradient(90deg, ${colors.blackBg}, ${colors.black})`,
+		transformOrigin: "top left",
+		transition: "all 0.2s ease",
+		pointerEvents: "auto",
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+		transform: "rotateZ(4deg) translateY(-3px)",
+	},
+}));

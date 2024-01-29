@@ -13,13 +13,11 @@ gsap.registerPlugin(ScrollTrigger);
 
 const ScrollingIntro = () => {
 	const containerRef = useRef();
-	const maskRef = useRef();
 	const objs = [
 		"i am a Full Stack Developer",
-		"4 Years of experience",
-		"Website Development",
-		"Mobile app development",
-		"Web3 Development",
+		"4 Years of experience in",
+		"Website Development,",
+		"Mobile app development &",
 	];
 	const defaultText = `I am Full Stack Developer with \n 4 Years of experience \n
     in developing websites, \n mobile apps, blockchain wallets, \n smart contracts and backend services`;
@@ -70,13 +68,17 @@ const ScrollingIntro = () => {
 			style={{ scrollBehavior: "smooth" }}
 		>
 			<div>
-				<div
-					ref={containerRef}
-					className="fixed top-1/2 left-1/3 mx-auto border-b-2 border-dotted border-orange-600 overflow-y-hidden"
-				>
-					<span className="text-white text-center mx-auto text-4xl">
+				<div ref={containerRef} className="sticky top-10 left-0 mx-auto w-full">
+					{/* <span className="text-white text-center mx-auto text-4xl">
 						{text}
-					</span>
+					</span> */}
+					{objs.map((item) => {
+						return (
+							<span className="list-item w-full h-10 p-10 hover:bg-orange-600 text-gray-400 hover:text-white text-4xl border-b-2 border-dotted border-orange-600 overflow-y-hidden">
+								{item}
+							</span>
+						);
+					})}
 				</div>
 			</div>
 		</div>

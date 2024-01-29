@@ -29,12 +29,6 @@ const TechStack = () => {
 		});
 	}, []);
 	useEffect(() => {
-		const tl = gsap.timeline();
-		// tl.to(`.image-item-${Number(active) + 1}`, { scale: 1.1, y: "10px" });
-		// tl.to(`.image-item-${Number(active) + 2}`, { scale: 1.2, y: "12px" });
-		// tl.to(`.image-item-${Number(active) - 1}`, { scale: 0.9, y: "0px" });
-		// tl.to(`.image-item-${Number(active) - 2}`, { scale: 0.8, y: "0px" });
-
 		gsap.fromTo(
 			".wave",
 			{
@@ -88,7 +82,7 @@ const TechStack = () => {
 	};
 
 	return (
-		<div className="bg-black bg-opacity-95 h-screen flex flex-col justify-center items-center relative">
+		<div className="bg-black bg-opacity-40 h-screen flex flex-col justify-center items-center relative">
 			<p className="text-gray-400 text-3xl">Tech Stack</p>
 			<br />
 			<div
@@ -151,34 +145,6 @@ const TechStack = () => {
 					Left Animation
 				</Button>
 			</div>
-			<div
-				className="wave"
-				style={{
-					backgroundImage:
-						"url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)",
-					backgroundRepeat: "repeat-x",
-					width: "6400px",
-					position: "absolute",
-					left: "0px",
-					bottom: "0px",
-					right: "0px",
-					height: "200px",
-				}}
-			/>
-			<div
-				className="wave-shadow"
-				style={{
-					backgroundImage:
-						"url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg)",
-					backgroundRepeat: "repeat-x",
-					width: "6400px",
-					position: "absolute",
-					left: "0px",
-					bottom: "0px",
-					right: "0px",
-					height: "220px",
-				}}
-			/>
 		</div>
 	);
 };
