@@ -2,6 +2,9 @@ import { makeStyles } from "@material-ui/core";
 import React, { useState } from "react";
 import colors from "tailwindcss/colors";
 import StickyNavbar from "./Navbar";
+import { Typewriter } from "react-simple-typewriter";
+import ScrollingIntro from "./ScrollingIntro";
+import gsap from "gsap";
 
 const HomeComponent = () => {
 	const styles = useStyles();
@@ -10,6 +13,8 @@ const HomeComponent = () => {
 
 	React.useEffect(() => {
 		startShuffle();
+
+		gsap.fromTo(".bg-image", { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8 });
 	}, []);
 
 	const startShuffle = () => {
@@ -33,29 +38,39 @@ const HomeComponent = () => {
 	};
 
 	return (
-		<div className="h-full w-full bg-black bg-opacity-95">
-			<StickyNavbar />
+		<div
+			className="h-full w-full relative"
+			style={{ height: "120vh" }}
+		>
 			<div
+				className="bg-image"
 				style={{
 					backgroundImage: `url(./home-bg.svg)`,
 					backgroundBlendMode: "color-burn",
 					backgroundPosition: "center",
 					backgroundRepeat: "repeat-x",
-					width: "100vw",
+					width: "100%",
 					height: "100vh",
+					position: "fixed",
+					inset: 0,
+					zIndex: -10,
 				}}
-			>
-				<div className="flex flex-col justify-center h-full w-full items-center">
-					<div>
-						<span className="text-gray-400 mr-10 text-2xl font-mono">
-							this is
-						</span>
-						<span className={styles.nameText} onMouseOver={startShuffle}>
-							{char}
-						</span>
-					</div>
+			/>
+			<StickyNavbar />
+			<div className="flex flex-col justify-center h-screen w-full items-center">
+				<div>
+					<span className="text-gray-400 mr-10 text-2xl font-mono">
+						this is
+					</span>
+					<span className={styles.nameText} onMouseOver={startShuffle}>
+						{char}
+					</span>
 				</div>
 			</div>
+			<ScrollingIntro />
+			<br />
+			<br />
+			<br />
 		</div>
 	);
 };

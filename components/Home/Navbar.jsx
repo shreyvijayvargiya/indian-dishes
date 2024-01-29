@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
@@ -54,35 +54,30 @@ const StickyNavbar = () => {
 		setShow(!show);
 	};
 
-	useLayoutEffect(() => {
-		gsap.fromTo(ref.current, { width: "0%" }, { width: "100%" });
-		gsap.fromTo(
-			bar.current,
-			{
-				opacity: 0,
-			},
-			{ opacity: 1 }
-		);
-	}, []);
+	useEffect(() => {
+		gsap.to(bar.current, { opacity: 1});
+		gsap.to(ref.current, { opacity: 0 })
+	}, [])
+
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
 		tl.fromTo(
 			bar.current,
-			{ rotate: "180deg" },
-			{ rotate: "0deg", duration: 1 }
+			{ rotate: "180deg", y: "-20%" },
+			{ rotate: "0deg", duration: 1, y: "0%" }
 		);
 	};
 
 	return (
 		<div
-			className={`fixed top-10 mx-auto left-0 right-0 rounded-md px-4 bg-black bg-opacity-30 ${styles.navbar}`}
-			style={{
-				boxShadow: show ? "0px 0px 40px rgb(255, 255, 255, 0.3)" : "none",
-			}}
+			className={`fixed top-10 mx-auto left-0 right-0 rounded-md px-4`}
 		>
 			<div
 				ref={ref}
-				className="flex justify-between items-center text-gray-400 w-full p-2"
+				style={{
+					boxShadow: show ? "0px 0px 40px rgb(255, 255, 255, 0.3)" : "none",
+				}}
+				className={`flex justify-between items-center text-gray-400 p-2 bg-black bg-opacity-30 rounded-md ${styles.navbar}`}
 			>
 				<p className="text hover:text-gray-200">Home</p>
 				<p className="text hover:text-gray-200">Work Experience</p>
@@ -116,9 +111,10 @@ export default StickyNavbar;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
-		border: (props) => props.show && `2px dotted ${colors.gray[500]}`,
+		border: (props) => props.show && `1px solid ${colors.gray[600]}`,
 		[theme.breakpoints.between("sm", "xl")]: {
-			width: "26%",
+			width: "26% !important",
+			margin: "auto",
 			background: (props) => !props.show && "none",
 		},
 		[theme.breakpoints.between("xs", "sm")]: {
