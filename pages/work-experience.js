@@ -1,4 +1,5 @@
-const { default: WorkExperience } = require("components/WorkExperience.jsx");
+import WorkExperience from "components/WorkExperience";
+
 
 const WorkExperiencePage = () => <WorkExperience />;
 export default WorkExperiencePage;

@@ -1,8 +1,9 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import Wrapper from "./Wrapper";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -39,83 +40,67 @@ const workExperience = [
 ];
 
 const WorkExperience = () => {
-	const containerRef = useRef();
-
-	const handleScroll = () => {
-		const scrollY = window.scrollY;
-
-		const percent =
-			(scrollY / (document.documentElement.scrollHeight - window.innerHeight)) *
-			100;
-	};
 	useEffect(() => {
-		gsap.fromTo(
-			".intro-container",
-			{ scale: 0, opacity: 0 },
-			{ scale: 1, opacity: 1 }
-		);
-
-		gsap.to(".list-container", {
-			x: () => -(containerRef.current.offsetWidth - window.innerWidth) + '%',
+		const sections = gsap.utils.toArray(".list-container .section");
+		gsap.to(sections, {
+			xPercent: -100,
 			ease: "none",
 			scrollTrigger: {
-				trigger: ".container",
-				start: "top center",
-				end: "bottom center",
-				scrub: 0.5,
+				trigger: ".list-container",
+				start: "top top",
+				end: "bottom bottom",
+				pin: true,
+				scrub: 1,
+				markers: true,
 			},
 		});
-		// window.addEventListener("scroll", handleScroll);
-
-		return () => {
-			window.removeEventListener("scroll", handleScroll);
-		};
 	}, []);
 
 	const styles = useStyles();
 
 	return (
-		<div
-			className="h-screen relative container px-40"
-			style={{ scrollBehavior: "smooth" }}
-			ref={containerRef}
-		>
-			<p className="text-3xl text-gray-400 font-mono text-center">
-				I had an experience in working small size startups to big MNC
-			</p>
+		<Wrapper>
 			<div
-				className="list-container top-1/3 left-40 px-40"
-				style={{ width: "200%" }}
+				className="work-experience-container mx-auto overflow-x-hidden relative"
+				style={{ scrollBehavior: "smooth" }}
 			>
-				<div
-					className={`ml-20 flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-500 py-4`}
-				>
-					{workExperience.map((item) => {
-						return (
-							<div
-								className={`${styles.card} w-80 h-80 rounded-xl`}
-								key={item.date}
-							>
-								<div className={styles.cardFront}>
-									<p className="text-4xl">{item.name}</p>
-								</div>
-								<div className={styles.cardBack}>{item.content}</div>
-							</div>
-						);
-					})}
+				{/* <span className="text-gray-400 mx-auto w-full flex justify-center items-center font-mono">
+					I had an experience in working small size startups to big MNC
+				</span> */}
+				<div className="list-container">
+					<div
+						className={`mx-auto flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-500 py-4`}
+					>
+						{workExperience.map((item, index) => {
+							return (
+								<section
+									key={item.date}
+									className={`${styles.card} h-80 rounded-xl card-${index} section`}
+								>
+									<div className={styles.cardFront}>
+										<p className="text-4xl">{item.name}</p>
+									</div>
+									{/* <div className={styles.cardBack}>{item.content}</div> */}
+								</section>
+							);
+						})}
+					</div>
 				</div>
 			</div>
-		</div>
+		</Wrapper>
 	);
 };
 export default WorkExperience;
 
 const useStyles = makeStyles((theme) => ({
 	listContainer: {
-		width: "100%",
-		position: "absolute",
+		width: "300vw",
+		height: "100vh",
+		position: "relative",
+		overflowX: "hidden",
 	},
 	card: {
+		width: "80vw",
 		position: "relative",
 		cursor: "pointer",
 		transformStyle: "preserve-3d",
@@ -132,11 +117,12 @@ const useStyles = makeStyles((theme) => ({
 		padding: 10,
 		border: `1px dotted ${colors.indigo[600]}`,
 		zIndex: 50,
+		width: "300px",
 		transformOrigin: "top left",
 		backfaceVisibility: "hidden",
 		background: `linear-gradient(100deg, ${colors.gray[900]}, ${colors.gray[800]})`,
 		transition: "all 1s ease",
-		transform: "rotateZ(12deg) translateY(-4px)",
+		transform: "rotateZ(6deg) translateY(-4px)",
 		"&:hover": {
 			transform: "rotateZ(-90deg) rotateY(-10deg)",
 			transformOrigin: "top left",

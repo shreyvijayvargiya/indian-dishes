@@ -25,12 +25,6 @@ const ScrollingIntro = () => {
 
 	const [scrollPosition, setScrollPosition] = useState(0);
 
-	useEffect(() => {
-		// gsap.to(containerRef.current, {
-		// 	x: "100%",
-		// 	opacity: 0,
-		// });
-	}, []);
 
 	const handleScroll = () => {
 		const scrollY = window.scrollY; // Scroll position in pixels
@@ -64,11 +58,11 @@ const ScrollingIntro = () => {
 
 	return (
 		<div
-			className="container h-screen relative mx-auto flex justify-center items-center"
+			className="scrolling-container h-screen relative mx-auto flex justify-center items-center"
 			style={{ scrollBehavior: "smooth" }}
 		>
 			<div>
-				<div ref={containerRef} className="sticky top-10 left-0 mx-auto w-full">
+				<div ref={containerRef} className="mx-auto w-full">
 					{/* <span className="text-white text-center mx-auto text-4xl">
 						{text}
 					</span> */}
