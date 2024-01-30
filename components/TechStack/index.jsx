@@ -82,7 +82,7 @@ const TechStack = () => {
 	};
 
 	return (
-		<div className="bg-black bg-opacity-20 h-screen flex flex-col justify-center items-center relative">
+		<div className="bg-black bg-opacity-95 h-screen flex flex-col justify-center items-center relative">
 			<p className="text-gray-400 text-3xl">Tech Stack</p>
 			<br />
 			<div

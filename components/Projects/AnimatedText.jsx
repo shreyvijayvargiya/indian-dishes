@@ -28,27 +28,12 @@ const AnimatedText = () => {
 	};
 
 	return (
-		<div className="bg-black bg-opacity-95 text-gray-200 flex flex-col justify-center items-center h-screen">
+		<div className="bg-black bg-opacity-5 w-full text-gray-200 flex flex-col justify-center items-center h-screen">
 			<div
-				className="p-4 md:text-7xl font-medium border-2 border-dashed border-gray-800 bg-gray-900 text-white rounded-md"
+				className="p-4 md:text-7xl font-medium border-2 border-dashed border-gray-800 text-white rounded-md"
 				onMouseEnter={startShuffle}
 			>
 				{char}
-			</div>
-			<span className="text-center p-2 rounded-md bg-gray-800 text-white my-2 bg-opacity-10 border border-gray-700">
-				Hover the card
-			</span>
-			<div className="fixed bottom-10 w-40 mx-auto text-center p-2 rounded-md bg-gray-800 border border-gray-700">
-				<p>
-					Made by{" "}
-					<a
-						href="https://iamshrey.me"
-						target="_blank"
-						className="underline text-indigo-400"
-					>
-						Shrey
-					</a>
-				</p>
 			</div>
 		</div>
 	);

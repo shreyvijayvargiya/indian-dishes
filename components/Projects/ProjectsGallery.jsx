@@ -83,7 +83,7 @@ const ProjectsGallery = () => {
 	const [active, setActive] = useState();
 
 	return (
-		<div className="h-screen bg-opacity-20 bg-black w-full py-10">
+		<div className="h-screen bg-opacity-95 bg-black w-full py-10">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"

@@ -51,7 +51,7 @@ const WorkExperience = () => {
 				end: "bottom bottom",
 				pin: true,
 				scrub: 1,
-				markers: true,
+				markers: false,
 			},
 		});
 	}, []);

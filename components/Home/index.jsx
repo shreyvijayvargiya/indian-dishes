@@ -14,6 +14,7 @@ const Home = () => {
 	return (
 		<div
 			className="h-screen w-full overflow-hidden flex flex-col justify-center items-center relative"
+			
 			onMouseMoveCapture={(e) => {
 				setToggle(false);
 				setMousePosition({ x: e.clientX, y: e.clientY });
@@ -89,6 +90,7 @@ const Home = () => {
 					/>
 				)}
 			</div>
+			
 		</div>
 	);
 };

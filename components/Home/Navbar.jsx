@@ -3,7 +3,7 @@ import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
 import gsap from "gsap";
-import { useMediaQuery, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 
 const StickyNavbar = () => {
 	const [show, setShow] = useState(true);
@@ -21,7 +21,7 @@ const StickyNavbar = () => {
 					scale: 0,
 					y: "-20%",
 				},
-				{ opacity: 0, scale: 1, y: "0%", duration: 1 }
+				{ opacity: 0, scale: 0, y: "0%", duration: 0.5 }
 			);
 			tl.fromTo(
 				bar.current,
@@ -55,9 +55,9 @@ const StickyNavbar = () => {
 	};
 
 	useEffect(() => {
-		gsap.to(bar.current, { opacity: 1});
-		gsap.to(ref.current, { opacity: 0 })
-	}, [])
+		gsap.to(bar.current, { opacity: show ? 1 : 0 });
+		gsap.to(ref.current, { opacity: show ? 0 : 1 });
+	}, []);
 
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
@@ -77,7 +77,7 @@ const StickyNavbar = () => {
 				style={{
 					boxShadow: show ? "0px 0px 40px rgb(255, 255, 255, 0.3)" : "none",
 				}}
-				className={`flex justify-between items-center text-gray-400 p-2 bg-black bg-opacity-30 rounded-md ${styles.navbar}`}
+				className={`flex justify-between items-center text-gray-400 px-8 py-3 bg-black bg-opacity-40 rounded-full ${styles.navbar}`}
 			>
 				<p className="text hover:text-gray-200">Home</p>
 				<p className="text hover:text-gray-200">Work Experience</p>
