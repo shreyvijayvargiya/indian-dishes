@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "tailwindcss/tailwind.css";
 import "../styles.css";
 import "../nprogress.css";
+import Body from "modules/Body";
 
 function MyApp({ Component, pageProps }) {
 	const router = useRouter();
@@ -33,7 +34,9 @@ function MyApp({ Component, pageProps }) {
 			<ThemeProvider theme={theme}>
 				<MantineProvider withGlobalStyles withNormalizeCSS>
 					<ParallaxProvider>
-						<Component {...pageProps} />
+						<Body>
+							<Component {...pageProps} />
+						</Body>
 					</ParallaxProvider>
 				</MantineProvider>
 			</ThemeProvider>

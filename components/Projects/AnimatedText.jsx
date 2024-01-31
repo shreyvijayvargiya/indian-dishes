@@ -72,11 +72,11 @@ const AnimatedText = () => {
 
 	return (
 		<div
-			className="w-full h-screen relative text-container bg-black bg-opacity-95 place-content-center flex flex-col justify-center items-center"
+			className="w-full py-20 relative text-containerplace-content-center flex flex-col justify-center items-center"
 			onMouseMoveCapture={handleMouseMove}
 		>
 			<div
-				className={`p-4 py-0 text-gray-400 w-auto border-t-2 border-b-2 text-center border-dashed border-gray-700 ${styles.char}`}
+				className={`p-4 py-0 text-gray-400 w-auto border-t-2 border-b-2 text-center border-dashed border-gray-700 ${styles.char} relative`}
 			>
 				<GridLines
 					lineColor={colors.gray[400]}
@@ -121,6 +121,5 @@ const useStyles = makeStyles((theme) => ({
 		fontStyle: "inline",
 		fontSize: "10em",
 		color: (props) => props.colorKeys[props.index],
-		// boxShadow: "0px 0px 40px rgb(250, 250, 250, 0.2)",
 	},
 }));

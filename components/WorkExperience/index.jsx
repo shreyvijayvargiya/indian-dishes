@@ -62,7 +62,7 @@ const WorkExperience = () => {
 	return (
 		<Wrapper>
 			<div
-				className="work-experience-container mx-auto overflow-x-hidden relative"
+				className="work-experience-container mx-auto overflow-x-hidden relative w-full h-full"
 				style={{ scrollBehavior: "smooth" }}
 			>
 				<div className="list-container">

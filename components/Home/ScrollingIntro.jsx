@@ -65,21 +65,20 @@ const ScrollingIntro = () => {
 		// window.addEventListener("scroll", handleScroll);
 
 		const tl = gsap.timeline({
-			scrollTrigger: {
-				trigger: ".sections-container",
-				start: "top 50px", // Trigger animation when the top of the element is 100px from the top of the viewport
-				end: "+=200", // Trigger animation when the top of the element is 200 pixels from its natural position
-				scrub: true, // Smoothly animates the property changes during scroll
-			},
+			// scrollTrigger: {
+			// 	trigger: ".sections-container",
+			// 	start: "top 50px", // Trigger animation when the top of the element is 100px from the top of the viewport
+			// 	end: "+=200", // Trigger animation when the top of the element is 200 pixels from its natural position
+			// 	scrub: true, // Smoothly animates the property changes during scroll
+			// },
 		});
 		tl.fromTo(
 			".sections-container",
-			{ xPercent: -200, opacity: 1 },
+			{ yPercent: 200, opacity: 1 },
 			{
-				xPercent: 0,
+				yPercent: 0,
 				opacity: 1,
-				duration: 2,
-				yoyo: true,
+				duration: 1,
 			}
 		);
 		objs.forEach((item, index) => {
@@ -87,13 +86,12 @@ const ScrollingIntro = () => {
 				`.section-${index}`,
 				{
 					opacity: 0,
-					yPercent: -80 + index * 10,
+					yPercent: 80 + index * 10,
 				},
 				{
 					opacity: 1,
 					yPercent: 0,
 					stagger: 0.5,
-					yoyo: true,
 				}
 			);
 		});
@@ -115,20 +113,18 @@ const ScrollingIntro = () => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<div className="w-full px-40 flex justify-around items-center gap-4 sections-container bg-black p-20 bg-opacity-20 border-dotted border-t border-gray-600 h-screen relative">
-				<div className="text-7xl text-center absolute top-0 bottom-0 left-0 right-0 place-content-center text-gray-400">
-					who am I
-				</div>
+			<AnimatedText />
+			<div className="w-full px-40 flex justify-around items-center gap-4 sections-container p-20 bg-opacity-20 h-96 relative">
 				{objs.map((item, index = 0) => {
 					return (
 						<section
 							key={item.id}
 							onMouseOver={() => setActive(item)}
 							onMouseOut={() => setActive(null)}
-							className={`section-${index} px-10 text-gray-200 my-10 border border-gray-700 rounded-xl bg-black bg-opacity-20 ${styles.section}`}
+							className={`section-${index} px-10 text-gray-200 my-10 border border-gray-700 rounded-xl bg-black bg-opacity-10 ${styles.section}`}
 						>
 							<p
-								className={`item-${index} h-96 hover:text-white text-xl text-center place-content-center flex flex-col justify-center font-bold`}
+								className={`item-${index} h-full hover:text-white text-xl text-center place-content-center flex flex-col justify-center font-bold`}
 								style={{ fontFamily: "Leckerli One" }}
 							>
 								{item.name}
@@ -165,9 +161,9 @@ export default ScrollingIntro;
 
 const useStyles = makeStyles((theme) => ({
 	section: {
-		width: "300px",
-		height: "300px",
-		boxShadow: "0px 0px 50px rgb(250, 250, 250, 0.2)",
+		width: "200px",
+		height: "200px",
+		boxShadow: "0px 0px 10px rgb(250, 250, 250, 0.1)",
 		"&>img": {
 			scale: 0,
 			zIndex: 9,
@@ -178,16 +174,14 @@ const useStyles = makeStyles((theme) => ({
 			zIndex: 10,
 		},
 		"&:hover": {
-			width: "500px",
-			height: "500px",
+			width: "300px",
+			height: "300px",
 			transition: "all 1s ease",
 			"&>img": {
 				scale: 0.9,
-				transition: "all 1s ease",
 			},
 			"&>p": {
 				opacity: 0.1,
-				transition: "all 1s ease",
 			},
 		},
 	},

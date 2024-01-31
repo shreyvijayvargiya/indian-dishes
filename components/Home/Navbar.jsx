@@ -4,6 +4,7 @@ import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
 import gsap from "gsap";
 import { makeStyles } from "@material-ui/core";
+import router from "next/router";
 
 const StickyNavbar = () => {
 	const [show, setShow] = useState(true);
@@ -28,7 +29,7 @@ const StickyNavbar = () => {
 				{ opacity: 0, rotate: "-360deg", y: "-100%" },
 				{ opacity: 1, rotate: "0deg", y: "0%" }
 			);
-			tl.fromTo(".text", { visibility: "visible" }, { visibility: "hidden" });
+			tl.fromTo(".button-link", { visibility: "visible" }, { visibility: "hidden" });
 		} else {
 			tl.fromTo(
 				bar.current,
@@ -49,14 +50,14 @@ const StickyNavbar = () => {
 					duration: 1,
 				}
 			);
-			tl.fromTo(".text", { visibility: "hidden" }, { visibility: "visible" });
+			tl.fromTo(".button-link", { visibility: "hidden" }, { visibility: "visible" });
 		}
 		setShow(!show);
 	};
 
 	useEffect(() => {
-		gsap.to(bar.current, { opacity: show ? 1 : 0 });
-		gsap.to(ref.current, { opacity: show ? 0 : 1 });
+		gsap.to(bar.current, { opacity: show ? 0 : 1 });
+		gsap.to(ref.current, { opacity: show ? 1 : 0 });
 	}, []);
 
 	const bounceTheBar = () => {
@@ -69,37 +70,46 @@ const StickyNavbar = () => {
 	};
 
 	return (
-		<div
-			className={`bottom top-10 mx-auto left-0 right-0 rounded-md px-4`}
-		>
+		<div className={`fixed bottom-10 mx-auto w-full rounded-md px-4`}>
 			<div
 				ref={ref}
-				style={{
-					boxShadow: show ? "0px 0px 40px rgb(255, 255, 255, 0.3)" : "none",
-				}}
-				className={`flex justify-between items-center text-gray-400 px-8 py-3 bg-black bg-opacity-40 rounded-full ${styles.navbar}`}
+				className={`flex justify-between items-center px-8 py-3 bg-black bg-opacity-20 rounded-full ${styles.navbar}`}
 			>
-				<p className="text hover:text-gray-200">Home</p>
-				<p className="text hover:text-gray-200">Work Experience</p>
-				<p
-					className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer"
-					onClick={toggleNavbar}
+				<button
+					className="button-link hover:text-white hover:underline text-pink-600 hover:bg-gray-900 text-md"
+					onClick={() => router.push("/introduction")}
 				>
-					<IoClose size={24} color={colors.gray[400]} />
-				</p>
-				<p className="text hover:text-gray-200">Projects</p>
-				<p className="text hover:text-gray-200">Contact Me</p>
+					it's me
+				</button>
+				<button
+					className="button-link hover:text-gray-200 text-indigo-600 text-md"
+					onClick={() => router.push("/work-experience")}
+				>
+					work experience
+				</button>
+				<span className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
+					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
+				</span>
+				<button
+					className="button-link hover:text-gray-200 text-orange-600 text-md"
+					onClick={() => console.log("Done")}
+				>
+					playground
+				</button>
+				<button className="button-link hover:text-gray-200 text-green-600 text-md">
+					say hi
+				</button>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-11 ml-8 ${
+				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 bottom-10 ml-8 ${
 					show ? "none" : "block"
 				}`}
 				onMouseEnter={bounceTheBar}
-				onClick={toggleNavbar}
 			>
 				<div
 					className="border border-gray-500 rounded-full p-2 hover:border-gray-400"
 					ref={bar}
+					onClick={toggleNavbar}
 				>
 					<FaBars size={24} color={colors.gray[400]} />
 				</div>
@@ -112,7 +122,11 @@ export default StickyNavbar;
 const useStyles = makeStyles((theme) => ({
 	navbar: {
 		border: (props) => props.show && `1px solid ${colors.gray[600]}`,
-		[theme.breakpoints.between("sm", "xl")]: {
+		zIndex: 1000,
+		"& :hover": {
+			boxShadow: "0px 0px 50px rgb(255, 255, 255, 0.3)",
+		},
+		[theme.breakpoints.up("sm")]: {
 			width: "26% !important",
 			margin: "auto",
 			background: (props) => !props.show && "none",

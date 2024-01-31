@@ -12,34 +12,22 @@ import AnimatedText from "components/Projects/AnimatedText";
 import { useParallax } from "react-scroll-parallax";
 import gsap from "gsap";
 
+const pages = [];
 const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	// const bgImage = useParallax({ tabIndex: containerRef.current, speed: 10 });
-
-	const { ref } = useParallax({
-		targetElement: containerRef.current,
-		speed: 0,
-	});
-
-
+	// const [pageStates, setPageStates] = useState()
 
 	return (
 		<div
-			className="h-full w-full relative home-container"
+			className="w-full relative home-container h-screen"
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
-			<StickyNavbar />
-			<div
-				className="flex flex-col justify-center w-full items-center animated-text"
-				ref={ref}
-			>
-				<AnimatedText />
-			</div>
-			{/* <ScrollingIntro />
-			<div style={{ zIndex: 10 }} className="relative">
+			
+			<ScrollingIntro />
+			{/* <div style={{ zIndex: 10 }} className="relative">
 				<WorkExperience />
 			</div>
 			<div style={{ zIndex: 10 }} className="relative">
