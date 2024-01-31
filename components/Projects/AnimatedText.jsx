@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import React, { useEffect, useRef, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
@@ -8,6 +8,7 @@ const AnimatedText = () => {
 	const [char, setChar] = useState("this is Shrey");
 	const colorKeys = Object.keys(colors);
 	const [index, setIndex] = useState(0);
+	const characterRef = useRef();
 
 	const startColorInterval = () => {
 		return setInterval(() => {
@@ -60,7 +61,7 @@ const AnimatedText = () => {
 		const centerY = window.innerHeight / 2;
 		const rotationX = ((clientY - centerY) / centerY) * 60; // Adjust the factor for the rotation speed
 		const rotationY = ((centerX - clientX) / centerX) * 60;
-		gsap.to(".char", {
+		gsap.to(characterRef.current, {
 			rotationX,
 			rotationY,
 			transition: "all 0.5s ease",
@@ -72,42 +73,44 @@ const AnimatedText = () => {
 
 	return (
 		<div
-			className="w-full py-20 relative text-containerplace-content-center flex flex-col justify-center items-center"
+			className="w-full relative text-container flex flex-col justify-center items-center h-screen"
 			onMouseMoveCapture={handleMouseMove}
 		>
 			<div
-				className={`p-4 py-0 text-gray-400 w-auto border-t-2 border-b-2 text-center border-dashed border-gray-700 ${styles.char} relative`}
+				className={` p-4 py-0 text-gray-400 w-auto border-t-2 border-b-2 text-center border-dashed border-gray-700 relative`}
 			>
 				<GridLines
 					lineColor={colors.gray[400]}
 					className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
 				/>
 				<p
-					className="char"
+					ref={characterRef}
 					style={{
+						transformStyle: "preserve-3d",
+						fontFamily: "phosphate",
+						fontStyle: "inline",
+						fontSize: "6em",
 						background: "transparent",
 						textShadow: "10px 10px 10px rgb(20, 250, 250, 0.2)",
+						color: (props) => props.colorKeys[props.index],
 					}}
 				>
 					{char}
 				</p>
-				{mousePosition.x && mousePosition.y && (
-					<div
-						className="box-2 p-2"
-						id="box-2"
-						style={{
-							position: "fixed",
-							top: mousePosition.y - 500,
-							left: mousePosition.x - 500,
-							transition: "all 0.5s ease-in-out",
-						}}
-					>
-						<img
-							src={"./mouse-1.svg"}
-							className="w-20 h-20"
-						/>
-					</div>
-				)}
+			{mousePosition.x && mousePosition.y && (
+				<div
+					className="box-2 p-2"
+					id="box-2"
+					style={{
+						position: "fixed",
+						top: mousePosition.y - 400,
+						left: mousePosition.x - 500,
+						transition: "all 0.5s ease-in-out",
+					}}
+				>
+					<img src={"./mouse-1.svg"} className="w-5 h-5" />
+				</div>
+			)}
 			</div>
 		</div>
 	);
@@ -115,11 +118,13 @@ const AnimatedText = () => {
 export default AnimatedText;
 
 const useStyles = makeStyles((theme) => ({
-	char: {
+	character: {
 		transformStyle: "preserve-3d",
 		fontFamily: "phosphate",
 		fontStyle: "inline",
-		fontSize: "10em",
+		fontSize: "8em",
+		background: "transparent",
+		textShadow: "10px 10px 10px rgb(20, 250, 250, 0.2)",
 		color: (props) => props.colorKeys[props.index],
 	},
 }));

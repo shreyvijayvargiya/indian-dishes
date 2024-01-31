@@ -25,8 +25,8 @@ const HomeComponent = () => {
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
-			
-			<ScrollingIntro />
+			<AnimatedText />
+			{/* <ScrollingIntro /> */}
 			{/* <div style={{ zIndex: 10 }} className="relative">
 				<WorkExperience />
 			</div>

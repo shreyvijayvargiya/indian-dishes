@@ -104,7 +104,7 @@ const ScrollingIntro = () => {
 	const [active, setActive] = useState(null);
 	return (
 		<div
-			className="scrolling-container relative mx-auto h-full overflow-x-hidden"
+			className="scrolling-container relative mx-auto overflow-x-hidden"
 			style={{
 				scrollBehavior: "smooth",
 			}}
@@ -113,8 +113,7 @@ const ScrollingIntro = () => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<AnimatedText />
-			<div className="w-full px-40 flex justify-around items-center gap-4 sections-container p-20 bg-opacity-20 h-96 relative">
+			<div className="w-full px-40 flex justify-around items-center gap-4 sections-container p-20 bg-opacity-20 h-96 relative h-screen place-content-center">
 				{objs.map((item, index = 0) => {
 					return (
 						<section

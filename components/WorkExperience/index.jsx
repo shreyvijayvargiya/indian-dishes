@@ -43,66 +43,66 @@ const WorkExperience = () => {
 	useEffect(() => {
 		const sections = gsap.utils.toArray(".list-container .section");
 		gsap.to(sections, {
-			xPercent: -100,
+			x: "-100vh",
 			ease: "none",
 			yoyo: true,
 			scrollTrigger: {
-				trigger: ".list-container",
+				trigger: ".work-experience-container",
 				start: "top top",
-				end: "bottom bottom",
-				pin: true,
+				end: () => `${(sections.length - 1) * 100}vh`,
 				scrub: 1,
-				markers: false,
+				pin: true,
+				markers: true,
 			},
+		});
+		sections.forEach((section, index) => {
+			gsap.from(section, {
+				xPercent: index * 10 + 100,
+				yPercent: 50,
+				scale: 0,
+			});
 		});
 	}, []);
 
 	const styles = useStyles();
 
 	return (
-		<Wrapper>
-			<div
-				className="work-experience-container mx-auto overflow-x-hidden relative w-full h-full"
-				style={{ scrollBehavior: "smooth" }}
-			>
-				<div className="list-container">
-					<div
-						className={`mx-auto flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-700 py-4`}
-					>
-						{workExperience.map((item, index) => {
-							return (
-								<section
-									key={item.date}
-									className={`${styles.card} h-80 rounded-xl card-${index} section`}
+		<div className="work-experience-container mx-auto overflow-x-hidden relative w-full bg-black bg-opacity-95">
+			<div className="list-container">
+				<div
+					className={`${styles.listContainer} mx-auto flex justify-around items-center py-4`}
+				>
+					{workExperience.map((item, index) => {
+						return (
+							<section key={item.date} className={`${styles.section} section `}>
+								<div
+									className={`${styles.card} border-t-2 border-dotted border-gray-700 rounded-xl card-${index}`}
 								>
 									<div className={styles.cardFront}>
-										<p className="text-4xl">{item.name}</p>
+										<p className="text-2xl">{item.name}</p>
 									</div>
 									<div className={styles.cardBack}>{item.content}</div>
-								</section>
-							);
-						})}
-					</div>
+								</div>
+							</section>
+						);
+					})}
 				</div>
 			</div>
-		</Wrapper>
+		</div>
 	);
 };
 export default WorkExperience;
 
 const useStyles = makeStyles((theme) => ({
 	listContainer: {
-		width: "300vw",
+		width: "400vh",
 		height: "100vh",
-		position: "sticky",
-		overflowX: "hidden",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
+	},
+	section: {
+		width: "100vh",
 	},
 	card: {
-		width: "384px",
+		width: "400px",
 		position: "relative",
 		cursor: "pointer",
 		transformStyle: "preserve-3d",
@@ -117,16 +117,16 @@ const useStyles = makeStyles((theme) => ({
 	cardFront: {
 		borderRadius: 16,
 		padding: 10,
-		border: `1px dotted ${colors.indigo[600]}`,
+		border: `1px dotted ${colors.gray[600]}`,
 		zIndex: 50,
-		width: "100%",
+		width: "98%",
 		transformOrigin: "top left",
 		backfaceVisibility: "hidden",
-		background: `linear-gradient(100deg, ${colors.gray[900]}, ${colors.gray[800]})`,
+		background: `linear-gradient(50deg, ${colors.gray[900]}, ${colors.gray[800]})`,
 		transition: "all 1s ease",
-		transform: "rotateZ(6deg) translateY(-4px)",
+		transform: "rotateZ(0deg) translateY(-4px)",
 		"&:hover": {
-			transform: "rotateZ(-90deg) rotateY(-10deg)",
+			transform: "rotateZ(-10deg) rotateY(-10deg)",
 			transformOrigin: "top left",
 		},
 	},
@@ -141,7 +141,7 @@ const useStyles = makeStyles((theme) => ({
 		width: "100%",
 		height: "100%",
 		zIndex: -10,
-		border: `1px dotted ${colors.pink[600]}`,
+		border: `1px dotted ${colors.gray[600]}`,
 		borderRadius: 16,
 		backfaceVisibility: "hidden",
 		background: `linear-gradient(90deg, ${colors.blackBg}, ${colors.black})`,
@@ -152,6 +152,6 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "column",
-		transform: "rotateZ(4deg) translateY(-3px)",
+		transform: "rotateZ(0deg) translateY(-3px)",
 	},
 }));

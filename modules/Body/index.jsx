@@ -2,7 +2,7 @@ import StickyNavbar from "components/Home/Navbar";
 
 const Body = ({ children }) => {
 	return (
-		<div className="w-full h-full bg-black bg-opacity-95">
+		<div className="w-full h-full">
 			{children}
 			<StickyNavbar />
 		</div>
