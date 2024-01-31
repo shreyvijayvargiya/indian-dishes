@@ -1,11 +1,11 @@
 import gsap from "gsap";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const WorkExperience = () => {
-	useLayoutEffect(() => {
+	useEffect(() => {
 		gsap.fromTo(
 			".text",
 			{
@@ -16,7 +16,7 @@ const WorkExperience = () => {
 				scrollTrigger: {
 					trigger: ".root",
 					start: "top center",
-          end: "end end",
+					end: "end end",
 					markers: true,
 					toggleActions: "restart pause reverse pause",
 				},
@@ -24,9 +24,7 @@ const WorkExperience = () => {
 		);
 	}, []);
 
-	const handleScrollAnimation = () => {
-    
-  };
+	const handleScrollAnimation = () => {};
 
 	return (
 		<div className="root bg-black h-full w-full bg-opacity-95 p-10 text-gray-400 flex flex-col justify-center items-center">

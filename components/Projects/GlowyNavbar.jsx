@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
@@ -56,7 +56,7 @@ const GlowyNavbar = () => {
 		setShow(!show);
 	};
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		gsap.fromTo(ref.current, { width: "0%" }, { width: "40%" });
 		gsap.fromTo(
 			bar.current,
@@ -72,7 +72,7 @@ const GlowyNavbar = () => {
 	};
 
 	return (
-		<div className="bg-black bg-opacity-95 h-screen w-full flex flex-col justify-center items-center">
+		<div className="bg-black bg-opacity-95 h-screen w-full flex flex-col justify-center items-center z-100">
 			<div className="gap-4 lg:w-2/5 xl:w-2/5 md:w-3/5 sm:w-full xxs:w-full xs:w-full mx-auto h-auto cursor-pointer">
 				<div
 					ref={ref}

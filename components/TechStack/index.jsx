@@ -17,7 +17,7 @@ const TechStack = () => {
 
 	const [active, setActive] = useState(0);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const tl = gsap.timeline();
 		images.map((item, index) => {
 			tl.fromTo(

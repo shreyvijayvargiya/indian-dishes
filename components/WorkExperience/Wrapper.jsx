@@ -7,7 +7,7 @@ const Wrapper = ({ children }) => {
 		gsap.from('.wrapper-container', { opacity: 1, scale: 0.2})
 	}, [])
 	return (
-		<div className="w-full bg-black bg-opacity-90 h-screen z-100 wrapper-container sticky top-0 bottom-0 right-0 left-0">
+		<div className="w-full bg-black bg-opacity-90 wrapper-container h-full">
 			{/* <div
 				className="bg-image"
 				style={{

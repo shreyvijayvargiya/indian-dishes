@@ -61,6 +61,7 @@
 		"next-cookies": "^2.0.3",
 		"next-images": "^1.7.0",
 		"nprogress": "^0.2.0",
+		"particle.js": "^1.0.7",
 		"path": "^0.12.7",
 		"postcss": "^7",
 		"postcss-cli": "^8.3.1",

@@ -70,7 +70,7 @@ const StickyNavbar = () => {
 
 	return (
 		<div
-			className={`fixed top-10 mx-auto left-0 right-0 rounded-md px-4 z-100`}
+			className={`bottom top-10 mx-auto left-0 right-0 rounded-md px-4`}
 		>
 			<div
 				ref={ref}

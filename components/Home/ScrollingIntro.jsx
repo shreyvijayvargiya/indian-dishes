@@ -8,11 +8,39 @@ import {
 	animateScroll as scroll,
 	scrollSpy,
 } from "react-scroll";
+import { useParallax, Parallax } from "react-scroll-parallax";
 import AnimatedText from "components/Projects/AnimatedText";
 import { Button } from "@mantine/core";
 import { makeStyles } from "@material-ui/core";
 
 gsap.registerPlugin(ScrollTrigger);
+const objs = [
+	{
+		id: 1,
+		name: "i am a Software Developer",
+		image: "./intro-images/developer.svg",
+	},
+	{
+		id: 2,
+		name: "with 4 Years of experience",
+		image: "./intro-images/wavy-buddies.svg",
+	},
+	{
+		id: 3,
+		name: "in Website development,",
+		image: "./intro-images/happy-bunch-desk.svg",
+	},
+	{
+		id: 4,
+		name: "Mobile app development",
+		image: "./intro-images/bro.svg",
+	},
+	{
+		id: 5,
+		name: "& Backend development",
+		image: "./intro-images/work-space.jpeg",
+	},
+];
 
 const ScrollingIntro = () => {
 	const containerRef = useRef();
@@ -21,37 +49,8 @@ const ScrollingIntro = () => {
 		x: 0,
 		y: 0,
 	});
-
-	const objs = [
-		{
-			id: 1,
-			name: "i am a Software Developer",
-			image: "./intro-images/developer.svg",
-		},
-		{
-			id: 2,
-			name: "with 4 Years of experience",
-			image: "./intro-images/wavy-buddies.svg",
-		},
-		{
-			id: 3,
-			name: "in Website development,",
-			image: "./intro-images/happy-bunch-desk.svg",
-		},
-		{
-			id: 4,
-			name: "Mobile app development",
-			image: "./intro-images/bro.svg",
-		},
-		{
-			id: 5,
-			name: "& Backend development",
-			image: "./intro-images/work-space.jpeg",
-		},
-	];
-	const styles = useStyles();
-
 	const [scrollPosition, setScrollPosition] = useState(0);
+	const styles = useStyles();
 
 	const handleScroll = () => {
 		const scrollY = window.scrollY; // Scroll position in pixels
@@ -67,11 +66,10 @@ const ScrollingIntro = () => {
 
 		const tl = gsap.timeline({
 			scrollTrigger: {
-				trigger: ".scrolling-container",
-				start: "top top", // Trigger animation when the top of the element is 100px from the top of the viewport
+				trigger: ".sections-container",
+				start: "top 50px", // Trigger animation when the top of the element is 100px from the top of the viewport
 				end: "+=200", // Trigger animation when the top of the element is 200 pixels from its natural position
 				scrub: true, // Smoothly animates the property changes during scroll
-				markers: true,
 			},
 		});
 		tl.fromTo(
@@ -80,9 +78,6 @@ const ScrollingIntro = () => {
 			{
 				xPercent: 0,
 				opacity: 1,
-				position: "sticky",
-				height: "100vh",
-				zIndex: 100,
 				duration: 2,
 				yoyo: true,
 			}
@@ -111,24 +106,19 @@ const ScrollingIntro = () => {
 	const [active, setActive] = useState(null);
 	return (
 		<div
-			className="scrolling-container relative mx-auto bg-black bg-opacity-5 h-full overflow-x-hidden"
+			className="scrolling-container relative mx-auto h-full overflow-x-hidden"
 			style={{
 				scrollBehavior: "smooth",
 			}}
+			ref={containerRef}
 			onMouseMoveCapture={(e) => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<div
-				className="flex flex-col justify-center w-full items-center home-container "
-				style={{ height: "50vh" }}
-			>
-				<AnimatedText />
-			</div>
-			<div
-				className="w-full px-40 flex justify-around items-center gap-4 sections-container bg-opacity-40 border-dotted border-t-4 border-gray-600 bg-black"
-				ref={containerRef}
-			>
+			<div className="w-full px-40 flex justify-around items-center gap-4 sections-container bg-black p-20 bg-opacity-20 border-dotted border-t border-gray-600 h-screen relative">
+				<div className="text-7xl text-center absolute top-0 bottom-0 left-0 right-0 place-content-center text-gray-400">
+					who am I
+				</div>
 				{objs.map((item, index = 0) => {
 					return (
 						<section
@@ -175,7 +165,8 @@ export default ScrollingIntro;
 
 const useStyles = makeStyles((theme) => ({
 	section: {
-		width: "380px",
+		width: "300px",
+		height: "300px",
 		boxShadow: "0px 0px 50px rgb(250, 250, 250, 0.2)",
 		"&>img": {
 			scale: 0,
@@ -187,16 +178,16 @@ const useStyles = makeStyles((theme) => ({
 			zIndex: 10,
 		},
 		"&:hover": {
-			width: "440px",
-			height: "440px",
-			transition: "all 0.4s ease",
+			width: "500px",
+			height: "500px",
+			transition: "all 1s ease",
 			"&>img": {
 				scale: 0.9,
 				transition: "all 1s ease",
 			},
 			"&>p": {
 				opacity: 0.1,
-				transition: "all 0.4s ease",
+				transition: "all 1s ease",
 			},
 		},
 	},

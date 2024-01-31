@@ -45,6 +45,7 @@ const WorkExperience = () => {
 		gsap.to(sections, {
 			xPercent: -100,
 			ease: "none",
+			yoyo: true,
 			scrollTrigger: {
 				trigger: ".list-container",
 				start: "top top",
@@ -64,12 +65,9 @@ const WorkExperience = () => {
 				className="work-experience-container mx-auto overflow-x-hidden relative"
 				style={{ scrollBehavior: "smooth" }}
 			>
-				{/* <span className="text-gray-400 mx-auto w-full flex justify-center items-center font-mono">
-					I had an experience in working small size startups to big MNC
-				</span> */}
 				<div className="list-container">
 					<div
-						className={`mx-auto flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-500 py-4`}
+						className={`mx-auto flex justify-around items-center ${styles.listContainer} border-t-2 border-dotted border-gray-700 py-4`}
 					>
 						{workExperience.map((item, index) => {
 							return (
@@ -80,7 +78,7 @@ const WorkExperience = () => {
 									<div className={styles.cardFront}>
 										<p className="text-4xl">{item.name}</p>
 									</div>
-									{/* <div className={styles.cardBack}>{item.content}</div> */}
+									<div className={styles.cardBack}>{item.content}</div>
 								</section>
 							);
 						})}
@@ -96,11 +94,15 @@ const useStyles = makeStyles((theme) => ({
 	listContainer: {
 		width: "300vw",
 		height: "100vh",
-		position: "relative",
+		position: "sticky",
 		overflowX: "hidden",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
 	},
 	card: {
-		width: "80vw",
+		width: "384px",
 		position: "relative",
 		cursor: "pointer",
 		transformStyle: "preserve-3d",
@@ -117,7 +119,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: 10,
 		border: `1px dotted ${colors.indigo[600]}`,
 		zIndex: 50,
-		width: "300px",
+		width: "100%",
 		transformOrigin: "top left",
 		backfaceVisibility: "hidden",
 		background: `linear-gradient(100deg, ${colors.gray[900]}, ${colors.gray[800]})`,
@@ -132,6 +134,8 @@ const useStyles = makeStyles((theme) => ({
 		position: "absolute",
 		top: 0,
 		left: 0,
+		right: 0,
+		bottom: 0,
 		padding: 20,
 		lineBreak: "auto",
 		width: "100%",
