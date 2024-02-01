@@ -75,6 +75,11 @@ const projects = [
 		device: "desktop",
 		title: "UI library storybook",
 	},
+	{
+		url: "https://indian-dishes.vercel.app/link-preview/projects/live-time",
+		device: "desktop",
+		title: "Live time component",
+	},
 ];
 
 const ProjectsGallery = () => {
@@ -83,7 +88,7 @@ const ProjectsGallery = () => {
 	const [active, setActive] = useState();
 
 	return (
-		<div className="h-screen bg-opacity-95 bg-black w-full py-10">
+		<div className="h-screen bg-opacity-95 bg-black w-full py-14">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"
@@ -98,16 +103,8 @@ const ProjectsGallery = () => {
 								setTimeout(() => {
 									setActive(project);
 								}, 500);
-								gsap.fromTo(
-									frameRef.current,
-									{ opacity: 0 },
-									{ opacity: 1, duration: 1 }
-								);
 							}}
 						>
-							{active?.url === project?.url && (
-								<div className="absolute top-4 left-0 right-0 border-t border-b w-full border-dashed border-gray-400 h-1 z-0" />
-							)}
 							<div
 								className={`px-10 cursor-pointer ${
 									active?.url === project?.url && "w-full py-2"
@@ -122,7 +119,7 @@ const ProjectsGallery = () => {
 								>
 									#{index + 1}
 									<span
-										className={`text-sm ml-2 font-mono group-hover:text-white group-hover:hidden ${
+										className={`text-md ml-2 group-hover:text-white group-hover:hidden font-sans ${
 											active?.url === project?.url
 												? "text-gray-200"
 												: "text-gray-500"
@@ -132,6 +129,9 @@ const ProjectsGallery = () => {
 									</span>
 								</p>
 							</div>
+							{active?.url === project?.url && (
+								<div className="absolute top-4 left-0 right-0 border-t border-b w-full border-dashed border-gray-800 h-1 z-0" />
+							)}
 						</div>
 					))}
 				</div>
@@ -151,6 +151,7 @@ const ProjectsGallery = () => {
 									width: "100%",
 									height: "100%",
 									zIndex: 100,
+									borderRadius: 20,
 								}}
 							/>
 						</div>
@@ -165,18 +166,23 @@ const useStyles = makeStyles((theme) => ({
 	projectListContainer: {
 		overflow: "scroll",
 		maxWidth: "15%",
+		margin: 10,
+		borderRadius: 10,
+		background: "",
+		border: `2px dotted ${colors.cyan[700]}`,
+		boxShadow: "0px 0px 10px rgb(150, 150, 200, 0.4)",
 	},
 	frameContainer: {
-		width: "85%",
+		width: "80%",
 		margin: "auto",
-		height: "90vh",
+		height: "80vh",
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
 		flexDirection: "column",
-		borderTop: `1px dotted ${colors.gray[400]}`,
-		borderBottom: `1px dotted ${colors.gray[400]}`,
-		borderLeft: `1px dotted ${colors.gray[400]}`,
+		border: `2px dotted ${colors.gray[700]}`,
+		boxShadow: "0px 0px 40px rgb(150, 150, 200, 0.2)",
+		borderRadius: 20,
 		[theme.breakpoints.down("sm")]: {
 			width: "100%",
 		},
@@ -184,7 +190,7 @@ const useStyles = makeStyles((theme) => ({
 	iframe: {
 		width: "100%",
 		height: "100%",
-		overflow: "scroll"
+		overflow: "scroll",
 	},
 	desktopIframe: {
 		width: "100%",

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaBars } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
 import colors from "tailwindcss/colors";
@@ -78,40 +78,47 @@ const StickyNavbar = () => {
 	};
 
 	return (
-		<div className="fixed top-10 mx-auto md:w-1/3 sm:w-full xxs:w-full xs:w-full left-0 right-0 rounded-md px-4">
-			<div
-				ref={ref}
-				className={
-					(styles.navbar, `flex justify-around items-center mx-auto w-full`)
-				}
-			>
-				<span
-					className="button-link hover:text-white  text-pink-600 hover:bg-gray-900 text-md"
+		<div className="fixed top-5 mx-auto md:w-1/3 sm:w-full xxs:w-full xs:w-full left-0 right-0 rounded-md px-4">
+			<div className="flex justify-between items-center px-8 py-3 bg-black bg-opacity-50 border border-gray-700 rounded-full" ref={ref}>
+				<button
+					className="button-link hover:text-white  text-yellow-600 hover:bg-blackShade text-md px-2 rounded-md"
+					onClick={() => router.push("/introduction")}
+				>
+					home
+				</button>
+				<button
+					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-md px-2 rounded-full"
 					onClick={() => router.push("/introduction")}
 				>
 					it's me
-				</span>
-				<span
-					className="button-link hover:text-gray-200 text-indigo-600 text-md"
+				</button>
+				<button
+					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-md px-2 p-1 rounded-full"
 					onClick={() => router.push("/work-experience")}
 				>
 					work experience
-				</span>
-				<span className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
+				</button>
+				<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
 					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
-				</span>
+				</div>
 				<button
-					className="button-link hover:text-gray-200 text-orange-600 text-md"
-					onClick={() => console.log("Done")}
+					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-md px-2  p-1 rounded-full"
+					onClick={() => router.push("projects")}
 				>
 					playground
 				</button>
-				<span className="button-link hover:text-gray-200 text-green-600 text-md z-100">
+				<button
+					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full"
+					onClick={() => router.push("tech-stack")}
+				>
+					stacks
+				</button>
+				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full">
 					say hi
 				</span>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-10 ml-8 ${
+				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-5 ml-8 ${
 					show ? "none" : "block"
 				}`}
 				onMouseEnter={bounceTheBar}
@@ -123,44 +130,6 @@ const StickyNavbar = () => {
 				>
 					<FaBars size={24} color={colors.gray[400]} />
 				</div>
-			</div>
-			<div className="flex justify-between items-center px-8 py-3 bg-black bg-opacity-20 rounded-full">
-				<span
-					className="button-link hover:text-white  text-yellow-600 hover:bg-blackShade text-md px-2 rounded-md"
-					onClick={() => router.push("/introduction")}
-				>
-					home
-				</span>
-				<span
-					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-md px-2 rounded-full"
-					onClick={() => router.push("/introduction")}
-				>
-					it's me
-				</span>
-				<span
-					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-md px-2 p-1 rounded-full"
-					onClick={() => router.push("/work-experience")}
-				>
-					work experience
-				</span>
-				<span className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
-					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
-				</span>
-				<button
-					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-md px-2  p-1 rounded-full"
-					onClick={() => router.push("projects")}
-				>
-					playground
-				</button>
-				<span
-					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full"
-					onClick={() => router.push("tech-stack")}
-				>
-					stacks
-				</span>
-				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full">
-					say hi
-				</span>
 			</div>
 		</div>
 	);

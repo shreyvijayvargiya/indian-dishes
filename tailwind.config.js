@@ -58,6 +58,15 @@ module.exports = {
 			"3/4": "75%",
 			full: "100%",
 		},
+		extend: {
+			fontFamily: {
+				sans: ["Inter", "Helvetica", "Arial", "sans-serif"],
+				serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
+				mono: ["Fira Code", "Courier New", "monospace"],
+				cool: ["Your Cool Font", "sans-serif"],
+				fancy: ["Phosphate", "cursive"],
+			},
+		},
 	},
 	variants: {
 		extend: {
