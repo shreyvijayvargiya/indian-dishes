@@ -1,9 +1,9 @@
 import React from "react";
-import ScrollingIntro from "components/Home/ScrollingIntro";
+import Introduction from "components/Home/Introduction";
 
 const HomePage = () => (
 	<div className="h-full w-full">
-		<ScrollingIntro />
+		<Introduction />
 	</div>
 );
 export default HomePage;

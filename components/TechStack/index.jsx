@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core";
 import _ from "lodash";
 import BackgroundWrapperDots from "./BgWrapper";
 import { Typewriter } from "react-simple-typewriter";
-import GridLines from 'react-gridlines';
+import GridLines from "react-gridlines";
 
 const TechStack = ({ showAnimationButtons = false }) => {
 	const images = [
@@ -111,10 +111,8 @@ const TechStack = ({ showAnimationButtons = false }) => {
 			".moving-container",
 			{
 				xPercent: -10,
-				opacity: 0,
 			},
 			{
-				opacity: 1,
 				xPercent: 10,
 				duration: 5,
 				yoyo: true,
@@ -195,38 +193,38 @@ const TechStack = ({ showAnimationButtons = false }) => {
 				</div>
 			</div>
 
-			<div className="moving-container text-indigo-400 flex jsutify-around items-center w-screen gap-20 group-hover:bg-black">
-				<div className="text-1 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+			<div className="moving-container text-indigo-400 flex jsutify-around items-center w-screen gap-10 group-hover:bg-black">
+				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					! DSA
 				</div>
-				<div className="text-1 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					% express.js
 				</div>
-				<div className="text-1 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					+ vercel
 				</div>
-				<div className="text-2 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-2 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					- next.js
 				</div>
-				<div className="text-3 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-3 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					* supabase
 				</div>
-				<div className="text-4 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-4 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					! astro
 				</div>
-				<div className="text-5 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-5 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					& tailwind-css
 				</div>
-				<div className="text-6 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-6 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					# animations
 				</div>
-				<div className="text-7 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-7 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					{"["} npm {"]"}
 				</div>
-				<div className="text-8 text-brown-400 py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
+				<div className="text-8 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					@ api
 				</div>
-				<div className="text-9 text-brown-400 p-2 bg-gray-900 border-dotted broder border-gray-800 rounded-xl">
+				<div className="text-9 text-brown-400 text-xs p-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					( github )
 				</div>
 			</div>

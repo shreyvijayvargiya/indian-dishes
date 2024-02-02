@@ -81,7 +81,6 @@ const WorkExperience = () => {
 				end: () => `${(sections.length - 1) * 100}vh`,
 				scrub: 1,
 				pin: true,
-				markers: true,
 				onUpdate: (self) => {
 					const progress = self.progress;
 					setPercent(progress);

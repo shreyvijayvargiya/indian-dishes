@@ -77,23 +77,28 @@ const StickyNavbar = () => {
 		);
 	};
 
+
 	return (
-		<div className="fixed top-5 mx-auto md:w-1/3 sm:w-full xxs:w-full xs:w-full left-0 right-0 rounded-md px-4">
-			<div className="flex justify-between items-center px-8 py-3 bg-black bg-opacity-50 border border-gray-700 rounded-full" ref={ref}>
+		<div className="fixed top-5 mx-auto md:w-2/5 sm:w-full xxs:w-full xs:w-full left-0 right-0 rounded-md px-4">
+			<div
+				className="flex justify-between items-center px-8 py-3 border border-gray-500 rounded-full"
+				ref={ref}
+				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.4)" }}
+			>
 				<button
-					className="button-link hover:text-white  text-yellow-600 hover:bg-blackShade text-md px-2 rounded-md"
+					className="button-link hover:text-white hover:translate-y-10 text-yellow-600 hover:bg-blackShade text-xs px-2 rounded-md"
 					onClick={() => router.push("/introduction")}
 				>
 					home
 				</button>
 				<button
-					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-md px-2 rounded-full"
+					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-xs px-2 rounded-full"
 					onClick={() => router.push("/introduction")}
 				>
 					it's me
 				</button>
 				<button
-					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-md px-2 p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-xs px-2 p-1 rounded-full"
 					onClick={() => router.push("/work-experience")}
 				>
 					work experience
@@ -102,18 +107,18 @@ const StickyNavbar = () => {
 					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
 				</div>
 				<button
-					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-md px-2  p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-xs px-2  p-1 rounded-full"
 					onClick={() => router.push("projects")}
 				>
 					playground
 				</button>
 				<button
-					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-xs px-2  z-100 p-1 rounded-full"
 					onClick={() => router.push("tech-stack")}
 				>
 					stacks
 				</button>
-				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-md px-2  z-100 p-1 rounded-full">
+				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-xs px-2  z-100 p-1 rounded-full">
 					say hi
 				</span>
 			</div>

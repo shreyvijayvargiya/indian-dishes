@@ -3,41 +3,54 @@ import React, { useEffect, useRef } from "react";
 import colors from "tailwindcss/colors";
 import StickyNavbar from "./Navbar";
 import { Typewriter } from "react-simple-typewriter";
-import ScrollingIntro from "./ScrollingIntro";
 import WorkExperience from "components/WorkExperience";
 import ProjectsGallery from "components/Projects/ProjectsGallery";
 import ContactMe from "components/ContactMe";
 import TechStack from "components/TechStack";
 import AnimatedText from "components/Projects/AnimatedText";
-import { useParallax } from "react-scroll-parallax";
+import { Parallax, ParallaxBanner, useParallax } from "react-scroll-parallax";
 import gsap from "gsap";
+import Introduction from "./Introduction";
+import BrushCanvas from "./BrushEffect";
 
-const pages = [];
 const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	// const [pageStates, setPageStates] = useState()
-
 	return (
 		<div
-			className="w-full relative home-container h-screen"
+			className={`w-full relative h-full overflow-y-scroll overflow-x-hidden bg-black bg-opacity-60 ${styles.container}`}
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
 			<AnimatedText />
-			{/* <ScrollingIntro /> */}
-			{/* <div style={{ zIndex: 10 }} className="relative">
+			<Parallax speed={-20}>
+				<Introduction />
+			</Parallax>
+			<Parallax>
 				<WorkExperience />
-			</div>
-			<div style={{ zIndex: 10 }} className="relative">
+			</Parallax>
+			<Parallax>
 				<ProjectsGallery />
-			</div>
-			<TechStack />
-			<ContactMe /> */}
+			</Parallax>
+			<Parallax>
+				<TechStack />
+			</Parallax>
 		</div>
 	);
 };
 export default HomeComponent;
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+	container: {
+		backgroundImage: "url(./bg-Banner.svg)",
+		backgroundAttachment: "fixed",
+		backgroundBlendMode: "color-burn",
+		position: "fixed",
+		backgroundRepeat: "repeat-x",
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+	},
+}));

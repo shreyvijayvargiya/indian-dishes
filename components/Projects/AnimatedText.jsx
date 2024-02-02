@@ -17,7 +17,7 @@ const AnimatedText = () => {
 			} else {
 				setIndex(index + 1);
 			}
-		}, 3000);
+		}, 2000);
 	};
 
 	React.useEffect(() => {
@@ -35,8 +35,8 @@ const AnimatedText = () => {
 	const startShuffle = () => {
 		let str = char.trim(" ").split("");
 		let interval = null;
-		let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-		let originalChars = "this is Shrey";
+		let chars = "XykmrQkn";
+		let originalChars = "Shrey";
 		let index = 0;
 
 		clearInterval(interval);
@@ -59,12 +59,13 @@ const AnimatedText = () => {
 		setMousePosition({ x: clientX, y: clientY });
 		const centerX = window.innerWidth / 2;
 		const centerY = window.innerHeight / 2;
-		const rotationX = ((clientY - centerY) / centerY) * 60; // Adjust the factor for the rotation speed
-		const rotationY = ((centerX - clientX) / centerX) * 60;
-		gsap.to(characterRef.current, {
-			rotationX,
+		const rotationX = ((clientY - centerY) / centerY) * 50; // Adjust the factor for the rotation speed
+		const rotationY = ((centerX - clientX) / centerX) * 100;
+		gsap.to(".character-container", {
 			rotationY,
-			transition: "all 0.5s ease",
+			rotationX,
+			scale: 1.2,
+			transition: "all 0.2s ease",
 			transformOrigin: "center center",
 		});
 	};
@@ -74,10 +75,13 @@ const AnimatedText = () => {
 	return (
 		<div
 			className="w-full relative text-container flex flex-col justify-center items-center h-screen"
-			onMouseMoveCapture={handleMouseMove}
+			onMouseMove={handleMouseMove}
 		>
 			<div
-				className={` p-4 py-0 text-gray-400 w-auto border-t-2 border-b-2 text-center border-dashed border-gray-700 relative`}
+				className={`character-container p-4 py-0 text-gray-400 w-auto text-center relative`}
+				// style={{
+				// 	boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.3) "
+				// }}
 			>
 				<GridLines
 					lineColor={colors.gray[400]}
@@ -86,31 +90,31 @@ const AnimatedText = () => {
 				<p
 					ref={characterRef}
 					style={{
-						transformStyle: "preserve-3d",
 						fontFamily: "phosphate",
 						fontStyle: "inline",
-						fontSize: "6em",
+						fontSize: "8em",
 						background: "transparent",
-						textShadow: "10px 10px 10px rgb(20, 250, 250, 0.2)",
-						color: (props) => props.colorKeys[props.index],
+						textShadow: "0px 0px 80px rgb(250, 250, 250, 0.4)",
+						color: colorKeys[index],
 					}}
 				>
+					<span className="text-gray-400 text-2xl">this is </span>
 					{char}
 				</p>
-			{mousePosition.x && mousePosition.y && (
-				<div
-					className="box-2 p-2"
-					id="box-2"
-					style={{
-						position: "fixed",
-						top: mousePosition.y - 400,
-						left: mousePosition.x - 500,
-						transition: "all 0.5s ease-in-out",
-					}}
-				>
-					<img src={"./mouse-1.svg"} className="w-5 h-5" />
-				</div>
-			)}
+				{mousePosition.x && mousePosition.y && (
+					<div
+						className="box-2 p-2"
+						id="box-2"
+						style={{
+							position: "fixed",
+							top: mousePosition.y - 400,
+							left: mousePosition.x - 500,
+							transition: "all 0.5s ease-in-out",
+						}}
+					>
+						<img src={"./mouse-1.svg"} className="w-5 h-5" />
+					</div>
+				)}
 			</div>
 		</div>
 	);
