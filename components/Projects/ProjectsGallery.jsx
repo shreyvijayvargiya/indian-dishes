@@ -88,7 +88,7 @@ const ProjectsGallery = () => {
 	const [active, setActive] = useState();
 
 	return (
-		<div className="h-screen bg-opacity-95 bg-black w-full py-14">
+		<div className="min-h-screen bg-opacity-95 bg-black w-full py-14">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"
@@ -106,7 +106,7 @@ const ProjectsGallery = () => {
 							}}
 						>
 							<div
-								className={`px-10 cursor-pointer ${
+								className={`px-3 cursor-pointer ${
 									active?.url === project?.url && "w-full py-2"
 								}`}
 							>
@@ -151,6 +151,7 @@ const ProjectsGallery = () => {
 									width: "100%",
 									height: "100%",
 									zIndex: 100,
+									opacity: 0.8,
 									borderRadius: 20,
 								}}
 							/>

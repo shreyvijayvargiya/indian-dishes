@@ -12,6 +12,9 @@ import { Parallax, ParallaxBanner, useParallax } from "react-scroll-parallax";
 import gsap from "gsap";
 import Introduction from "./Introduction";
 import BrushCanvas from "./BrushEffect";
+import GridLines from "react-gridlines";
+import Om from "components/Projects/TextEffects/Om";
+import TripLoader from "components/Projects/TripLoader";
 
 const HomeComponent = () => {
 	const styles = useStyles();
@@ -19,10 +22,11 @@ const HomeComponent = () => {
 
 	return (
 		<div
-			className={`w-full relative h-full overflow-y-scroll overflow-x-hidden bg-black bg-opacity-60 ${styles.container}`}
+			className={`w-full relative h-full overflow-y-scroll overflow-x-hidden bg-black bg-opacity-90 ${styles.container}`}
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
+			<TripLoader />
 			<AnimatedText />
 			<Parallax speed={-20}>
 				<Introduction />

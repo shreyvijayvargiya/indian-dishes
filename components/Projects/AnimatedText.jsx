@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
+import Om from "./TextEffects/Om";
+import InfinitySign from "./TextEffects/Infinity";
+import InifiniteLoader from "./TextEffects/InfiniteLoader";
 
 const AnimatedText = () => {
 	const [char, setChar] = useState("this is Shrey");
@@ -59,8 +62,8 @@ const AnimatedText = () => {
 		setMousePosition({ x: clientX, y: clientY });
 		const centerX = window.innerWidth / 2;
 		const centerY = window.innerHeight / 2;
-		const rotationX = ((clientY - centerY) / centerY) * 50; // Adjust the factor for the rotation speed
-		const rotationY = ((centerX - clientX) / centerX) * 100;
+		const rotationX = ((clientY - centerY) / centerY) * 20; // Adjust the factor for the rotation speed
+		const rotationY = ((centerX - clientX) / centerX) * 50;
 		gsap.to(".character-container", {
 			rotationY,
 			rotationX,
@@ -77,16 +80,16 @@ const AnimatedText = () => {
 			className="w-full relative text-container flex flex-col justify-center items-center h-screen"
 			onMouseMove={handleMouseMove}
 		>
+			<div className="absolute bottom-40 flex justify-between items-center w-screen px-10">
+				<Om />
+				<InifiniteLoader />
+			</div>
 			<div
 				className={`character-container p-4 py-0 text-gray-400 w-auto text-center relative`}
 				// style={{
 				// 	boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.3) "
 				// }}
 			>
-				<GridLines
-					lineColor={colors.gray[400]}
-					className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
-				/>
 				<p
 					ref={characterRef}
 					style={{
@@ -116,6 +119,7 @@ const AnimatedText = () => {
 					</div>
 				)}
 			</div>
+			<InfinitySign />
 		</div>
 	);
 };

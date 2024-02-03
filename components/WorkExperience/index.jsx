@@ -128,8 +128,8 @@ const WorkExperience = () => {
 									</p>
 									<p className="text font-thin">{item.date}</p>
 									<ol className="list-disc ml-10 my-4">
-										{item.content.split(".").map((content) => {
-											return content ? <li>{content}</li> : null;
+										{item.content.split(".").map((content, index) => {
+											return content ? <li key={index}>{content}</li> : null;
 										})}
 									</ol>
 									<div className="absolute bottom-10">
@@ -143,7 +143,7 @@ const WorkExperience = () => {
 					})}
 				</div>
 			</div>
-			<div className="fixed right-10 top-8">
+			<div className="live-time fixed right-10 top-8">
 				<LiveTime />
 			</div>
 			<div className={`fixed bottom-10 left-0 right-0 w-full`}>
