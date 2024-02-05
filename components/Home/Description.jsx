@@ -131,11 +131,13 @@ const Description = () => {
 
 	const handleMouseOver = (item) => {
 		setActive(item);
+		gsap.to(`.section-${item.id}`, { scale: 1.1 });
 		play();
 	};
 
-	const handleMouseOut = () => {
+	const handleMouseOut = (item) => {
 		setActive(null);
+		gsap.to(`.section-${item.id}`, { scale: 1 });
 	};
 
 	return (
@@ -150,13 +152,11 @@ const Description = () => {
 			<div className="md:w-1/2 mx-auto sm:w-full xxs:w-full px-20 section-container">
 				{desc.map((item) => {
 					return (
-						<section
+						<div
 							key={item.id}
-							className={`${
-								active?.id === item.id ? "section-active" : "section-inactive"
-							} flex justify-start items-center gap-2 w-full my-10 section-item`}
+							className={`flex justify-start items-center gap-2 w-full my-10 section-item section-${item.id}`}
 							onMouseEnter={() => handleMouseOver(item)}
-							onMouseLeave={handleMouseOut}
+							onMouseLeave={() => handleMouseOut(item)}
 						>
 							<div
 								className={`w-10 h-10 text-gray-400 text-2xl ${
@@ -168,7 +168,7 @@ const Description = () => {
 								<img className="w-10 h-10" src={item.leftImage} />
 							</div>
 							<div className="text-3xl">{item.content}</div>
-						</section>
+						</div>
 					);
 				})}
 			</div>

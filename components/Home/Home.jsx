@@ -29,7 +29,7 @@ const HomeComponent = () => {
 			ref={containerRef}
 		>
 			{/* <TripLoader /> */}
-			<div className="fixed top-10 left-10">
+			<div className="fixed top-20 left-10">
 				<RocketLaunch />
 			</div>
 			<div className="fixed bottom-10 right-10">
