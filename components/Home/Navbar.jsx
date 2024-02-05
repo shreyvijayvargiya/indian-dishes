@@ -77,28 +77,29 @@ const StickyNavbar = () => {
 		);
 	};
 
-
 	return (
-		<div className="fixed top-5 mx-auto md:w-2/5 sm:w-full xxs:w-full xs:w-full left-0 right-0 rounded-md px-4">
+		<div
+			className={`fixed top-5 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
+		>
 			<div
-				className="flex justify-between items-center px-8 py-3 border border-gray-500 rounded-full"
+				className="flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md"
 				ref={ref}
-				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.4)" }}
+				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.1)" }}
 			>
 				<button
-					className="button-link hover:text-white hover:translate-y-10 text-yellow-600 hover:bg-blackShade text-xs px-2 rounded-md"
+					className="button-link hover:text-white hover:translate-y-10 text-yellow-600 hover:bg-blackShade text-sm px-2 rounded-md"
 					onClick={() => router.push("/introduction")}
 				>
 					home
 				</button>
 				<button
-					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-xs px-2 rounded-full"
+					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-sm px-2 rounded-full"
 					onClick={() => router.push("/introduction")}
 				>
 					it's me
 				</button>
 				<button
-					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-xs px-2 p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-sm px-2 p-1 rounded-full"
 					onClick={() => router.push("/work-experience")}
 				>
 					work experience
@@ -107,18 +108,18 @@ const StickyNavbar = () => {
 					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
 				</div>
 				<button
-					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-xs px-2  p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-sm px-2  p-1 rounded-full"
 					onClick={() => router.push("projects")}
 				>
 					playground
 				</button>
 				<button
-					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-xs px-2  z-100 p-1 rounded-full"
+					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full"
 					onClick={() => router.push("tech-stack")}
 				>
 					stacks
 				</button>
-				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-xs px-2  z-100 p-1 rounded-full">
+				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full">
 					say hi
 				</span>
 			</div>
@@ -129,11 +130,11 @@ const StickyNavbar = () => {
 				onMouseEnter={bounceTheBar}
 			>
 				<div
-					className="border border-gray-500 rounded-full p-2 hover:border-gray-400"
+					className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
 					ref={bar}
 					onClick={toggleNavbar}
 				>
-					<FaBars size={24} color={colors.gray[400]} />
+					<FaBars size={24} color={colors.gray[600]} />
 				</div>
 			</div>
 		</div>
@@ -143,13 +144,9 @@ export default StickyNavbar;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
-		border: (props) => props.show && `1px solid ${colors.gray[600]}`,
 		zIndex: 1000,
-		"& :hover": {
-			boxShadow: "0px 0px 50px rgb(255, 255, 255, 0.3)",
-		},
 		[theme.breakpoints.up("sm")]: {
-			width: "30% !important",
+			width: "40% !important",
 			margin: "auto",
 			background: (props) => !props.show && "none",
 		},

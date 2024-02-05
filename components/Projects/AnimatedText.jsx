@@ -6,6 +6,7 @@ import GridLines from "react-gridlines";
 import Om from "./TextEffects/Om";
 import InfinitySign from "./TextEffects/Infinity";
 import InifiniteLoader from "./TextEffects/InfiniteLoader";
+import Introduction from "components/Home/Introduction";
 
 const AnimatedText = () => {
 	const [char, setChar] = useState("this is Shrey");
@@ -77,49 +78,25 @@ const AnimatedText = () => {
 
 	return (
 		<div
-			className="w-full relative text-container flex flex-col justify-center items-center h-screen"
+			className="sm:w-full md:w-1/3 mx-auto relative text-container overflow-hidden flex flex-col justify-center items-center py-20"
 			onMouseMove={handleMouseMove}
 		>
-			<div className="absolute bottom-40 flex justify-between items-center w-screen px-10">
-				<Om />
-				<InifiniteLoader />
-			</div>
 			<div
-				className={`character-container p-4 py-0 text-gray-400 w-auto text-center relative`}
-				// style={{
-				// 	boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.3) "
-				// }}
+				className={`character-container px-20 py-4 text-gray-200 text-left relative border-t-2 w-full border-b-2 border-gray-600 border-dashed`}
 			>
 				<p
 					ref={characterRef}
 					style={{
 						fontFamily: "phosphate",
 						fontStyle: "inline",
-						fontSize: "8em",
+						fontSize: "2em",
 						background: "transparent",
-						textShadow: "0px 0px 80px rgb(250, 250, 250, 0.4)",
-						color: colorKeys[index],
+						textShadow: `0px 0px 30px ${colors[colorKeys[index]][800]}`,
 					}}
 				>
-					<span className="text-gray-400 text-2xl">this is </span>
-					{char}
+					this is {char}
 				</p>
-				{mousePosition.x && mousePosition.y && (
-					<div
-						className="box-2 p-2"
-						id="box-2"
-						style={{
-							position: "fixed",
-							top: mousePosition.y - 400,
-							left: mousePosition.x - 500,
-							transition: "all 0.5s ease-in-out",
-						}}
-					>
-						<img src={"./mouse-1.svg"} className="w-5 h-5" />
-					</div>
-				)}
 			</div>
-			<InfinitySign />
 		</div>
 	);
 };
@@ -130,7 +107,7 @@ const useStyles = makeStyles((theme) => ({
 		transformStyle: "preserve-3d",
 		fontFamily: "phosphate",
 		fontStyle: "inline",
-		fontSize: "8em",
+		fontSize: "1em",
 		background: "transparent",
 		textShadow: "10px 10px 10px rgb(20, 250, 250, 0.2)",
 		color: (props) => props.colorKeys[props.index],

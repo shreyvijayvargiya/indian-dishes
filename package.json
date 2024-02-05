@@ -84,6 +84,7 @@
 		"react-wavify": "^1.9.0",
 		"tailwindcss": "npm:@tailwindcss/postcss7-compat",
 		"three": "^0.159.0",
+		"use-sound": "^4.0.1",
 		"uuid": "^8.3.2"
 	},
 	"devDependencies": {

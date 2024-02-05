@@ -15,6 +15,8 @@ import BrushCanvas from "./BrushEffect";
 import GridLines from "react-gridlines";
 import Om from "components/Projects/TextEffects/Om";
 import TripLoader from "components/Projects/TripLoader";
+import RocketLaunch from "components/Projects/TextEffects/RocketLaunch";
+import Description from "./Description";
 
 const HomeComponent = () => {
 	const styles = useStyles();
@@ -22,39 +24,28 @@ const HomeComponent = () => {
 
 	return (
 		<div
-			className={`w-full relative h-full overflow-y-scroll overflow-x-hidden bg-black bg-opacity-90 ${styles.container}`}
+			className={`w-full relative overflow-x-hidden bg-black bg-opacity-95 h-screen ${styles.container}`}
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
-			<TripLoader />
+			{/* <TripLoader /> */}
+			<div className="fixed top-10 left-10">
+				<RocketLaunch />
+			</div>
+			<div className="fixed bottom-10 right-10">
+				<Om />
+			</div>
+			<br />
+			<br />
 			<AnimatedText />
-			<Parallax speed={-20}>
-				<Introduction />
-			</Parallax>
-			<Parallax>
-				<WorkExperience />
-			</Parallax>
-			<Parallax>
-				<ProjectsGallery />
-			</Parallax>
-			<Parallax>
-				<TechStack />
-			</Parallax>
+			<br />
+			<br />
+			<Description />
 		</div>
 	);
 };
 export default HomeComponent;
 
 const useStyles = makeStyles((theme) => ({
-	container: {
-		backgroundImage: "url(./bg-Banner.svg)",
-		backgroundAttachment: "fixed",
-		backgroundBlendMode: "color-burn",
-		position: "fixed",
-		backgroundRepeat: "repeat-x",
-		top: 0,
-		left: 0,
-		right: 0,
-		bottom: 0,
-	},
+	container: {},
 }));

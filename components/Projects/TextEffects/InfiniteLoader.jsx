@@ -1,6 +1,5 @@
 import gsap from "gsap";
 import { useEffect } from "react";
-import colors from "tailwindcss/colors";
 
 const InifiniteLoader = () => {
 	useEffect(() => {
@@ -21,7 +20,7 @@ const InifiniteLoader = () => {
 	return (
 		<div className="loader">
 			<svg
-				viewBox="0 0 72 72"
+				viewBox="0 0 1000 1000"
 				id="emoji"
 				xmlns="http://www.w3.org/2000/svg"
 				fill="#ffffff"

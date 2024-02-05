@@ -20,27 +20,27 @@ const objs = [
 	{
 		id: 1,
 		name: "i am a Software Developer",
-		image: "./intro-images/developer.svg",
+		image: "./intro-images/Rectangle 6.svg",
 	},
 	{
 		id: 2,
 		name: "with 4 Years of experience",
-		image: "./intro-images/wavy-buddies.svg",
+		image: "./intro-images/Rectangle 7.svg",
 	},
 	{
 		id: 3,
 		name: "in Website development,",
-		image: "./intro-images/happy-bunch-desk.svg",
+		image: "./intro-images/Rectangle 8.svg",
 	},
 	{
 		id: 4,
-		name: "Mobile app development",
-		image: "./intro-images/bro.svg",
+		name: "mobile app development &",
+		image: "./intro-images/Rectangle 9.svg",
 	},
 	{
 		id: 5,
-		name: "& Backend development",
-		image: "./intro-images/work-space.jpeg",
+		name: "backend development",
+		image: "./intro-images/Rectangle 10.svg",
 	},
 ];
 
@@ -59,6 +59,7 @@ const Introduction = () => {
 		x: 0,
 		y: 0,
 	});
+	const [active, setActive] = useState(null);
 	const [scrollPosition, setScrollPosition] = useState(0);
 	const styles = useStyles();
 
@@ -71,42 +72,73 @@ const Introduction = () => {
 				`.section-${index}`,
 				{
 					opacity: 0,
+					scale: 0,
 					yPercent: 40,
 				},
 				{
 					opacity: 1,
+					scale: 1,
 					yPercent: 0,
 				}
 			);
 		});
 	}, []);
 
-	const [active, setActive] = useState(null);
+	useEffect(() => {
+		gsap.fromTo(
+			".bg-image",
+			{
+				x: "10px",
+				y: "10px",
+				skewX: "10deg",
+				borderRadius: 50,
+				width: "80%",
+			},
+			{
+				x: "-10px",
+				y: "-20px",
+				repeat: -1,
+				width: "100%",
+				borderRadius: 20,
+				duration: 4,
+				skewX: "10deg",
+				yoyo: true,
+			}
+		);
+	}, []);
 
 	return (
 		<div
-			className="scrolling-container relative mx-auto overflow-hidden bg-black bg-opacity-10"
+			className="scrolling-container relative mx-auto my-20 w-full"
 			ref={containerRef}
+			style={{ scrollbarWidth: 0, scrollBehavior: "smooth" }}
 			onMouseMove={(e) => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<div className="w-full flex justify-around my-4 items-center flex-col gap-4 sections-container p-10 place-content-center relative">
+			<div
+				className={`flex justify-around items-center gap-10 md:flex-row sm:flex-col xxs:flex-col xs:flex-col sections-container ${styles.container}`}
+			>
 				{objs.map((item, index) => {
 					return (
-						<section
-							key={item.id}
-							onMouseOver={() => setActive(item)}
-							onMouseOut={() => setActive(null)}
-							className={`section-${index} sections px-10 text-gray-200 my-4 ${styles.section}`}
-						>
-							<p
-								className={`item-${index} py-20 flex flex-col justify-center items-center hover:text-white text-center text-6xl place-content-center font-bold`}
-								style={{ fontFamily: "Leckerli One" }}
+						<Parallax speed={10}>
+							<section
+								key={item.id}
+								className={`section-${index} sections ${styles.section} relative m-10 `}
 							>
-								{item.name}
-							</p>
-						</section>
+								<p
+									className={`item-${index} text-white text-2xl opacity-100 text-center font-serif font-bold text-item z-100 relative flex justify-center items-center top-36`}
+									style={{ zIndex: 100 }}
+								>
+									{item.name}
+								</p>
+								<img
+									src={item.image}
+									alt={item.name}
+									className={`w-full h-full opacity-50 hover:opacity-80 z-80 mx-auto bg-image ${styles.img} `}
+								/>
+							</section>
+						</Parallax>
 					);
 				})}
 			</div>
@@ -123,7 +155,7 @@ const Introduction = () => {
 				>
 					<img
 						src={"./intro-images/football-cursor.svg"}
-						className="w-10 h-10"
+						className="w-4 h-4 object-cover"
 					/>
 				</div>
 			)}
@@ -133,7 +165,30 @@ const Introduction = () => {
 export default Introduction;
 
 const useStyles = makeStyles((theme) => ({
+	container: {
+		width: "fit-content",
+		width: "95%",
+		padding: 10,
+		margin: "auto",
+	},
 	section: {
 		width: "100%",
+		height: "30vh",
+		backgroundAttachment: "fixed",
+		margin: "auto",
+		cursor: "pointer",
+		"&:hover": {
+			"& >img": {
+				scale: 0.9,
+				transition: "all 0.5 ease",
+			},
+		},
+	},
+	img: {
+		zIndex: 10,
+		boxShadow: "0px 0px 40px rgb(250, 250, 250, 0.1)",
+		outline: `2px dashed ${colors.trueGray[700]}`,
+		rotate: "rotateX(40deg)",
+		objectFit: "cover",
 	},
 }));
