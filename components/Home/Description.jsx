@@ -94,13 +94,12 @@ const Description = () => {
 		},
 	];
 
-	const [active, setActive] = useState(desc[0]);
+	const [active, setActive] = useState();
 	const [play] = useSound("./sound-clips/sound-keyboard.mp3", { volume: 0.6 });
 	const tl = gsap.timeline();
 
 	useEffect(() => {
 		const sections = gsap.utils.toArray(".section-container .section-item");
-		const tl = gsap.timeline();
 		sections.forEach((section) => {
 			tl.fromTo(
 				section,
@@ -117,53 +116,53 @@ const Description = () => {
 		});
 	}, []);
 
+	useEffect(() => {
+		const tl = gsap.timeline();
+		tl.fromTo(
+			".active-image",
+			{ opacity: 0, scale: 0, rotate: "0deg", xPercent: -200 },
+			{ opacity: 1, scale: 1, rotate: "360deg", xPercent: 0 }
+		).fromTo(
+			".inactive-image",
+			{ opacity: 1, scale: 1, rotate: "-360deg", xPercent: 0 },
+			{ scale: 0, rotate: "0deg", xPercent: -200 }
+		);
+	}, [active]);
+
 	const handleMouseOver = (item) => {
-		play();
 		setActive(item);
-		tl.to(`.section-active-${item.id}`, {
-			opacity: 0.9,
-			scale: 1.1,
-			duration: 0.8,
-		}).to(`.left-active-icon-${item?.id}`, { xPercent: -100, opacity: 0 });
+		play();
 	};
 
-	const handleMouseOut = (item) => {
+	const handleMouseOut = () => {
 		setActive(null);
-		tl.to(`.section-inactive-${item.id}`, {
-			opacity: 1,
-			scale: 1,
-			duration: 0.8,
-		}).fromTo(
-			`.left-inactive-icon-${item?.id}`,
-			{
-				xPercent: -200,
-			},
-			{
-				xPercent: 0,
-			}
-		);
 	};
 
 	return (
 		<div className="w-full h-full px-20">
+			<div className="fixed top-1/3 bottom-1/2 left-20">
+				{active && (
+					<div className={`${active ? "active-image" : "inactive-image"}`}>
+						<img src={active.leftImage} className="w-40 h-40" />
+					</div>
+				)}
+			</div>
 			<div className="md:w-1/2 mx-auto sm:w-full xxs:w-full px-20 section-container">
-				{desc.map((item, index) => {
+				{desc.map((item) => {
 					return (
 						<section
 							key={item.id}
 							className={`${
-								active?.id === item.id
-									? `section-inactive-${item.id}`
-									: `section-active-${item.id}`
+								active?.id === item.id ? "section-active" : "section-inactive"
 							} flex justify-start items-center gap-2 w-full my-10 section-item`}
-							onMouseOver={() => handleMouseOver(item)}
-							onMouseOut={() => handleMouseOut(item)}
+							onMouseEnter={() => handleMouseOver(item)}
+							onMouseLeave={handleMouseOut}
 						>
 							<div
 								className={`w-10 h-10 text-gray-400 text-2xl ${
 									active?.id === item.id
-										? `left-active-icon-${item.id}`
-										: `left-inactive-icon-${item.id}`
+										? `left-active-icon`
+										: `left-inactive-icon`
 								}`}
 							>
 								<img className="w-10 h-10" src={item.leftImage} />
