@@ -9,10 +9,8 @@ import {
 	scrollSpy,
 } from "react-scroll";
 import { useParallax, Parallax } from "react-scroll-parallax";
-import AnimatedText from "components/Projects/AnimatedText";
 import { Button } from "@mantine/core";
 import { makeStyles } from "@material-ui/core";
-import GridLines from "react-gridlines";
 import colors from "tailwindcss/colors";
 
 gsap.registerPlugin(ScrollTrigger);

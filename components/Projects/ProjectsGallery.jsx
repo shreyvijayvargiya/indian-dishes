@@ -91,8 +91,16 @@ const ProjectsGallery = () => {
 		<div className="min-h-screen bg-opacity-95 bg-black w-full py-14">
 			<GridLines
 				lineColor={colors.gray[400]}
-				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"
+				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5 rotate-6 skew-x-12"
 			/>
+			<div>
+				<img
+					src="./gridlines.svg"
+					width={"100%"}
+					height={"100%"}
+					className="fixed top-0 left-0 bottom-0 right-0 z-0 opacity-5 rotate-45 skew-x-6"
+				/>
+			</div>
 			<div className="flex flex-row justify-around items-center w-full h-full">
 				<div className={`${classes.projectListContainer}`}>
 					{projects.map((project, index) => (

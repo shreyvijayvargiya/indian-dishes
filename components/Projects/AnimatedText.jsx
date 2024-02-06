@@ -1,15 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
-import Om from "./TextEffects/Om";
-import InfinitySign from "./TextEffects/Infinity";
-import InifiniteLoader from "./TextEffects/InfiniteLoader";
-import Introduction from "components/Home/Introduction";
 
 const AnimatedText = () => {
-	const [char, setChar] = useState("this is Shrey");
+	const [char, setChar] = useState("Shrey Vijayvargiya");
 	const colorKeys = Object.keys(colors);
 	const [index, setIndex] = useState(0);
 	const characterRef = useRef();
@@ -43,7 +39,7 @@ const AnimatedText = () => {
 	const startShuffle = () => {
 		let str = char.trim(" ").split("");
 		let interval = null;
-		let chars = "XykmrQkn";
+		let chars = "ykrQn";
 		let originalChars = "Shrey";
 		let index = 0;
 
@@ -60,11 +56,8 @@ const AnimatedText = () => {
 		}, 100);
 	};
 
-	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
 	const handleMouseMove = (event) => {
 		const { clientX, clientY } = event;
-		setMousePosition({ x: clientX, y: clientY });
 		const centerX = window.innerWidth / 2;
 		const centerY = window.innerHeight / 2;
 		const rotationX = ((clientY - centerY) / centerY) * 20; // Adjust the factor for the rotation speed
@@ -82,22 +75,27 @@ const AnimatedText = () => {
 
 	return (
 		<div
-			className="sm:w-full md:w-1/3 mx-auto mt-40 relative text-container overflow-hidden flex flex-col justify-center items-center border-b-2 border-t-2 border-gray-600 border-dashed"
+			className="sm:w-full md:w-full mx-auto my-28 relative text-container overflow-hidden border-b-2 border-t-2 border-gray-600 border-dashed bg-black bg-opacity-40"
 			onMouseMove={handleMouseMove}
 		>
+			<GridLines
+				lineColor={colors.gray[400]}
+				className="h-full fixed w-full opacity-5 z-100"
+			/>
 			<div
-				className={`character-container px-20 py-4 text-gray-200 text-left relative w-full `}
+				className={`character-container px-10 text-gray-200 text-center relative w-full `}
 			>
 				<p
 					ref={characterRef}
 					style={{
 						fontFamily: "phosphate",
 						fontStyle: "inline",
-						fontSize: "3em",
+						fontSize: "6em",
 						color: colors[colorKeys[index]][400],
 					}}
 				>
-					this is {char}
+					<span className="text-gray-200 text-2xl">this is </span>
+					{char}
 				</p>
 			</div>
 		</div>

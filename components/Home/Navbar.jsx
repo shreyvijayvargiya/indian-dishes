@@ -79,7 +79,7 @@ const StickyNavbar = () => {
 
 	return (
 		<div
-			className={`fixed top-5 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
+			className={`fixed top-4 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
 		>
 			<div
 				className="flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md"
@@ -88,15 +88,9 @@ const StickyNavbar = () => {
 			>
 				<button
 					className="button-link hover:text-white hover:translate-y-10 text-yellow-600 hover:bg-blackShade text-sm px-2 rounded-md"
-					onClick={() => router.push("/introduction")}
+					onClick={() => router.push("/")}
 				>
 					home
-				</button>
-				<button
-					className="button-link hover:text-white  text-pink-600 hover:bg-blackShade text-sm px-2 rounded-full"
-					onClick={() => router.push("/introduction")}
-				>
-					it's me
 				</button>
 				<button
 					className="button-link hover:text-gray-200 text-indigo-600 hover:bg-blackShade text-sm px-2 p-1 rounded-full"
@@ -104,9 +98,6 @@ const StickyNavbar = () => {
 				>
 					work experience
 				</button>
-				<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
-					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
-				</div>
 				<button
 					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-sm px-2  p-1 rounded-full"
 					onClick={() => router.push("projects")}
@@ -119,9 +110,16 @@ const StickyNavbar = () => {
 				>
 					stacks
 				</button>
-				<span className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full">
+				<a
+					className="button-link hover:text-gray-200 text-green-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full"
+					href="https//mailto@shreyvijayvagriya26@gmail.com"
+					target="_blank"
+				>
 					say hi
-				</span>
+				</a>
+				<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
+					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
+				</div>
 			</div>
 			<div
 				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-5 ml-8 ${
@@ -144,13 +142,13 @@ export default StickyNavbar;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
-		zIndex: 50,
-		[theme.breakpoints.up("sm")]: {
-			width: "40% !important",
+		zIndex: 10,
+		[theme.breakpoints.up("lg")]: {
+			width: "35% !important",
 			margin: "auto",
 			background: (props) => !props.show && "none",
 		},
-		[theme.breakpoints.between("xs", "sm")]: {
+		[theme.breakpoints.down("lg")]: {
 			width: (props) => (props.show ? "90%" : "auto"),
 			margin: "auto",
 		},

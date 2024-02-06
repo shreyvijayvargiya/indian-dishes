@@ -2,6 +2,8 @@ import { makeStyles } from "@material-ui/core";
 import gsap from "gsap";
 import React, { useEffect, useState, useRef } from "react";
 import colors from "tailwindcss/colors";
+import { Typewriter } from "react-simple-typewriter";
+import AnimatedText from "./AnimatedText";
 
 const loaders = [
 	"hello",
@@ -20,11 +22,16 @@ const TripLoader = ({ setLoading }) => {
 	const [active, setActive] = useState(0);
 	const colorKeys = Object.keys(colors);
 	const phoneRef = useRef();
+	const welcomeScreenRef = useRef();
+	const animatedTextRef = useRef();
 
 	const tl = gsap.timeline();
-	useEffect(() => {
-		tl.fromTo(".animated-container", { width: "0%" }, { width: "100%" });
-	}, []);
+
+	const closeLoader = () => {
+		setTimeout(() => {
+			setLoading(false);
+		}, 4000);
+	};
 
 	const interval = () => {
 		return setInterval(() => {
@@ -32,47 +39,46 @@ const TripLoader = ({ setLoading }) => {
 				tl.to(phoneRef.current, {
 					scale: 1.5,
 				})
+					.to(phoneRef.current, { opacity: 0, stagger: 0.5 })
 					.fromTo(
-						".welcome-text",
-						{
-							yPercent: -50,
-							opacity: 0,
-						},
-						{
-							opacity: 1,
-							yPercent: 0,
-							delay: 1,
-						}
+						welcomeScreenRef.current,
+						{ opacity: 1 },
+						{ opacity: 0, stagger: 0.5 }
 					)
-					.to(phoneRef.current, { opacity: 0, delay: 1 })
-					.to(".welcome-text", { opacity: 1, scale: 1.2, delay: 0.5 })
-					.to(".animated-container", {
-						scale: 0,
-						width: 0,
-						opacity: 0,
-						delay: 1,
-					});
-				setLoading(false);
+					.fromTo(
+						animatedTextRef.current,
+						{ opacity: 0, xPercent: 200, yPercent: 0 },
+						{ opacity: 1, xPercent: 0, yPercent: -50 }
+					)
+					.fromTo(
+						animatedTextRef.current,
+						{ scale: 2 },
+						{
+							scale: 0.8,
+							duration: 2,
+						}
+					);
+				clearInterval(id);
+				closeLoader();
 			} else {
 				gsap.to(".loader-bg", { height: (active + 1) * 10 + "%" });
 				setActive((prev) => prev + 1);
 			}
 		}, 400);
 	};
+	const id = interval();
 
 	useEffect(() => {
-		tl.to(".welcome-text", { opacity: 0, visibility: "hidden" });
+		gsap.to(welcomeScreenRef.current, { opacity: 0 });
+		gsap.to(animatedTextRef.current, {
+			opacity: 0,
+		});
 	}, []);
 
 	useEffect(() => {
-		const id = interval();
 		const tl = gsap.timeline();
 
-		tl.fromTo(
-			".animated-text",
-			{ opacity: 0, yPercent: -20 },
-			{ opacity: 1, yPercent: 5 * active }
-		).to(phoneRef.current, {
+		tl.to(phoneRef.current, {
 			skewX: active * 2 + "deg",
 			scale: 1 + active / 20,
 			rotateX: active * 4 + "deg",
@@ -113,8 +119,21 @@ const TripLoader = ({ setLoading }) => {
 					</p>
 				</div>
 			</div>
-			<div>
-				<p className="welcome-text text-8xl text-gray-400 font-cool">Welcome</p>
+			<div className="welcome-screen w-full" ref={welcomeScreenRef}>
+				<div className="text-gray-400 font-cool text-8xl text-center welcome-text">
+					<Typewriter
+						loop={4}
+						typeSpeed={100}
+						cursor="_"
+						words={["Welcome"]}
+						onLoopDone={() => {
+							gsap.to(".welcome-text", { opacity: 0 });
+						}}
+					/>
+				</div>
+			</div>
+			<div ref={animatedTextRef} style={{ opacity: 0, width: "100%" }}>
+				<AnimatedText />
 			</div>
 		</div>
 	);
@@ -128,8 +147,8 @@ const useStyles = makeStyles((theme) => ({
 	phoneMockup: {
 		outline: `2px dashed ${colors.gray[500]}`,
 		outlineOffset: 4,
-		width: "15%",
-		height: "60vh",
+		width: "20%",
+		height: "70vh",
 		borderRadius: 40,
 		position: "absolute",
 		top: 0,

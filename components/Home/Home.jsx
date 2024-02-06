@@ -6,12 +6,16 @@ import Om from "components/Projects/TextEffects/Om";
 import TripLoader from "components/Projects/TripLoader";
 import RocketLaunch from "components/Projects/TextEffects/RocketLaunch";
 import Description from "./Description";
+import colors from "tailwindcss/colors";
+import PlayIcon from "modules/Icons/PlayIcon";
+import GridLines from "react-gridlines";
+import GithubCalenderContribution from "components/Projects/GithubCalender";
 
 const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 
@@ -45,22 +49,23 @@ const HomeComponent = () => {
 				<TripLoader setLoading={setLoading} />
 			) : (
 				<div className="w-full">
-					{" "}
-					<div className="fixed top-20 left-10">
+					<div className="fixed top-10 left-10">
 						<RocketLaunch />
 					</div>
-					<div className="fixed bottom-10 right-10">
-						<Om />
+					<div className="fixed bottom-10 left-10">
+						<GithubCalenderContribution />
 					</div>
-					<br />
-					<br />
+					<div
+						className="fixed bottom-10 right-10"
+						onClick={() => setLoading(true)}
+					>
+						<PlayIcon />
+					</div>
 					<div ref={animatedCompRef} className="w-full">
 						<AnimatedText />
-					</div>
-					<br />
-					<br />
-					<div ref={descCompRef} className="w-full">
-						<Description />
+						<div ref={descCompRef} className="w-full">
+							<Description />
+						</div>
 					</div>
 				</div>
 			)}

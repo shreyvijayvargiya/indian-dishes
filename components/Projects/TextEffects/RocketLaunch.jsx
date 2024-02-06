@@ -5,8 +5,8 @@ const RocketLaunch = () => {
 	useEffect(() => {
 		gsap.fromTo(
 			".rocket-container",
-			{ yPercent: 0, rotate: "0deg" },
-			{ yPercent: -100, repeat: -1, rotate: "180deg", duration: 2, yoyo: true }
+			{ xPercent: 0, rotate: "0deg" },
+			{ xPercent: -50, repeat: -1, rotate: "180deg", duration: 2, yoyo: true }
 		);
 	}, []);
 	return (

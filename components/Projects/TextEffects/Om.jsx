@@ -34,5 +34,8 @@ const useStyles = makeStyles((theme) => ({
 	om: {
 		color: colors.orange[300],
 		fontSize: "3em",
+		[theme.breakpoints.down("sm")]: {
+			display: "hidden",
+		},
 	},
 }));
