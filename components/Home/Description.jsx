@@ -1,4 +1,5 @@
 import gsap from "gsap";
+import router from "next/router";
 import React, { useEffect, useState } from "react";
 import useSound from "use-sound";
 
@@ -24,7 +25,10 @@ const Description = () => {
 				<div>
 					<p className="text-gray-400 hover:text-gray-100">
 						with <span className="text-orange-400">4</span> years of{" "}
-						<span className="relative text-indigo-500 cursor-pointer hover:text-indigo-400">
+						<span
+							className="relative text-indigo-500 cursor-pointer hover:text-indigo-400"
+							onClick={() => router.push("/work-experience")}
+						>
 							experience{" "}
 							<img
 								className="absolute left-0 right-0 bottom-0 top-10 underline-1"
@@ -44,7 +48,10 @@ const Description = () => {
 					<p>
 						website and mobile apps
 						{"( here is my"}
-						<span className="relative text-green-500 cursor-pointer hover:text-green-400">
+						<span
+							className="relative text-green-500 cursor-pointer hover:text-green-400"
+							onClick={() => router.push("/tech-stack")}
+						>
 							{" "}
 							tech stack
 							<img
@@ -64,7 +71,10 @@ const Description = () => {
 				<div className="text-gray-400 hover:text-gray-100">
 					<p>
 						do check my{" "}
-						<span className="relative text-pink-500 hover:text-pink-400">
+						<span
+							className="relative text-pink-500 hover:text-pink-400"
+							onClick={() => router.push("/projects")}
+						>
 							projects
 							<img
 								className="absolute left-0 right-0 bottom-0 top-10 underline-3"
@@ -103,49 +113,46 @@ const Description = () => {
 		sections.forEach((section) => {
 			tl.fromTo(
 				section,
-				{ yPercent: 100, opacity: 0, width: 0, visibility: "hidden" },
+				{ yPercent: 20, opacity: 0, width: 0, visibility: "hidden" },
 				{
-					stagger: 0.8,
+					stagger: 0.4,
 					yPercent: 0,
 					opacity: 1,
 					width: "100%",
 					visibility: "visible",
-					delay: 0.5,
+					delay: 0.1,
 				}
 			);
 		});
 	}, []);
 
-	useEffect(() => {
-		const tl = gsap.timeline();
-		tl.fromTo(
-			".active-image",
-			{ opacity: 0, scale: 0, rotate: "0deg", xPercent: -200 },
-			{ opacity: 1, scale: 1, rotate: "360deg", xPercent: 0 }
-		).fromTo(
-			".inactive-image",
-			{ opacity: 1, scale: 1, rotate: "-360deg", xPercent: 0 },
-			{ scale: 0, rotate: "0deg", xPercent: -200 }
-		);
-	}, [active]);
-
 	const handleMouseOver = (item) => {
 		setActive(item);
-		gsap.to(`.section-${item.id}`, { scale: 1.1 });
+		tl.to(`.section-${item.id}`, { scale: 1.2 });
+		tl.fromTo(
+			".centered-image",
+			{ opacity: 0, rotate: "0deg", xPercent: -200 },
+			{ opacity: 1, rotate: "360deg", xPercent: 0 }
+		);
 		play();
 	};
 
 	const handleMouseOut = (item) => {
 		setActive(null);
-		gsap.to(`.section-${item.id}`, { scale: 1 });
+		tl.to(`.section-${item.id}`, { scale: 1 });
+		tl.fromTo(
+			".centered-image",
+			{ opacity: 1, rotate: "0deg", xPercent: 0 },
+			{ rotate: "360deg", xPercent: -200, opacity: 0 }
+		);
 	};
 
 	return (
 		<div className="w-full h-full px-20">
 			<div className="fixed top-1/3 bottom-1/2 left-20">
 				{active && (
-					<div className={`${active ? "active-image" : "inactive-image"}`}>
-						<img src={active.leftImage} className="w-40 h-40" />
+					<div className={`${active ? "centered-image" : "inactive-image"}`}>
+						<img src={active?.leftImage} className="w-40 h-40" />
 					</div>
 				)}
 			</div>

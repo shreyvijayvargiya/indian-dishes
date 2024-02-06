@@ -25,11 +25,15 @@ const AnimatedText = () => {
 	};
 
 	React.useEffect(() => {
-		startShuffle();
-		gsap.from(".text-container", { scale: 0.5, yPercent: -200 });
+		gsap.fromTo(
+			".text-container",
+			{ rotateX: "-2deg", skewX: "2deg" },
+			{ rotateX: "0deg", skewX: "0deg", repeat: -1, yoyo: true }
+		);
 	}, []);
 
 	React.useEffect(() => {
+		startShuffle();
 		const intervalId = startColorInterval();
 		return () => {
 			clearInterval(intervalId);
@@ -65,7 +69,7 @@ const AnimatedText = () => {
 		const centerY = window.innerHeight / 2;
 		const rotationX = ((clientY - centerY) / centerY) * 20; // Adjust the factor for the rotation speed
 		const rotationY = ((centerX - clientX) / centerX) * 50;
-		gsap.to(".character-container", {
+		gsap.to(".text-container", {
 			rotationY,
 			rotationX,
 			scale: 1.2,
@@ -78,20 +82,19 @@ const AnimatedText = () => {
 
 	return (
 		<div
-			className="sm:w-full md:w-1/3 mx-auto relative text-container overflow-hidden flex flex-col justify-center items-center py-20"
+			className="sm:w-full md:w-1/3 mx-auto mt-40 relative text-container overflow-hidden flex flex-col justify-center items-center border-b-2 border-t-2 border-gray-600 border-dashed"
 			onMouseMove={handleMouseMove}
 		>
 			<div
-				className={`character-container px-20 py-4 text-gray-200 text-left relative border-t-2 w-full border-b-2 border-gray-600 border-dashed`}
+				className={`character-container px-20 py-4 text-gray-200 text-left relative w-full `}
 			>
 				<p
 					ref={characterRef}
 					style={{
 						fontFamily: "phosphate",
 						fontStyle: "inline",
-						fontSize: "2em",
-						background: "transparent",
-						textShadow: `0px 0px 30px ${colors[colorKeys[index]][800]}`,
+						fontSize: "3em",
+						color: colors[colorKeys[index]][400],
 					}}
 				>
 					this is {char}

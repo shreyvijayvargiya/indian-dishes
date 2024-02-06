@@ -144,7 +144,7 @@ export default StickyNavbar;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
-		zIndex: 1000,
+		zIndex: 50,
 		[theme.breakpoints.up("sm")]: {
 			width: "40% !important",
 			margin: "auto",
