@@ -52,9 +52,10 @@ const TripLoader = ({ setLoading }) => {
 					)
 					.fromTo(
 						animatedTextRef.current,
-						{ scale: 2 },
+						{ scale: 1 },
 						{
-							scale: 0.8,
+							scale: 4,
+							yPercent: 10,
 							duration: 2,
 						}
 					);

@@ -8,6 +8,8 @@ import _ from "lodash";
 import BackgroundWrapperDots from "./BgWrapper";
 import { Typewriter } from "react-simple-typewriter";
 import GridLines from "react-gridlines";
+import GithubCalenderContribution from "components/Projects/GithubCalender";
+import useSound from "use-sound";
 
 const TechStack = ({ showAnimationButtons = false }) => {
 	const images = [
@@ -35,6 +37,8 @@ const TechStack = ({ showAnimationButtons = false }) => {
 			);
 		});
 	}, []);
+
+	const [play] = useSound("./sound-clips/piano-sound.mp3", { volume: 0.6 });
 
 	useEffect(() => {
 		gsap.from(".stack-container", { scale: 0.8 });
@@ -67,6 +71,24 @@ const TechStack = ({ showAnimationButtons = false }) => {
 	}, [active]);
 
 	useEffect(() => {
+		gsap.fromTo(
+			".github-calender",
+			{ width: "0%", visibility: "hidden", height: "0%" },
+			{
+				repeat: -1,
+				duration: 4,
+				yoyo: true,
+				height: "100%",
+				visibility: "visible",
+				width: "200px",
+				borderColor: colors.gray[600],
+			}
+		);
+		gsap.fromTo(
+			".github-contribution-text",
+			{ yPercent: 50, xPercent: 10 },
+			{ yPercent: -20, repeat: -1, yoyo: true, duration: 4 }
+		);
 		bounceTheBar();
 	}, []);
 
@@ -132,9 +154,10 @@ const TechStack = ({ showAnimationButtons = false }) => {
 				lineColor={colors.gray[400]}
 				className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
 			/>
+
 			<div>
 				<div
-					className={`stack-container flex justify-evenly items-center p-4 rounded-2xl bg-black bg-opacity-5 border border-gray-500 ${styles.stackContainer}`}
+					className={`stack-container flex justify-evenly items-center p-4 rounded-2xl bg-black bg-opacity-5 border-2 border-dashed border-gray-500 ${styles.stackContainer}`}
 				>
 					{images.map((item, index) => {
 						return (
@@ -143,6 +166,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 								className={`p-2 cursor-pointer py-4`}
 								onMouseEnter={() => {
 									setActive(index);
+									play();
 									gsap.fromTo(
 										`.icon-container-${item}`,
 										{
@@ -192,7 +216,12 @@ const TechStack = ({ showAnimationButtons = false }) => {
 					<p className="text-gray-300 text-xl">{"}"}</p>
 				</div>
 			</div>
-
+			<div className="fixed left-10 bottom-10 flex justify-center items-center gap-1">
+				<div className="github-calender relative w-full h-full bg-black bg-opacity-30 rounded-xl z-50">
+					<GithubCalenderContribution />
+				</div>
+				<p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-20 border-2 border-dashed border-gray-800 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" />
+			</div>
 			<div className="moving-container text-indigo-400 flex jsutify-around items-center w-screen gap-10 group-hover:bg-black">
 				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
 					! DSA

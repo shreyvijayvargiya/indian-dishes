@@ -177,13 +177,16 @@ const Description = () => {
 			".preview-container",
 			{ opacity: 0, yPercent: 20 },
 			{ opacity: 1, yPercent: 0, delay: 0.5 }
+		).fromTo(
+			".cursor-image",
+			{ yPercent: -10, scale: 1, rotateX: "2deg" },
+			{ yPercent: 10, repeat: -1, yoyo: true, scale: 0.8, rotateX: "-2deg" }
 		);
 	}, []);
 
 	const handleMouseOver = (item) => {
 		setActive(item);
-		tl.to(`.section-${item.id}`, { scale: 1.2 });
-		tl.fromTo(
+		tl.to(`.section-${item.id}`, { scale: 1.2 }).fromTo(
 			".centered-image",
 			{ opacity: 0, rotate: "0deg", xPercent: -200 },
 			{ opacity: 1, rotate: "360deg", xPercent: 0 }
@@ -193,16 +196,25 @@ const Description = () => {
 
 	const handleMouseOut = (item) => {
 		setActive(null);
-		tl.to(`.section-${item.id}`, { scale: 1 });
-		tl.fromTo(
+		tl.to(`.section-${item.id}`, { scale: 1 }).fromTo(
 			".centered-image",
 			{ opacity: 1, rotate: "0deg", xPercent: 0 },
 			{ rotate: "360deg", xPercent: -200, opacity: 0 }
 		);
 	};
 
+	const [mousePosition, setMousePosition] = useState({
+		x: 0,
+		y: 0,
+	});
+
 	return (
-		<div className="w-full h-full">
+		<div
+			className="w-full h-full relative"
+			onMouseMoveCapture={(e) => {
+				setMousePosition({ x: e.clientX, y: e.clientY });
+			}}
+		>
 			<div className="md:w-full lg:w-1/3 mx-auto sm:w-full xxs:w-full px-10 section-container">
 				{desc.map((item) => {
 					const ContentComponent = item.content();
@@ -245,6 +257,17 @@ const Description = () => {
 					);
 				})}
 			</div> */}
+			{mousePosition.x && mousePosition.y && (
+				<div
+					style={{
+						position: "absolute",
+						top: mousePosition.y + "px",
+						left: mousePosition.x + "px",
+					}}
+				>
+					<img src="./circular-cursor.svg" className="w-40 h-40 cursor-image" />
+				</div>
+			)}
 		</div>
 	);
 };

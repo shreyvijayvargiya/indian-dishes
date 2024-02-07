@@ -28,15 +28,19 @@ const HomeComponent = () => {
 
 		tl.fromTo(
 			animatedCompRef.current,
-			{ y: "100%", opacity: 0 },
-			{ y: "0%", opacity: 1, duration: 1.5, ease: "power4.out" }
-		);
-
-		tl.fromTo(
-			descCompRef.current,
-			{ y: "50%", opacity: 0 },
-			{ y: "0%", opacity: 1, ease: "power4.out" }
-		);
+			{ opacity: 0, scale: 0 },
+			{ opacity: 1, scale: 1, delay: 1 }
+		)
+			.fromTo(
+				animatedCompRef.current,
+				{ y: "50%" },
+				{ y: "0%", duration: 1, ease: "power4.out" }
+			)
+			.fromTo(
+				descCompRef.current,
+				{ y: "20%", opacity: 0 },
+				{ y: "0%", opacity: 1, ease: "power4.out" }
+			);
 	};
 
 	return (
@@ -49,11 +53,12 @@ const HomeComponent = () => {
 				<TripLoader setLoading={setLoading} />
 			) : (
 				<div className="w-full">
+					<GridLines
+						lineColor={colors.gray[400]}
+						className="h-full fixed top-9 left-0 bottom-0 right-0 w-full opacity-5 z-100"
+					/>
 					<div className="fixed top-10 left-10">
 						<RocketLaunch />
-					</div>
-					<div className="fixed bottom-10 left-10">
-						<GithubCalenderContribution />
 					</div>
 					<div
 						className="fixed bottom-10 right-10"
