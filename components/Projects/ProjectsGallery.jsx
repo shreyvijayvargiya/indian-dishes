@@ -3,6 +3,8 @@ import { StylesProvider, makeStyles } from "@material-ui/core";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
+import { FaBars, FaList } from "react-icons/fa";
+import { IoCloseCircle, IoLogoStackoverflow } from "react-icons/io5";
 
 const projects = [
 	{
@@ -85,13 +87,16 @@ const projects = [
 const ProjectsGallery = () => {
 	const classes = useStyles();
 	const frameRef = useRef(null);
+	const bar = useRef(null);
 	const [active, setActive] = useState();
 
+	const [show, setShow] = useState(false);
+
 	return (
-		<div className="min-h-screen bg-opacity-95 bg-black w-full py-14">
+		<div className="min-h-screen bg-opacity-95 bg-black w-full py-10 flex flex-col justify-center items-center">
 			<GridLines
 				lineColor={colors.gray[400]}
-				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5 rotate-6 skew-x-12"
+				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"
 			/>
 			<div>
 				<img
@@ -167,6 +172,72 @@ const ProjectsGallery = () => {
 					)}
 				</div>
 			</div>
+			<div className={classes.mobileProjectsListContainer}>
+				{show && (
+					<div className="mobile-projects-list bg-blackBg bg-opacity-90 h-60 overflow-y-scroll m-10 rounded-xl">
+						{projects.map((project, index) => (
+							<div
+								key={index}
+								className="relative w-full my-5"
+								onClick={() => {
+									setActive(project);
+									setShow(false);
+								}}
+							>
+								<div
+									className={`px-3 cursor-pointer ${
+										active?.url === project?.url && "w-full py-2"
+									}`}
+								>
+									<p
+										className={`text-sm group ${
+											active?.url === project?.url
+												? "text-white"
+												: "text-gray-500"
+										}`}
+									>
+										#{index + 1}
+										<span
+											className={`text-md ml-2 group-hover:text-white group-hover:hidden font-sans ${
+												active?.url === project?.url
+													? "text-gray-200"
+													: "text-gray-500"
+											}`}
+										>
+											{project.title}
+										</span>
+									</p>
+								</div>
+								{active?.url === project?.url && (
+									<div className="absolute top-4 left-0 right-0 border-t border-b w-full border-dashed border-gray-800 h-1 z-0" />
+								)}
+							</div>
+						))}
+					</div>
+				)}
+				<div
+					className={`cursor-pointer rounded-full flex justify-center items-center bg-none`}
+				>
+					<div
+						className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
+						ref={bar}
+						onClick={() => {
+							setShow(!show);
+							gsap.fromTo(
+								".mobile-projects-list",
+								{ height: "0%", opacity: 0 },
+								{ height: "100%", opacity: 1 }
+							);
+						}}
+					>
+						{show ? (
+							<IoCloseCircle size={24} color={colors.gray[600]} />
+						) : (
+							<FaList size={24} color={colors.gray[600]} />
+						)}
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -180,6 +251,19 @@ const useStyles = makeStyles((theme) => ({
 		background: "",
 		border: `2px dotted ${colors.cyan[700]}`,
 		boxShadow: "0px 0px 10px rgb(150, 150, 200, 0.4)",
+		[theme.breakpoints.down("md")]: {
+			display: "none",
+		},
+	},
+	mobileProjectsListContainer: {
+		position: "fixed",
+		bottom: 10,
+		left: 0,
+		right: 0,
+		overflowY: "scroll",
+		[theme.breakpoints.up("md")]: {
+			display: "none",
+		},
 	},
 	frameContainer: {
 		width: "80%",

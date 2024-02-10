@@ -45,7 +45,7 @@ const StickyNavbar = () => {
 	};
 
 	return (
-		<div className={`fixed top-6 left-0 right-0 rounded-md px-4`}>
+		<div className={`fixed top-4 left-0 right-0 rounded-md px-4`}>
 			<div
 				className={`flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md ${styles.navbar}`}
 				ref={ref}
@@ -87,7 +87,7 @@ const StickyNavbar = () => {
 				</div>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-6 ml-8`}
+				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-4`}
 				onMouseEnter={bounceTheBar}
 			>
 				<div
