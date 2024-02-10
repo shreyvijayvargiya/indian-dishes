@@ -57,7 +57,7 @@ const TripLoader = ({ setLoading }) => {
 				});
 				setActive((prev) => prev + 1);
 			}
-		}, 1000);
+		}, 600);
 	};
 
 	const id = interval();

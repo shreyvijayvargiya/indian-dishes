@@ -11,62 +11,29 @@ const StickyNavbar = () => {
 	const ref = useRef(null);
 	const bar = useRef(null);
 	const styles = useStyles({ show });
+	const tl = gsap.timeline();
 
 	const toggleNavbar = () => {
-		const tl = gsap.timeline();
-		if (show) {
-			tl.fromTo(
-				ref.current,
-				{
-					opacity: 1,
-					scale: 0,
-					y: "-20%",
-				},
-				{ opacity: 0, scale: 0, y: "0%", duration: 0.5 }
-			);
-			tl.fromTo(
-				bar.current,
-				{ opacity: 0, rotate: "-360deg", y: "-100%" },
-				{ opacity: 1, rotate: "0deg", y: "0%" }
-			);
-			tl.fromTo(
-				".button-link",
-				{ visibility: "visible" },
-				{ visibility: "hidden" }
-			);
-		} else {
-			tl.fromTo(
-				bar.current,
-				{ rotateZ: "360deg", opacity: 1, y: "0%" },
-				{ rotateZ: "0deg", opacity: 0, y: "-100%" }
-			);
-			tl.fromTo(
-				ref.current,
-				{
-					opacity: 0,
-					scale: 0,
-					y: "-20%",
-				},
-				{
-					opacity: 1,
-					scale: 1,
-					y: "0%",
-					duration: 1,
-				}
-			);
-			tl.fromTo(
-				".button-link",
-				{ visibility: "hidden" },
-				{ visibility: "visible" }
-			);
-		}
 		setShow(!show);
+		if (show) {
+			tl.to(ref.current, { opacity: 0, duration: 0.5, yPercent: "100%" })
+				.to(bar.current, { opacity: 1, rotate: "360deg", y: "0%" })
+				.to(".button-link", { visibility: "hidden" });
+		} else {
+			tl.to(bar.current, {
+				rotateZ: "0deg",
+				opacity: 0,
+				y: "-100%",
+			})
+				.to(ref.current, {
+					opacity: 1,
+					y: "0%",
+				})
+				.to(".button-link", { visibility: "visible" });
+		}
 	};
 
-	useEffect(() => {
-		gsap.to(bar.current, { opacity: show ? 0 : 1 });
-		gsap.to(ref.current, { opacity: show ? 1 : 0 });
-	}, [show]);
+	useEffect(() => {}, [show]);
 
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
