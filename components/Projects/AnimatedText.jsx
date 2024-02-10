@@ -5,7 +5,7 @@ import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
 
 const AnimatedText = () => {
-	const [char, setChar] = useState("Shrey Vijayvargiya");
+	const [char, setChar] = useState("Shrey");
 	const colorKeys = Object.keys(colors);
 	const [index, setIndex] = useState(0);
 	const characterRef = useRef();
@@ -17,7 +17,7 @@ const AnimatedText = () => {
 			} else {
 				setIndex(index + 1);
 			}
-		}, 2000);
+		}, 200);
 	};
 
 	React.useEffect(() => {
@@ -53,7 +53,7 @@ const AnimatedText = () => {
 				clearInterval(interval);
 				setChar(originalChars);
 			}
-		}, 100);
+		}, 2000);
 	};
 
 	const handleMouseMove = (event) => {

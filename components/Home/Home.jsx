@@ -15,7 +15,7 @@ const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 
@@ -52,7 +52,7 @@ const HomeComponent = () => {
 			{loading ? (
 				<TripLoader setLoading={setLoading} />
 			) : (
-				<div className="w-full">
+				<div className="w-full" style={{ backgroundImage: "url()" }}>
 					<GridLines
 						lineColor={colors.gray[400]}
 						className="h-full fixed top-9 left-0 bottom-0 right-0 w-full opacity-5 z-100"

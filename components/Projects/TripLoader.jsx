@@ -3,27 +3,24 @@ import gsap from "gsap";
 import React, { useEffect, useState, useRef } from "react";
 import colors from "tailwindcss/colors";
 import { Typewriter } from "react-simple-typewriter";
-import AnimatedText from "./AnimatedText";
 
 const loaders = [
-	"hello",
 	"namaste",
-	"frontend",
-	"dev",
-	"programming",
-	"css",
-	"github",
-	"vercel",
-	"firebase",
-	"supabase",
-	"backend",
+	"hello",
+	"bonjour",
+	"I am shrey",
+	"a software developer",
+	"with 4 ",
+	"years of experience.",
+	"I develop",
+	"website and",
+	"mobile apps",
 ];
 const TripLoader = ({ setLoading }) => {
 	const [active, setActive] = useState(0);
 	const colorKeys = Object.keys(colors);
 	const phoneRef = useRef();
 	const welcomeScreenRef = useRef();
-	const animatedTextRef = useRef();
 
 	const tl = gsap.timeline();
 
@@ -40,47 +37,41 @@ const TripLoader = ({ setLoading }) => {
 					scale: 1.5,
 				})
 					.to(phoneRef.current, { opacity: 0, stagger: 0.5 })
+					.fromTo(welcomeScreenRef.current, { opacity: 0 }, { opacity: 1 })
 					.fromTo(
-						welcomeScreenRef.current,
-						{ opacity: 1 },
-						{ opacity: 0, stagger: 0.5 }
-					)
-					.fromTo(
-						animatedTextRef.current,
-						{ opacity: 0, xPercent: 200, yPercent: 0 },
-						{ opacity: 1, xPercent: 0, yPercent: -50 }
-					)
-					.fromTo(
-						animatedTextRef.current,
-						{ scale: 1 },
+						".animated-container",
+						{ backgroundColor: "rgb(0, 0, 0, 1)", opacity: 1 },
 						{
-							scale: 4,
-							yPercent: 10,
+							skewX: "2deg",
+							opacity: 0,
+							backgroundColor: "rgb(0, 0, 0, 0.2)",
 							duration: 2,
+							delay: 1,
 						}
 					);
 				clearInterval(id);
 				closeLoader();
 			} else {
-				gsap.to(".loader-bg", { height: (active + 1) * 10 + "%" });
+				gsap.to(".loader-bg", {
+					height: (active + 2) * 10 + "%",
+					textAlign: "center",
+				});
 				setActive((prev) => prev + 1);
 			}
-		}, 400);
+		}, 1000);
 	};
+
 	const id = interval();
 
 	useEffect(() => {
-		gsap.to(welcomeScreenRef.current, { opacity: 0 });
-		gsap.to(animatedTextRef.current, {
-			opacity: 0,
-		});
+		gsap.set(welcomeScreenRef.current, { opacity: 0 });
 	}, []);
 
 	useEffect(() => {
 		const tl = gsap.timeline();
 
 		tl.to(phoneRef.current, {
-			skewX: active * 2 + "deg",
+			skewX: active + "px",
 			scale: 1 + active / 20,
 			rotateX: active * 4 + "deg",
 			transformOrigin: "50% 50%",
@@ -96,7 +87,7 @@ const TripLoader = ({ setLoading }) => {
 		<div
 			className="animated-container place-content-center flex flex-col justify-center items-center fixed top-0 left-0 right-0 bottom-0"
 			style={{
-				color: colors[colorKeys[active]],
+				color: colors[colorKeys[active + 1]],
 				backgroundColor: "rgb(0, 0, 0)",
 				zIndex: 100,
 			}}
@@ -112,29 +103,18 @@ const TripLoader = ({ setLoading }) => {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
-						backgroundColor: colors[colorKeys[active]][600],
+						backgroundColor: colors[colorKeys[active + 1]][600],
 					}}
 				>
-					<p className="text-4xl font-mono animated-text z-30">
+					<p className="text-4xl font-sans animated-text z-30">
 						{loaders[active]}
 					</p>
 				</div>
 			</div>
-			<div className="welcome-screen w-full" ref={welcomeScreenRef}>
-				<div className="text-gray-400 font-cool text-8xl text-center welcome-text">
-					<Typewriter
-						loop={4}
-						typeSpeed={100}
-						cursor="_"
-						words={["Welcome"]}
-						onLoopDone={() => {
-							gsap.to(".welcome-text", { opacity: 0 });
-						}}
-					/>
+			<div className="welcome-screen w-full none" ref={welcomeScreenRef}>
+				<div className="text-gray-400 font-cool text-8xl text-center">
+					<Typewriter loop={1} typeSpeed={100} cursor="." words={["Welcome"]} />
 				</div>
-			</div>
-			<div ref={animatedTextRef} style={{ opacity: 0, width: "100%" }}>
-				<AnimatedText />
 			</div>
 		</div>
 	);

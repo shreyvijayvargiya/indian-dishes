@@ -43,16 +43,16 @@ const PlayIcon = () => {
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="-51.2 -51.2 614.40 614.40"
 					stroke="#6f5cff"
-					stroke-width="6.144"
+					strokeWidth="6.144"
 					transform="rotate(0)"
 				>
-					<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+					<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 					<g
 						id="SVGRepo_tracerCarrier"
-						stroke-linecap="round"
-						stroke-linejoin="round"
+						strokeLinecap="round"
+						strokeLinejoin="round"
 						stroke="#CCCCCC"
-						stroke-width="24.576"
+						strokeWidth="24.576"
 					>
 						{" "}
 						<g>

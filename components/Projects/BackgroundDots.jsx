@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 
-const BackgroundDots = (props) => {
+const BackgroundDots = ({ pauseAnimation }) => {
 	const colorKeys = Object.keys(colors);
 
 	useEffect(() => {
@@ -10,7 +10,6 @@ const BackgroundDots = (props) => {
 			gsap.fromTo(
 				`.dot-${item}`,
 				{
-					// x: () => "-" + Math.random() * window.innerWidth,
 					y: "0%",
 					scale: 0.4,
 					ease: "power2.out",
@@ -18,7 +17,6 @@ const BackgroundDots = (props) => {
 						colors[colorKeys[Math.floor(Math.random() * 25)]][400],
 				},
 				{
-					// x: 0,
 					y: "100%",
 					stagger: 0.5,
 					repeat: -1,
