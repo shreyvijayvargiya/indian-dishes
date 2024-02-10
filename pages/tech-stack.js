@@ -1,9 +1,5 @@
 import React from "react";
 import TechStack from "components/TechStack";
 
-const HomePage = () => (
-	<div className="h-full w-full">
-		<TechStack />
-	</div>
-);
+const HomePage = () => <TechStack />;
 export default HomePage;

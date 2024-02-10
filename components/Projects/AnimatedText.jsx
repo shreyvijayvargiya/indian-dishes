@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
+import { useMediaQuery } from "@material-ui/core";
 
 const AnimatedText = () => {
 	const [char, setChar] = useState("Shrey");
@@ -73,6 +74,8 @@ const AnimatedText = () => {
 
 	const styles = useStyles({ colorKeys, index });
 
+	const isMobile = useMediaQuery("min-width: 600px");
+
 	return (
 		<div className="sm:w-full md:w-full mx-auto " onMouseMove={handleMouseMove}>
 			<div>
@@ -94,7 +97,7 @@ const AnimatedText = () => {
 						style={{
 							fontFamily: "phosphate",
 							fontStyle: "inline",
-							fontSize: "6em",
+							fontSize: isMobile ? "2em": "6em",
 							color: colors[colorKeys[index]][400],
 						}}
 					>

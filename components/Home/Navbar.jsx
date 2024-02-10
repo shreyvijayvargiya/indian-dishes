@@ -7,7 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import router from "next/router";
 
 const StickyNavbar = () => {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const ref = useRef(null);
 	const bar = useRef(null);
 	const styles = useStyles({ show });
@@ -45,11 +45,9 @@ const StickyNavbar = () => {
 	};
 
 	return (
-		<div
-			className={`fixed bottom-6 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
-		>
+		<div className={`fixed top-6 left-0 right-0 rounded-md px-4`}>
 			<div
-				className="flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md"
+				className={`flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md ${styles.navbar}`}
 				ref={ref}
 				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.2)" }}
 			>
@@ -89,7 +87,7 @@ const StickyNavbar = () => {
 				</div>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 bottom-6 ml-8`}
+				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-6 ml-8`}
 				onMouseEnter={bounceTheBar}
 			>
 				<div
@@ -116,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
 		[theme.breakpoints.down("lg")]: {
 			width: (props) => (props.show ? "90%" : "auto"),
 			margin: "auto",
+			display: "flex",
+			flexDirection: "column",
+			textAlign: "left",
 		},
 	},
 }));

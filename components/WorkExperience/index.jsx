@@ -66,7 +66,6 @@ const WorkExperience = () => {
 	const waveRef = useRef();
 
 	const [percent, setPercent] = useState(5);
-	const [activeIndex, setActiveIndex] = useState(0);
 
 	useEffect(() => {
 		const sections = gsap.utils.toArray(".list-container .section");
@@ -123,17 +122,20 @@ const WorkExperience = () => {
 						return (
 							<section key={item.date} className={`${styles.section} section `}>
 								<div className={`${styles.card} card-${index}`}>
-									<p className={`text-5xl font-serif font-semibold `}>
+									<p
+										className={`text-2xl sm:text-md font-serif font-semibold `}
+									>
 										{item.name}
 									</p>
 									<p className="text font-thin">{item.date}</p>
-									<ol className="list-disc ml-10 my-4">
+									<ol className="list-disc ml-10 my-4 text-sm sm:text-xs">
 										{item.content.split(".").map((content, index) => {
 											return content ? <li key={index}>{content}</li> : null;
 										})}
 									</ol>
-									<div className="absolute bottom-10">
-										<p className="text-4xl uppercase font-mono font-bold">
+									<br />
+									<div className="">
+										<p className="text-xl sm:text-md uppercase font-mono font-bold">
 											{item.companyName}
 										</p>
 									</div>
@@ -143,7 +145,7 @@ const WorkExperience = () => {
 					})}
 				</div>
 			</div>
-			<div className="live-time fixed right-10 top-8">
+			<div className="live-time fixed right-10 top-8 md:none sm:none lg:block xxs:none xs:none">
 				<LiveTime />
 			</div>
 			<div className={`fixed bottom-10 left-0 right-0 w-full`}>
@@ -165,22 +167,25 @@ export default WorkExperience;
 
 const useStyles = makeStyles((theme) => ({
 	listContainer: {
-		width: "500vh",
+		width: "200%",
 		height: "100vh",
 		overflowY: "hidden",
 	},
 	section: {
-		width: "100vw",
+		width: "80%",
 		display: "flex",
 		justifyContent: "center",
 		alignContent: "center",
 		flexDirection: "column",
-		padding: theme.spacing(10),
+		padding: theme.spacing(2),
+		[theme.breakpoints.down("sm")]: {
+			padding: theme.spacing(1),
+		},
 	},
 	card: {
-		width: "90%",
-		height: "440px",
-		padding: theme.spacing(10),
+		width: "75%",
+		height: "100%",
+		padding: theme.spacing(5),
 		margin: "auto",
 		position: "relative",
 		cursor: "pointer",
@@ -198,6 +203,12 @@ const useStyles = makeStyles((theme) => ({
 			transform: "rotateZ(0deg) translateY(0px)",
 		},
 		transition: "all 0.5s ease",
+		[theme.breakpoints.down("md")]: {
+			padding: theme.spacing(1),
+			height: "50vh !important",
+			overflowY: "scroll",
+			width: "100%"
+		},
 	},
 	wave: {
 		border: `1px dotted ${colors.pink[300]}`,

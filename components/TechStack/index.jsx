@@ -2,16 +2,27 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "@mantine/core";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
-import BackgroundDots from "components/Projects/BackgroundDots";
 import { makeStyles } from "@material-ui/core";
 import _ from "lodash";
-import BackgroundWrapperDots from "./BgWrapper";
 import { Typewriter } from "react-simple-typewriter";
 import GridLines from "react-gridlines";
 import GithubCalenderContribution from "components/Projects/GithubCalender";
 import useSound from "use-sound";
 
 const TechStack = ({ showAnimationButtons = false }) => {
+	const stacks = [
+		"! DSA",
+		"% express.js",
+		"+ vercel",
+		"- next.js",
+		"* supabase",
+		"! astro",
+		"& tailwind-css",
+		"# animations",
+		"[npm]",
+		"@ api",
+		"( github )",
+	];
 	const images = [
 		"javascript",
 		"nodejs",
@@ -132,13 +143,13 @@ const TechStack = ({ showAnimationButtons = false }) => {
 		).fromTo(
 			".moving-container",
 			{
-				xPercent: -10,
+				xPercent: 0,
 			},
 			{
-				xPercent: 10,
-				duration: 5,
-				yoyo: true,
+				xPercent: -2,
+				duration: 10,
 				repeat: -1,
+				yoyo: true,
 			}
 		);
 	};
@@ -157,7 +168,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 
 			<div>
 				<div
-					className={`stack-container flex justify-evenly items-center p-4 rounded-2xl bg-black bg-opacity-5 border-2 border-dashed border-gray-500 ${styles.stackContainer}`}
+					className={`stack-container flex md:flex-row justify-evenly my-10 items-center p-4 rounded-2xl bg-black bg-opacity-5 border-2 border-dashed border-gray-500 ${styles.stackContainer}`}
 				>
 					{images.map((item, index) => {
 						return (
@@ -191,7 +202,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 								}}
 							>
 								<img
-									className={`border border-gray-500 hover:border-gray-500 w-20 h-20 object-contain bg-blend-darken rounded-2xl icon-container-${item}
+									className={`border border-gray-500 hover:border-gray-500 md:w-20 md:h-20 sm:h-10 sm:w-10 xxs:h-8 xxs:w-8 xs:w-8 xs:h-8 object-contain bg-blend-darken rounded-2xl icon-container-${item}
 								image-item-${index}`}
 									src={`./logos/${item}.svg`}
 								/>
@@ -204,9 +215,6 @@ const TechStack = ({ showAnimationButtons = false }) => {
 						);
 					})}
 				</div>
-				<br />
-				<br />
-				<br />
 				<div className="flex justify-center items-center gap-1 text-4xl text-blue-400 my-10 fixed bottom-10 left-0 right-0 mx-auto">
 					<p className="text-gray-300 text-xl">{"{"}</p>
 
@@ -216,46 +224,24 @@ const TechStack = ({ showAnimationButtons = false }) => {
 					<p className="text-gray-300 text-xl">{"}"}</p>
 				</div>
 			</div>
-			<div className="fixed left-10 bottom-10 flex justify-center items-center gap-1">
-				<div className="github-calender relative w-full h-full bg-black bg-opacity-30 rounded-xl z-50">
+			<div className="fixed left-10 bottom-10 flex justify-center items-center gap-1 md:block sm:hidden xxs:hidden xs:hidden">
+				<div className="github-calender relative w-full h-full bg-black bg-opacity-30 rounded-xl z-50 ">
 					<GithubCalenderContribution />
+					<span className="text-gray-400 text-xs w-full">
+						Github contributions
+					</span>
 				</div>
 				<p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-20 border-2 border-dashed border-gray-800 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" />
 			</div>
-			<div className="moving-container text-indigo-400 flex jsutify-around items-center w-screen gap-10 group-hover:bg-black">
-				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					! DSA
-				</div>
-				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					% express.js
-				</div>
-				<div className="text-xs text-brown-400 py-2 px-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					+ vercel
-				</div>
-				<div className="text-2 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					- next.js
-				</div>
-				<div className="text-3 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					* supabase
-				</div>
-				<div className="text-4 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					! astro
-				</div>
-				<div className="text-5 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					& tailwind-css
-				</div>
-				<div className="text-6 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					# animations
-				</div>
-				<div className="text-7 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					{"["} npm {"]"}
-				</div>
-				<div className="text-8 text-brown-400 text-xs py-2 px-4 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					@ api
-				</div>
-				<div className="text-9 text-brown-400 text-xs p-2 hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl">
-					( github )
-				</div>
+			<div className="moving-container text-indigo-400 flex justify-around items-center w-full gap-10 group-hover:bg-black md:flex-row overflow-hidden">
+				{stacks.map((item) => (
+					<div
+						key={item}
+						className="text-x w-full text-brown-400 py-2 text-center hover:bg-gray-900 cursor-pointer hover:text-white border-dotted border-2 border-gray-700 rounded-xl"
+					>
+						{item}
+					</div>
+				))}
 			</div>
 			{showAnimationButtons && (
 				<div className="flex justify-evenly items-center gap-4">
@@ -275,6 +261,7 @@ export default TechStack;
 
 const useStyles = makeStyles((theme) => ({
 	stackContainer: {
+		width: "100%",
 		boxShadow: "0px 0px 50px rgb(255, 255, 255, 0.2)",
 		transition: "all 0.5s ease",
 		"&:hover": {
