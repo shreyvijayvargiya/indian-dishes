@@ -27,7 +27,7 @@ const TripLoader = ({ setLoading }) => {
 	const closeLoader = () => {
 		setTimeout(() => {
 			setLoading(false);
-		}, 4000);
+		}, 2000);
 	};
 
 	const interval = () => {
@@ -46,11 +46,10 @@ const TripLoader = ({ setLoading }) => {
 							opacity: 0,
 							backgroundColor: "rgb(0, 0, 0, 0.2)",
 							duration: 2,
-							delay: 1,
 						}
 					);
-				clearInterval(id);
-				closeLoader();
+					clearInterval(id);
+					closeLoader();
 			} else {
 				gsap.to(".loader-bg", {
 					height: (active + 2) * 10 + "%",

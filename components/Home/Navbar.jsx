@@ -66,7 +66,7 @@ const StickyNavbar = () => {
 	useEffect(() => {
 		gsap.to(bar.current, { opacity: show ? 0 : 1 });
 		gsap.to(ref.current, { opacity: show ? 1 : 0 });
-	}, []);
+	}, [show]);
 
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
@@ -79,12 +79,12 @@ const StickyNavbar = () => {
 
 	return (
 		<div
-			className={`fixed top-4 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
+			className={`fixed bottom-6 left-0 right-0 rounded-md px-4 ${styles.navbar}`}
 		>
 			<div
 				className="flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md"
 				ref={ref}
-				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.1)" }}
+				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.2)" }}
 			>
 				<button
 					className="button-link hover:text-white hover:translate-y-10 text-yellow-600 hover:bg-blackShade text-sm px-2 rounded-md"
@@ -100,13 +100,13 @@ const StickyNavbar = () => {
 				</button>
 				<button
 					className="button-link hover:text-gray-200 text-orange-600 hover:bg-blackShade text-sm px-2  p-1 rounded-full"
-					onClick={() => router.push("projects")}
+					onClick={() => router.push("/projects")}
 				>
 					playground
 				</button>
 				<button
-					className="button-link hover:text-gray-200 text-gray-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full"
-					onClick={() => router.push("tech-stack")}
+					className="button-link hover:text-gray-200 text-pink-600 hover:bg-blackShade text-sm px-2  z-100 p-1 rounded-full"
+					onClick={() => router.push("/tech-stack")}
 				>
 					stacks
 				</button>
@@ -122,9 +122,7 @@ const StickyNavbar = () => {
 				</div>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-5 ml-8 ${
-					show ? "none" : "block"
-				}`}
+				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 bottom-6 ml-8`}
 				onMouseEnter={bounceTheBar}
 			>
 				<div

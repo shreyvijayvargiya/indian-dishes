@@ -17,7 +17,7 @@ const AnimatedText = () => {
 			} else {
 				setIndex(index + 1);
 			}
-		}, 200);
+		}, 400);
 	};
 
 	React.useEffect(() => {
@@ -53,7 +53,7 @@ const AnimatedText = () => {
 				clearInterval(interval);
 				setChar(originalChars);
 			}
-		}, 2000);
+		}, 3000);
 	};
 
 	const handleMouseMove = (event) => {
@@ -62,7 +62,7 @@ const AnimatedText = () => {
 		const centerY = window.innerHeight / 2;
 		const rotationX = ((clientY - centerY) / centerY) * 20; // Adjust the factor for the rotation speed
 		const rotationY = ((centerX - clientX) / centerX) * 50;
-		gsap.to(".text-container", {
+		gsap.to([".text-container", ".user-avatar"], {
 			rotationY,
 			rotationX,
 			scale: 1.2,
@@ -74,29 +74,34 @@ const AnimatedText = () => {
 	const styles = useStyles({ colorKeys, index });
 
 	return (
-		<div
-			className="sm:w-full md:w-full mx-auto my-28 relative text-container overflow-hidden border-b-2 border-t-2 border-gray-600 border-dashed bg-black bg-opacity-40"
-			onMouseMove={handleMouseMove}
-		>
-			<GridLines
-				lineColor={colors.gray[400]}
-				className="h-full fixed w-full opacity-5 z-100"
-			/>
-			<div
-				className={`character-container px-10 text-gray-200 text-center relative w-full `}
-			>
-				<p
-					ref={characterRef}
-					style={{
-						fontFamily: "phosphate",
-						fontStyle: "inline",
-						fontSize: "6em",
-						color: colors[colorKeys[index]][400],
-					}}
+		<div className="sm:w-full md:w-full mx-auto " onMouseMove={handleMouseMove}>
+			<div>
+				<img
+					src="./avatar.png"
+					className="w-20 h-20 mx-auto m-10 user-avatar"
+				/>
+			</div>
+			<div className="border-b-2 border-t-2 border-gray-600 border-dashed bg-black bg-opacity-40 my-10 relative text-container overflow-hidden">
+				<GridLines
+					lineColor={colors.gray[400]}
+					className="h-full fixed w-full opacity-5 z-100"
+				/>
+				<div
+					className={`character-container px-10 text-gray-200 text-center relative w-full `}
 				>
-					<span className="text-gray-200 text-2xl">this is </span>
-					{char}
-				</p>
+					<p
+						ref={characterRef}
+						style={{
+							fontFamily: "phosphate",
+							fontStyle: "inline",
+							fontSize: "6em",
+							color: colors[colorKeys[index]][400],
+						}}
+					>
+						<span className="text-gray-200 text-2xl my-20">this is </span>
+						{char}
+					</p>
+				</div>
 			</div>
 		</div>
 	);

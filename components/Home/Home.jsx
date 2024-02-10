@@ -52,14 +52,11 @@ const HomeComponent = () => {
 			{loading ? (
 				<TripLoader setLoading={setLoading} />
 			) : (
-				<div className="w-full" style={{ backgroundImage: "url()" }}>
+				<div className="w-full">
 					<GridLines
 						lineColor={colors.gray[400]}
-						className="h-full fixed top-9 left-0 bottom-0 right-0 w-full opacity-5 z-100"
+						className="h-full fixed top-0 left-0 bottom-0 right-0 w-full opacity-5 z-100"
 					/>
-					<div className="fixed top-10 left-10">
-						<RocketLaunch />
-					</div>
 					<div
 						className="fixed bottom-10 right-10"
 						onClick={() => setLoading(true)}
