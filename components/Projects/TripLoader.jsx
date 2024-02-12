@@ -48,7 +48,6 @@ const TripLoader = ({ setLoading }) => {
 							duration: 2,
 						}
 					);
-					clearInterval(id);
 					closeLoader();
 			} else {
 				gsap.to(".loader-bg", {
@@ -102,7 +101,7 @@ const TripLoader = ({ setLoading }) => {
 						display: "flex",
 						justifyContent: "center",
 						alignItems: "center",
-						backgroundColor: colors[colorKeys[active + 1]][600],
+						backgroundColor: colors[colorKeys[active]][600],
 					}}
 				>
 					<p className="text-4xl font-sans animated-text z-30">

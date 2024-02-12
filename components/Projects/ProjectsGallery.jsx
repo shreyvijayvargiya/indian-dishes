@@ -88,7 +88,7 @@ const ProjectsGallery = () => {
 	const classes = useStyles();
 	const frameRef = useRef(null);
 	const bar = useRef(null);
-	const [active, setActive] = useState();
+	const [active, setActive] = useState(projects[0]);
 
 	const [show, setShow] = useState(false);
 
@@ -249,7 +249,7 @@ const useStyles = makeStyles((theme) => ({
 		margin: 10,
 		borderRadius: 10,
 		background: "",
-		border: `2px dotted ${colors.cyan[700]}`,
+		border: `2px dotted ${colors.gray[600]}`,
 		boxShadow: "0px 0px 10px rgb(150, 150, 200, 0.4)",
 		[theme.breakpoints.down("md")]: {
 			display: "none",

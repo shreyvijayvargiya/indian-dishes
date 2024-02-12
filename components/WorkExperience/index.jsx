@@ -80,6 +80,7 @@ const WorkExperience = () => {
 				end: () => `${(sections.length - 1) * 100}vh`,
 				scrub: 1,
 				pin: true,
+				markers: true,
 				onUpdate: (self) => {
 					const progress = self.progress;
 					setPercent(progress);
@@ -109,7 +110,7 @@ const WorkExperience = () => {
 	const activeNum = getActiveIndex(percent * 100);
 
 	return (
-		<div className="work-experience-container mx-auto overflow-x-hidden relative w-full bg-black bg-opacity-95">
+		<div className="work-experience-container mx-auto overflow-x-hidden relative w-full bg-black bg-opacity-95 h-full">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
@@ -145,10 +146,10 @@ const WorkExperience = () => {
 					})}
 				</div>
 			</div>
-			<div className="live-time fixed right-10 top-8 md:none sm:none lg:block xxs:none xs:none">
+			<div className="live-time absolute right-10 top-8 md:none sm:none lg:block xxs:none xs:none">
 				<LiveTime />
 			</div>
-			<div className={`fixed bottom-10 left-0 right-0 w-full`}>
+			<div className={`absolute bottom-10 left-0 right-0 w-full`}>
 				<p className="text-orange-300 font-serif m-2">
 					{activeNum} {percent * 100}
 				</p>
@@ -207,7 +208,7 @@ const useStyles = makeStyles((theme) => ({
 			padding: theme.spacing(1),
 			height: "50vh !important",
 			overflowY: "scroll",
-			width: "100%"
+			width: "100%",
 		},
 	},
 	wave: {

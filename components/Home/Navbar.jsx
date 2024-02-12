@@ -82,21 +82,28 @@ const StickyNavbar = () => {
 				>
 					say hi
 				</a>
-				<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
-					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
-				</div>
 			</div>
 			<div
-				className={`cursor-pointer rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-4`}
+				className={`rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-4`}
 				onMouseEnter={bounceTheBar}
 			>
-				<div
-					className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
-					ref={bar}
-					onClick={toggleNavbar}
-				>
-					<FaBars size={24} color={colors.gray[600]} />
-				</div>
+				{!show ? (
+					<div
+						className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
+						ref={bar}
+						onClick={toggleNavbar}
+					>
+						<FaBars size={24} color={colors.gray[600]} />
+					</div>
+				) : (
+					<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
+						<IoClose
+							size={24}
+							color={colors.gray[600]}
+							onClick={toggleNavbar}
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	);

@@ -49,7 +49,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 		});
 	}, []);
 
-	const [play] = useSound("./sound-clips/piano-sound.mp3", { volume: 0.6 });
+	const [play] = useSound("./sound-clips/piano-sound.mp3", { volume: 0.2 });
 
 	useEffect(() => {
 		gsap.from(".stack-container", { scale: 0.8 });
@@ -215,7 +215,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 						);
 					})}
 				</div>
-				<div className="flex justify-center items-center gap-1 text-4xl text-blue-400 my-10 fixed bottom-10 left-0 right-0 mx-auto">
+				<div className="flex justify-center items-center gap-1 text-4xl text-blue-400 my-10 absolute bottom-10 left-0 right-0 mx-auto">
 					<p className="text-gray-300 text-xl">{"{"}</p>
 
 					<div className="tech-stack-text text-xl">
@@ -224,14 +224,14 @@ const TechStack = ({ showAnimationButtons = false }) => {
 					<p className="text-gray-300 text-xl">{"}"}</p>
 				</div>
 			</div>
-			<div className="fixed left-10 bottom-10 flex justify-center items-center gap-1 md:block sm:hidden xxs:hidden xs:hidden">
+			<div className="absolute left-10 bottom-10 flex justify-center items-center gap-1 md:block sm:hidden xxs:hidden xs:hidden">
 				<div className="github-calender relative w-full h-full bg-black bg-opacity-30 rounded-xl z-50 ">
 					<GithubCalenderContribution />
 					<span className="text-gray-400 text-xs w-full">
 						Github contributions
 					</span>
 				</div>
-				<p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-20 border-2 border-dashed border-gray-800 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" />
+				<p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-90 border border-dashed border-gray-900 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" />
 			</div>
 			<div className="moving-container text-indigo-400 flex justify-around items-center w-full gap-10 group-hover:bg-black md:flex-row overflow-hidden">
 				{stacks.map((item) => (

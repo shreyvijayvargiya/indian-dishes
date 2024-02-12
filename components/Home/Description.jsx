@@ -260,7 +260,7 @@ const Description = () => {
 			{mousePosition.x && mousePosition.y && (
 				<div
 					style={{
-						position: "absolute",
+						position: "fixed",
 						top: mousePosition.y + "px",
 						left: mousePosition.x + "px",
 					}}

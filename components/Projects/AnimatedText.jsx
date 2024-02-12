@@ -30,31 +30,29 @@ const AnimatedText = () => {
 	}, []);
 
 	React.useEffect(() => {
-		startShuffle();
+		const shuffleIntervalId = startShuffle();
 		const intervalId = startColorInterval();
 		return () => {
 			clearInterval(intervalId);
+			clearInterval(shuffleIntervalId);
 		};
 	}, [index]);
 
 	const startShuffle = () => {
 		let str = char.trim(" ").split("");
-		let interval = null;
 		let chars = "ykrQn";
 		let originalChars = "Shrey";
 		let index = 0;
 
-		clearInterval(interval);
-		interval = setInterval(() => {
+		return setInterval(() => {
 			if (index < char.length - 1) {
-				str[index] = chars[Math.floor(Math.random() * 26) - 1];
+				str[index] = chars[Math.floor(Math.random() * 5) - 1];
 				setChar(str.join(""));
 				index = index + 1;
 			} else if (index === char.length - 1) {
-				clearInterval(interval);
 				setChar(originalChars);
 			}
-		}, 3000);
+		}, 500);
 	};
 
 	const handleMouseMove = (event) => {
@@ -84,20 +82,18 @@ const AnimatedText = () => {
 					className="w-20 h-20 mx-auto m-10 user-avatar"
 				/>
 			</div>
-			<div className="border-b-2 border-t-2 border-gray-600 border-dashed bg-black bg-opacity-40 my-10 relative text-container overflow-hidden">
-				<GridLines
-					lineColor={colors.gray[400]}
-					className="h-full fixed w-full opacity-5 z-100"
-				/>
+
+			<div className="border-b border-t border-gray-700 border-dashed my-10 relative text-container overflow-hidden">
 				<div
 					className={`character-container px-10 text-gray-200 text-center relative w-full `}
+					onMouseOver={startShuffle}
 				>
 					<p
 						ref={characterRef}
 						style={{
 							fontFamily: "phosphate",
 							fontStyle: "inline",
-							fontSize: isMobile ? "2em": "6em",
+							fontSize: isMobile ? "2em" : "6em",
 							color: colors[colorKeys[index]][400],
 						}}
 					>
