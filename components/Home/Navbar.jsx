@@ -14,7 +14,6 @@ const StickyNavbar = () => {
 	const tl = gsap.timeline();
 
 	const toggleNavbar = () => {
-		setShow(!show);
 		if (show) {
 			tl.to(ref.current, { opacity: 0, duration: 0.5, yPercent: "100%" })
 				.to(bar.current, { opacity: 1, rotate: "360deg", y: "0%" })
@@ -31,9 +30,14 @@ const StickyNavbar = () => {
 				})
 				.to(".button-link", { visibility: "visible" });
 		}
+		setShow(!show);
 	};
 
-	useEffect(() => {}, [show]);
+	useEffect(() => {
+		tl.to(ref.current, { opacity: show ? 1 : 0 }).to(bar.current, {
+			opacity: show ? 0 : 1,
+		});
+	}, [show]);
 
 	const bounceTheBar = () => {
 		const tl = gsap.timeline();
@@ -81,29 +85,26 @@ const StickyNavbar = () => {
 					target="_blank"
 				>
 					say hi
-				</a>
+				</a>{" "}
+				<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
+					<IoClose size={24} color={colors.gray[600]} onClick={toggleNavbar} />
+				</div>
 			</div>
 			<div
 				className={`rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-4`}
 				onMouseEnter={bounceTheBar}
+				ref={bar}
 			>
-				{!show ? (
-					<div
-						className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
-						ref={bar}
-						onClick={toggleNavbar}
-					>
-						<FaBars size={24} color={colors.gray[600]} />
-					</div>
-				) : (
-					<div className="border border-gray-500 rounded-full hover:border-gray-300 cursor-pointer">
-						<IoClose
-							size={24}
-							color={colors.gray[600]}
-							onClick={toggleNavbar}
-						/>
-					</div>
-				)}
+				<div
+					className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
+					onClick={toggleNavbar}
+				>
+					<FaBars
+						size={24}
+						color={colors.gray[600]}
+						className={styles.barIcon}
+					/>
+				</div>
 			</div>
 		</div>
 	);
@@ -122,8 +123,13 @@ const useStyles = makeStyles((theme) => ({
 			width: (props) => (props.show ? "90%" : "auto"),
 			margin: "auto",
 			display: "flex",
-			flexDirection: "column",
+			flexDirection: "row",
 			textAlign: "left",
+		},
+	},
+	barIcon: {
+		"&:hover": {
+			borderColor: colors.gray[400],
 		},
 	},
 }));
