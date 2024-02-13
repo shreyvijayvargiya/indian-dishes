@@ -35,6 +35,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 
 	const [active, setActive] = useState(0);
 	let innerWidth;
+	const tl = gsap.timeline();
 
 	useEffect(() => {
 		innerWidth = window?.innerWidth;
@@ -52,54 +53,39 @@ const TechStack = ({ showAnimationButtons = false }) => {
 	const [play] = useSound("./sound-clips/piano-sound.mp3", { volume: 0.2 });
 
 	useEffect(() => {
-		gsap.from(".stack-container", { scale: 0.8 });
-		gsap.fromTo(
-			".wave",
-			{
-				x: "0%",
-			},
-			{
-				x: "-5%",
-				duration: 10,
-				repeat: -1,
-				ease: "linear",
-				yoyo: true,
-			}
-		);
-		gsap.fromTo(
-			".wave-shadow",
-			{
-				x: "0%",
-			},
-			{
-				x: "-4%",
-				duration: 10,
-				repeat: -1,
-				ease: "linear",
-				yoyo: true,
-			}
-		);
+		tl.from(".stack-container", { scale: 0.8 });
 	}, [active]);
 
 	useEffect(() => {
-		gsap.fromTo(
+		tl.fromTo(
 			".github-calender",
-			{ width: "0%", visibility: "hidden", height: "0%" },
+			{ opacity: 0.7, scale: 0.9 },
 			{
 				repeat: -1,
-				duration: 4,
+				scale: 1,
+				duration: 3,
 				yoyo: true,
-				height: "100%",
-				visibility: "visible",
-				width: "200px",
+				opacity: 1,
 				borderColor: colors.gray[600],
 			}
-		);
-		gsap.fromTo(
-			".github-contribution-text",
-			{ yPercent: 50, xPercent: 10 },
-			{ yPercent: -20, repeat: -1, yoyo: true, duration: 4 }
-		);
+		)
+			.fromTo(
+				".github-contribution-text",
+				{ opacity: 1 },
+				{ opacity: 0, repeat: -1, duration: 3, yoyo: true, duration: 4 }
+			)
+			.fromTo(
+				".white-smoke",
+				{ opacity: 0.1, yPercent: 0 },
+				{
+					opacity: 0.15,
+					yPercent: 4,
+					duration: 4,
+					repeat: -1,
+					yoyo: true,
+					ease: "power2.inOut",
+				}
+			);
 		bounceTheBar();
 	}, []);
 
@@ -128,7 +114,6 @@ const TechStack = ({ showAnimationButtons = false }) => {
 	};
 
 	const bounceTheBar = () => {
-		const tl = gsap.timeline();
 		tl.fromTo(
 			".stack-container",
 			{ x: "-10px", skewX: "-5deg", scale: 1 },
@@ -158,7 +143,7 @@ const TechStack = ({ showAnimationButtons = false }) => {
 	const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 	return (
 		<div
-			className="bg-black bg-opacity-95 h-screen w-full flex flex-col justify-center items-center relative"
+			className="bg-black bg-opacity h-screen w-full flex flex-col justify-center items-center relative overflow-hidden"
 			onMouseMove={(e) => setMousePosition({ x: e.clientX, y: e.clientY })}
 		>
 			<GridLines
@@ -167,6 +152,14 @@ const TechStack = ({ showAnimationButtons = false }) => {
 			/>
 
 			<div>
+				<div className="white-smoke absolute top-0 left-0 right-0 bottom-0 mx-auto w-auto h-full flex flex-col justify-center items-center z-0 opacity-5 overflow-hidden">
+					<img
+						src="./white-smoke.avif"
+						width={"100%"}
+						height={"100%"}
+						alt="White Smoke"
+					/>
+				</div>
 				<div
 					className={`stack-container flex md:flex-row justify-evenly my-10 items-center p-4 rounded-2xl bg-black bg-opacity-5 border-2 border-dashed border-gray-500 ${styles.stackContainer}`}
 				>
@@ -215,24 +208,16 @@ const TechStack = ({ showAnimationButtons = false }) => {
 						);
 					})}
 				</div>
-				<div className="flex justify-center items-center gap-1 text-4xl text-blue-400 my-10 absolute bottom-10 left-0 right-0 mx-auto">
+				<div className="flex justify-center items-center gap-1 text-4xl text-blue-400 my-10 mx-auto">
 					<p className="text-gray-300 text-xl">{"{"}</p>
-
 					<div className="tech-stack-text text-xl">
 						<Typewriter loop={100} cursor="_" words={["my tech stack"]} />
 					</div>
 					<p className="text-gray-300 text-xl">{"}"}</p>
 				</div>
 			</div>
-			<div className="absolute left-10 bottom-10 flex justify-center items-center gap-1 md:block sm:hidden xxs:hidden xs:hidden">
-				<div className="github-calender relative w-full h-full bg-black bg-opacity-30 rounded-xl z-50 ">
-					<GithubCalenderContribution />
-					<span className="text-gray-400 text-xs w-full">
-						Github contributions
-					</span>
-				</div>
-				<p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-90 border border-dashed border-gray-900 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" />
-			</div>
+			<br />
+			<br />
 			<div className="moving-container text-indigo-400 flex justify-around items-center w-full gap-10 group-hover:bg-black md:flex-row overflow-hidden">
 				{stacks.map((item) => (
 					<div
@@ -242,6 +227,15 @@ const TechStack = ({ showAnimationButtons = false }) => {
 						{item}
 					</div>
 				))}
+			</div>
+			<div className="absolute left-10 top-10 flex justify-center items-center gap-1 md:block sm:hidden xxs:hidden xs:hidden">
+				<div className="github-calender relative w-60 h-full bg-black bg-opacity-30 rounded-xl z-100">
+					<GithubCalenderContribution />
+				</div>
+				<span className="github-contribution-text absolute left-0 bottom-0 top-0 right-0 text-gray-400 text-xs w-full p-1 flex justify-center items-center">
+					Github contributions
+				</span>
+				{/* <p className="text-gray-600 absolute top-0 left-0 bottom-0 right-0 bg-black bg-opacity-10 border border-dashed border-gray-900 p-2 rounded-xl flex justify-center items-center github-contribution-text text-xs z-0" /> */}
 			</div>
 			{showAnimationButtons && (
 				<div className="flex justify-evenly items-center gap-4">

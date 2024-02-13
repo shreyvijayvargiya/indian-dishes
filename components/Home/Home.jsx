@@ -16,7 +16,7 @@ const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(tru);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 	const workExperienceCompRef = useRef();
