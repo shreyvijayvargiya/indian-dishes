@@ -16,7 +16,7 @@ const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(tru);
+	const [loading, setLoading] = useState(true);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 	const workExperienceCompRef = useRef();
@@ -63,13 +63,13 @@ const HomeComponent = () => {
 			{loading ? (
 				<TripLoader setLoading={setLoading} />
 			) : (
-				<div className="w-full h-full">
+				<div className="relative w-full h-full">
 					<GridLines
 						lineColor={colors.gray[400]}
 						className="h-full fixed top-0 left-0 bottom-0 right-0 w-full opacity-5 z-100"
 					/>
 					<div
-						className="absolute bottom-10 right-10"
+						className="absolute top-10 right-10 z-100"
 						onClick={() => setLoading(true)}
 					>
 						<PlayIcon />

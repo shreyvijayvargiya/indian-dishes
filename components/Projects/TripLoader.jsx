@@ -38,17 +38,7 @@ const TripLoader = ({ setLoading }) => {
 				})
 					.to(phoneRef.current, { opacity: 0, stagger: 0.5 })
 					.fromTo(welcomeScreenRef.current, { opacity: 0 }, { opacity: 1 })
-					.fromTo(
-						".animated-container",
-						{ backgroundColor: "rgb(0, 0, 0, 1)", opacity: 1 },
-						{
-							skewX: "2deg",
-							opacity: 0,
-							backgroundColor: "rgb(0, 0, 0, 0.2)",
-							duration: 2,
-						}
-					);
-					closeLoader();
+				closeLoader();
 			} else {
 				gsap.to(".loader-bg", {
 					height: (active + 2) * 10 + "%",

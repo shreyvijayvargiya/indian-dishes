@@ -7,7 +7,6 @@ const PlayIcon = () => {
 		gsap.fromTo(
 			".play-button",
 			{
-				yPercent: -100,
 				rotateZ: "0deg",
 				scale: 0.8,
 				borderRadius: 30,
@@ -15,7 +14,6 @@ const PlayIcon = () => {
 			},
 			{
 				rotateZ: "360deg",
-				yPercent: 0,
 				borderRadius: 0,
 				scale: 1,
 				duration: 1,

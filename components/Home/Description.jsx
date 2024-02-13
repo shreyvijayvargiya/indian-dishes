@@ -215,7 +215,7 @@ const Description = () => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<div className="md:w-full lg:w-1/3 mx-auto sm:w-full xxs:w-full px-10 section-container">
+			<div className="md:w-full lg:w-2/5 mx-auto sm:w-full xxs:w-full px-10 section-container">
 				{desc.map((item) => {
 					const ContentComponent = item.content();
 					return (
@@ -239,24 +239,6 @@ const Description = () => {
 					);
 				})}
 			</div>
-			{/* <div className="border-t-2 border-dashed border-gray-700 w-screen p-10 flex justify-between items=center gap-10 sm:hidden preview-container">
-				{desc.map((item) => {
-					return (
-						<div>
-							{item.previewLink && (
-								<iframe
-									src={item.previewLink}
-									width={300}
-									height={300}
-									className={`border-dashed border-gray-800 rounded-2xl ${
-										active?.id === item.id && "border-indigo-600"
-									}`}
-								/>
-							)}
-						</div>
-					);
-				})}
-			</div> */}
 			{mousePosition.x && mousePosition.y && (
 				<div
 					style={{
