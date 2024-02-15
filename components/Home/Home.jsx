@@ -16,7 +16,7 @@ const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(true);
+	const [loading, setLoading] = useState(false);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 	const workExperienceCompRef = useRef();
@@ -47,7 +47,7 @@ const HomeComponent = () => {
 			)
 			.fromTo(
 				workExperienceCompRef.current,
-				{ xPercent: -20, opacity: 0 },
+				{ xPercent: -100, opacity: 0 },
 				{ xPercent: 0, opacity: 1 }
 			)
 			.fromTo(projectsCompRef.current, { scale: 0.9 }, { scale: 1 })
@@ -64,10 +64,6 @@ const HomeComponent = () => {
 				<TripLoader setLoading={setLoading} />
 			) : (
 				<div className="relative w-full h-full">
-					<GridLines
-						lineColor={colors.gray[400]}
-						className="h-full fixed top-0 left-0 bottom-0 right-0 w-full opacity-5 z-100"
-					/>
 					<div
 						className="absolute top-10 right-10 z-100"
 						onClick={() => setLoading(true)}
@@ -90,9 +86,7 @@ const HomeComponent = () => {
 						</Parallax>
 					</div>
 					<div className="w-full h-full relative" ref={projectsCompRef}>
-						<Parallax speed={-20}>
-							<ProjectsGallery />
-						</Parallax>
+						<ProjectsGallery />
 					</div>
 					<div className="w-full h-full relative" ref={techStackCompRef}>
 						<Parallax speed={20}>

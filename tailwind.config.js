@@ -63,7 +63,7 @@ module.exports = {
 				sans: ["Inter", "Helvetica", "Arial", "sans-serif"],
 				serif: ["Georgia", "Cambria", "Times New Roman", "serif"],
 				mono: ["Fira Code", "Courier New", "monospace"],
-				cool: ["Your Cool Font", "sans-serif"],
+				cool: ["Comic Sans", "sans-serif"],
 				fancy: ["Phosphate", "cursive"],
 			},
 		},

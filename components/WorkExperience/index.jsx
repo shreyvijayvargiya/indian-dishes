@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, useMediaQuery } from "@material-ui/core";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -65,27 +65,30 @@ const getActiveIndex = (progress) => {
 const WorkExperience = () => {
 	const waveRef = useRef();
 
+	const isMobile = useMediaQuery("max-width: 600px");
 	const [percent, setPercent] = useState(5);
 
 	useEffect(() => {
 		const sections = gsap.utils.toArray(".list-container .section");
 		const tl = gsap.timeline({});
-		tl.to(sections, {
-			xPercent: -100 * (sections.length - 2),
-			ease: "none",
-			yoyo: true,
-			scrollTrigger: {
-				trigger: ".list-container",
-				start: "top top",
-				end: () => `${(sections.length - 1) * 100}vh`,
-				scrub: 1,
-				pin: true,
-				onUpdate: (self) => {
-					const progress = self.progress;
-					setPercent(progress);
+		if (!isMobile) {
+			tl.to(sections, {
+				xPercent: -100 * (sections.length - 2),
+				ease: "none",
+				yoyo: true,
+				scrollTrigger: {
+					trigger: ".work-experience-container",
+					start: "top top",
+					end: () => `${(sections.length - 1) * 100}vh`,
+					scrub: 1,
+					pin: true,
+					onUpdate: (self) => {
+						const progress = self.progress;
+						setPercent(progress);
+					},
 				},
-			},
-		});
+			});
+		}
 
 		sections.forEach((section, index) => {
 			gsap.fromTo(
@@ -109,14 +112,14 @@ const WorkExperience = () => {
 	const activeNum = getActiveIndex(percent * 100);
 
 	return (
-		<div className="work-experience-container mx-auto overflow-x-hidden relative w-full bg-black bg-opacity-95 h-full">
+		<div className="work-experience-container mx-auto overflow-x-hidden relative w-full h-full bg-black bg-opacity-95">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
 			/>
 			<div className="list-container">
 				<div
-					className={`${styles.listContainer} mx-auto flex justify-around items-center`}
+					className={`${styles.listContainer} mx-auto flex justify-around items-center md:flex-row sm:flex-col lg:flex-row xs:flex-col xxs:flex-col`}
 				>
 					{workExperience.map((item, index) => {
 						return (
@@ -148,7 +151,7 @@ const WorkExperience = () => {
 			<div className="live-time absolute right-10 top-8 md:none sm:none lg:block xxs:none xs:none">
 				<LiveTime />
 			</div>
-			<div className={`absolute bottom-10 left-0 right-0 w-full`}>
+			<div className={`fixed bottom-10 left-0 right-0 w-full`}>
 				<p className="text-orange-300 font-serif m-2">
 					{activeNum} {percent * 100}
 				</p>

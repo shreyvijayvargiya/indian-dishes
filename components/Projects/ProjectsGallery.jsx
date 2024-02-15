@@ -93,7 +93,7 @@ const ProjectsGallery = () => {
 	const [show, setShow] = useState(false);
 
 	return (
-		<div className="min-h-screen bg-opacity-95 bg-black w-full py-10 flex flex-col justify-center items-center">
+		<div className="min-h-screen w-full py-10 flex flex-col justify-center items-center bg-black bg-opacity-95">
 			<GridLines
 				lineColor={colors.gray[400]}
 				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"

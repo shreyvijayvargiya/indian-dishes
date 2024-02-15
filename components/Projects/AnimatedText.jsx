@@ -25,7 +25,7 @@ const AnimatedText = () => {
 		gsap.fromTo(
 			".text-container",
 			{ rotateX: "-2deg", skewX: "2deg" },
-			{ rotateX: "0deg", skewX: "0deg", repeat: -1, yoyo: true }
+			{ rotateX: "0deg", skewX: "0deg", repeat: -1, yoyo: true, ease: "power1" }
 		);
 	}, []);
 
@@ -76,13 +76,6 @@ const AnimatedText = () => {
 
 	return (
 		<div className="sm:w-full md:w-full mx-auto " onMouseMove={handleMouseMove}>
-			<div>
-				<img
-					src="./avatar.png"
-					className="w-20 h-20 mx-auto m-10 user-avatar"
-				/>
-			</div>
-
 			<div className="border-b border-t border-gray-700 border-dashed my-10 relative text-container overflow-hidden">
 				<div
 					className={`character-container px-10 text-gray-200 text-center relative w-full `}
@@ -93,7 +86,7 @@ const AnimatedText = () => {
 						style={{
 							fontFamily: "phosphate",
 							fontStyle: "inline",
-							fontSize: isMobile ? "2em" : "6em",
+							fontSize: isMobile ? "2em" : "5em",
 							color: colors[colorKeys[index]][400],
 						}}
 					>

@@ -92,12 +92,12 @@ const StickyNavbar = () => {
 			</div>
 			<div
 				className={`rounded-full flex justify-center items-center bg-none fixed left-0 right-0 top-4`}
-				onMouseEnter={bounceTheBar}
 				ref={bar}
-			>
+				>
 				<div
 					className="border border-gray-700 rounded-full p-2 hover:border-gray-400"
 					onClick={toggleNavbar}
+					onMouseEnter={bounceTheBar}
 				>
 					<FaBars
 						size={24}

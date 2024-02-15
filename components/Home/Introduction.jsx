@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import dynamic from "next/dynamic";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import {
 	Events,
 	Element,
@@ -13,7 +12,6 @@ import { Button } from "@mantine/core";
 import { makeStyles } from "@material-ui/core";
 import colors from "tailwindcss/colors";
 
-gsap.registerPlugin(ScrollTrigger);
 const objs = [
 	{
 		id: 1,

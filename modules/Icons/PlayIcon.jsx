@@ -16,7 +16,7 @@ const PlayIcon = () => {
 				rotateZ: "360deg",
 				borderRadius: 0,
 				scale: 1,
-				duration: 1,
+				duration: 4,
 				repeat: -1,
 				yoyo: true,
 				backgroundColor: colors.indigo[700],
