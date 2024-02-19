@@ -2,11 +2,10 @@ import React, { useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import gsap from "gsap";
 import colors from "tailwindcss/colors";
-import GridLines from "react-gridlines";
 import { useMediaQuery } from "@material-ui/core";
 
 const AnimatedText = () => {
-	const [char, setChar] = useState("Shrey");
+	const [char, setChar] = useState("Shrey Vijayvargiya");
 	const colorKeys = Object.keys(colors);
 	const [index, setIndex] = useState(0);
 	const characterRef = useRef();
@@ -40,8 +39,8 @@ const AnimatedText = () => {
 
 	const startShuffle = () => {
 		let str = char.trim(" ").split("");
-		let chars = "ykrQn";
-		let originalChars = "Shrey";
+		let chars = "YRKQN ADBCFGH";
+		let originalChars = "Shrey Vijayvargiya";
 		let index = 0;
 
 		return setInterval(() => {
@@ -52,7 +51,7 @@ const AnimatedText = () => {
 			} else if (index === char.length - 1) {
 				setChar(originalChars);
 			}
-		}, 500);
+		}, 200);
 	};
 
 	const handleMouseMove = (event) => {
@@ -79,7 +78,6 @@ const AnimatedText = () => {
 			<div className="border-b border-t border-gray-700 border-dashed my-10 relative text-container overflow-hidden">
 				<div
 					className={`character-container px-10 text-gray-200 text-center relative w-full `}
-					onMouseOver={startShuffle}
 				>
 					<p
 						ref={characterRef}
@@ -90,7 +88,6 @@ const AnimatedText = () => {
 							color: colors[colorKeys[index]][400],
 						}}
 					>
-						<span className="text-gray-200 text-2xl my-20">this is </span>
 						{char}
 					</p>
 				</div>

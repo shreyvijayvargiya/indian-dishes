@@ -43,7 +43,7 @@ const Description = () => {
 						>
 							experience{" "}
 							<img
-								className="absolute left-0 right-0 bottom-0 top-10 underline-1"
+								className="absolute left-0 right-0 bottom-0 top-5 underline-1"
 								src="./desc-images/underline-1.svg"
 							/>
 						</span>{" "}
@@ -83,7 +83,7 @@ const Description = () => {
 							{" "}
 							tech stack
 							<img
-								className="absolute left-0 right-0 bottom-0 top-10 underline-2"
+								className="absolute left-0 right-0 bottom-0 top-5 underline-2"
 								src="./desc-images/underline-2.svg"
 							/>
 						</span>
@@ -124,7 +124,7 @@ const Description = () => {
 						>
 							projects
 							<img
-								className="absolute left-0 right-0 bottom-0 top-10 underline-3"
+								className="absolute left-0 right-0 bottom-0 top-5 underline-3"
 								src="./desc-images/underline-3.svg"
 							/>
 						</span>
@@ -165,7 +165,7 @@ const Description = () => {
 						>
 							say Hi
 							<img
-								className="absolute left-0 right-0 bottom-0 top-10 underline-4"
+								className="absolute left-0 right-0 bottom-0 top-5 underline-4"
 								src="./desc-images/underline-4.svg"
 							/>
 						</a>
@@ -252,19 +252,24 @@ const Description = () => {
 	}, []);
 
 	const handleMouseOver = (item) => {
-		tl.to(`.bg-image-${item.id}`, {
-			opacity: 1,
-			display: "block",
-		}).to(`.section-${item.id}`, { scaleX: 1.1, color: "white" });
-		play();
 		setActive(item);
+		tl.to(`.bg-image-${item.id}`, {
+			opacity: 0.5,
+			scaleX: 1,
+			transformOrigin: "50% 50%",
+			borderRadius: 100,
+			ease: "power2.out",
+		});
+		play();
 	};
 
 	const handleMouseOut = (item) => {
-		tl.to(`.bg-image-${item.id}`, { opacity: 0.1, display: "none" }).to(
-			`.section-${item.id}`,
-			{ scaleX: 0.99, color: colors.gray[400], height: "100%" }
-		);
+		tl.to(`.bg-image-${item.id}`, {
+			opacity: 0,
+			ease: "power2.in",
+			scaleX: 0,
+			transformOrigin: "50% 50%",
+		});
 		setActive(null);
 	};
 
@@ -280,21 +285,25 @@ const Description = () => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
 		>
-			<div className="w-full section-container">
+			<div className="md:w-full section-container lg:w-1/3 mx-auto rounded-xl">
 				{desc.map((item) => {
 					const ContentComponent = item.content();
 					return (
 						<div
 							key={item.id}
-							className={`relative w-full flex justify-center items-center flex-row gap-2 py-10 section-item section-${item.id}`}
+							className={`relative w-full mx-auto gap-2 py-8 my-4 hover:bg-black hover:bg-opacity-40 bg-black bg-opacity-10 flex flex-row justify-center items-center section-item section-${item.id} border rounded-xl border-dashed border-gray-700`}
 							onMouseEnter={() => handleMouseOver(item)}
 							onMouseLeave={() => handleMouseOut(item)}
 						>
-							<div className="">{item.leftImage}</div>
-							<div className="text-2xl relative">{ContentComponent}</div>
+							<div className="absolute left-0 top-0 bottom-0 p-5">
+								{item.leftImage}
+							</div>
+							<div className="text-xl text-center">{ContentComponent}</div>
 							<div
-								className={`bg-image-${item.id} absolute top-0 left-0 right-0 bottom-0 z-0 w-full h-full border-t border-b border-gray-700`}
-								style={{ pointerEvents: "none", opacity: 1 }}
+								className={`bg-image-${item?.id} absolute top-0 left-0 right-0 bottom-0 z-0 w-full h-full rounded-xl`}
+								style={{
+									pointerEvents: "none",
+								}}
 							>
 								{item.bgImage}
 							</div>

@@ -11,6 +11,7 @@ import WorkExperience from "components/WorkExperience";
 import ProjectsGallery from "components/Projects/ProjectsGallery";
 import TechStack from "components/TechStack";
 import { Parallax } from "react-scroll-parallax";
+import TextName from "./TextName";
 
 const HomeComponent = () => {
 	const styles = useStyles();
@@ -56,14 +57,14 @@ const HomeComponent = () => {
 
 	return (
 		<div
-			className={`w-full relative overflow-x-hidden bg-black bg-opacity-95 h-auto ${styles.container}`}
+			className={`w-full relative overflow-x-hidden bg-black bg-opacity-95 h-full ${styles.container}`}
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
 			{loading ? (
 				<TripLoader setLoading={setLoading} />
 			) : (
-				<div className="relative w-full h-full">
+				<div className="relative w-full h-screen">
 					<div
 						className="absolute top-10 right-10 z-100"
 						onClick={() => setLoading(true)}
@@ -72,26 +73,11 @@ const HomeComponent = () => {
 					</div>
 					<br />
 					<br />
-					<div ref={animatedCompRef} className="w-full">
-						<AnimatedText />
+					<div className="w-full" ref={animatedCompRef}>
+						<TextName />
 					</div>
 					<div ref={descCompRef} className="w-full">
-						<Parallax speed={10}>
-							<Description />
-						</Parallax>
-					</div>
-					<div ref={workExperienceCompRef}>
-						<Parallax speed={20}>
-							<WorkExperience />
-						</Parallax>
-					</div>
-					<div className="w-full h-full relative" ref={projectsCompRef}>
-						<ProjectsGallery />
-					</div>
-					<div className="w-full h-full relative" ref={techStackCompRef}>
-						<Parallax speed={20}>
-							<TechStack />
-						</Parallax>
+						<Description />
 					</div>
 				</div>
 			)}
