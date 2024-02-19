@@ -14,19 +14,19 @@ const TextName = () => {
 			} else {
 				setIndex(index + 1);
 			}
-		}, 400);
+		}, 500);
 	};
 
-	const nameArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14];
+	const nameArr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 	useEffect(() => {
 		gsap.fromTo(
 			".name-container",
 			{ xPercent: 0 },
 			{
-				xPercent: -20,
+				xPercent: -2,
+				duration: 10,
 				repeat: -1,
 				yoyo: true,
-				duration: 10,
 				ease: "none",
 			}
 		);
@@ -43,7 +43,7 @@ const TextName = () => {
 
 	return (
 		<div
-			className="name-container flex justify-between items-center overflow-x-hidden gap-10 whitespace-nowrap  bg-black bg-opacity-20"
+			className="name-container flex justify-between items-center overflow-x-hidden gap-10 whitespace-nowrap bg-black bg-opacity-5"
 			style={{ width: "300%" }}
 		>
 			{nameArr.map((item) => {
@@ -55,7 +55,7 @@ const TextName = () => {
 							color: colors[colorKeys[index]][400]
 								? colors[colorKeys[index]][400]
 								: colors.gray[400],
-							textShadow: "0px 0px 40px rgb(250, 250, 250, 0.3)",
+							textShadow: "0px 0px 60px rgb(250, 250, 250, 0.3)",
 						}}
 					>
 						{" "}
@@ -70,9 +70,11 @@ export default TextName;
 
 const useStyles = makeStyles((theme) => ({
 	textName: {
-		fontSize: "10em",
+		fontSize: "8em",
+		letterSpacing: "20px",
 		[theme.breakpoints.down("sm")]: {
 			fontSize: "5em",
+			letterSpacing: "10px",
 		},
 	},
 }));

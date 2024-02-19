@@ -51,7 +51,7 @@ const StickyNavbar = () => {
 	return (
 		<div className={`fixed top-4 left-0 right-0 rounded-md px-4`}>
 			<div
-				className={`flex justify-between items-center px-8 py-3 border border-gray-700 rounded-md ${styles.navbar}`}
+				className={`flex justify-between items-center px-8 py-3 rounded-md ${styles.navbar}`}
 				ref={ref}
 				style={{ boxShadow: "0px 0px 30px rgb(255, 255, 255, 0.2)" }}
 			>
@@ -113,7 +113,7 @@ export default StickyNavbar;
 
 const useStyles = makeStyles((theme) => ({
 	navbar: {
-		zIndex: 10,
+		zIndex: 1000,
 		[theme.breakpoints.up("lg")]: {
 			width: "35% !important",
 			margin: "auto",

@@ -19,7 +19,12 @@ const Description = () => {
 				</div>
 			),
 			leftImage: <img className="w-10 h-10 img-1" src="./avatar.png" />,
-			bgImage: <img className="w-full h-full object-cover" src="./devBg.svg" />,
+			bgImage: (
+				<img
+					className="w-full h-full object-cover rounded-xl"
+					src="./devBg.svg"
+				/>
+			),
 		},
 		{
 			id: 2,
@@ -55,7 +60,10 @@ const Description = () => {
 				<img className="w-10 h-10 img-2" src="./desc-images/icon-2.svg" />
 			),
 			bgImage: (
-				<img className=" w-full h-full object-cover" src="./workExBg.svg" />
+				<img
+					className="w-full h-full object-cover rounded-xl"
+					src="./workExBg.svg"
+				/>
 			),
 			previewLink: "/work-experience",
 		},
@@ -96,7 +104,7 @@ const Description = () => {
 			),
 			bgImage: (
 				<img
-					className="w-full h-full z-0 object-cover"
+					className="w-full h-full object-cover rounded-xl"
 					src="./projectsBg.svg"
 				/>
 			),
@@ -108,7 +116,7 @@ const Description = () => {
 				<div className="text-gray-400 hover:text-gray-100">
 					<p>
 						do check my{" "}
-						<span
+						<button
 							className="relative text-pink-500 hover:text-pink-400"
 							onClick={() => router.push("/projects")}
 							onMouseOver={() => {
@@ -127,7 +135,7 @@ const Description = () => {
 								className="absolute left-0 right-0 bottom-0 top-5 underline-3"
 								src="./desc-images/underline-3.svg"
 							/>
-						</span>
+						</button>
 					</p>
 				</div>
 			),
@@ -136,7 +144,7 @@ const Description = () => {
 			),
 			bgImage: (
 				<img
-					className="w-full h-full z-0 object-cover"
+					className="w-full h-full z-0 object-cover rounded-xl"
 					src="./websitesBg.svg"
 				/>
 			),
@@ -173,14 +181,17 @@ const Description = () => {
 				);
 			},
 			bgImage: (
-				<img className=" w-full h-full z-0 object-cover" src="./mailmeBg.svg" />
+				<img
+					className="w-full h-full object-cover rounded-xl"
+					src="./mailmeBg.svg"
+				/>
 			),
 			leftImage: (
 				<img className="w-10 h-10 img-5" src="./desc-images/icon-5.svg" />
 			),
 		},
 	];
-	const [active, setActive] = useState(desc[0]);
+	const [active, setActive] = useState(null);
 	const [play] = useSound("./sound-clips/sound-keyboard.mp3", { volume: 0.6 });
 	const tl = gsap.timeline();
 
@@ -254,22 +265,26 @@ const Description = () => {
 	const handleMouseOver = (item) => {
 		setActive(item);
 		tl.to(`.bg-image-${item.id}`, {
-			opacity: 0.5,
-			scaleX: 1,
+			opacity: 0,
+			width: "0%",
+			margin: "auto",
 			transformOrigin: "50% 50%",
-			borderRadius: 100,
 			ease: "power2.out",
-		});
+		})
+			.to(`.section-${item.id}`, { scale: 1.2, ease: "back.inOut" })
+			.to(`.list-left-icon-${item.id}`, { rotateX: "180deg", duration: 10 });
 		play();
 	};
 
 	const handleMouseOut = (item) => {
 		tl.to(`.bg-image-${item.id}`, {
-			opacity: 0,
+			opacity: 0.15,
+			width: "100%",
 			ease: "power2.in",
-			scaleX: 0,
 			transformOrigin: "50% 50%",
-		});
+		})
+			.to(`.section-${item.id}`, { scale: 1, ease: "back.out" })
+			.to(`.list-left-icon-${item.id}`, { rotateX: "0deg", duration: 10 });
 		setActive(null);
 	};
 
@@ -280,7 +295,7 @@ const Description = () => {
 
 	return (
 		<div
-			className="w-full h-full relative"
+			className="w-full h-full relative mb-20"
 			onMouseMoveCapture={(e) => {
 				setMousePosition({ x: e.clientX, y: e.clientY });
 			}}
@@ -291,16 +306,18 @@ const Description = () => {
 					return (
 						<div
 							key={item.id}
-							className={`relative w-full mx-auto gap-2 py-8 my-4 hover:bg-black hover:bg-opacity-40 bg-black bg-opacity-10 flex flex-row justify-center items-center section-item section-${item.id} border rounded-xl border-dashed border-gray-700`}
+							className={`relative w-full mx-auto gap-2 p-8 my-4 hover:border-gray-600 hover:bg-black hover:bg-opacity-40 bg-black bg-opacity-10 flex flex-row justify-start items-center section-item section-${item.id} border rounded-xl border-dashed border-gray-700`}
 							onMouseEnter={() => handleMouseOver(item)}
 							onMouseLeave={() => handleMouseOut(item)}
 						>
-							<div className="absolute left-0 top-0 bottom-0 p-5">
+							<div className={`list-left-icon-${item.id}`}>
 								{item.leftImage}
 							</div>
-							<div className="text-xl text-center">{ContentComponent}</div>
+							<div className="md:text-sm lg:text-xl sm:text-sm text-center">
+								{ContentComponent}
+							</div>
 							<div
-								className={`bg-image-${item?.id} absolute top-0 left-0 right-0 bottom-0 z-0 w-full h-full rounded-xl`}
+								className={`bg-image-${item?.id} absolute opacity-0 top-0 left-0 bottom-0 z-0 w-full h-full rounded-xl`}
 								style={{
 									pointerEvents: "none",
 								}}

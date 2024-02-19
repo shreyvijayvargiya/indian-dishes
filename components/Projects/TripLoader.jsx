@@ -38,10 +38,14 @@ const TripLoader = ({ setLoading }) => {
 				})
 					.to(phoneRef.current, { opacity: 0, stagger: 0.5 })
 					.fromTo(welcomeScreenRef.current, { opacity: 0 }, { opacity: 1 })
+					.to("button-skip", { opacity: 0 });
+				setActive(0);
 				closeLoader();
 			} else {
-				gsap.to(".loader-bg", {
+				tl.to(".loader-bg", {
 					height: (active + 2) * 10 + "%",
+					borderBottomLeftRadius: (active + 1) * 4,
+					borderBottomRightRadius: (active + 1) * 4,
 					textAlign: "center",
 				});
 				setActive((prev) => prev + 1);
@@ -53,6 +57,7 @@ const TripLoader = ({ setLoading }) => {
 
 	useEffect(() => {
 		gsap.set(welcomeScreenRef.current, { opacity: 0 });
+		gsap.to(".skip-button", { opacity: 0 });
 	}, []);
 
 	useEffect(() => {
@@ -85,7 +90,8 @@ const TripLoader = ({ setLoading }) => {
 					className="loader-bg"
 					style={{
 						position: "relative",
-						borderRadius: 40,
+						borderTopLeftRadius: 40,
+						borderTopRightRadius: 40,
 						height: "100%",
 						zIndex: 100,
 						display: "flex",
@@ -99,9 +105,15 @@ const TripLoader = ({ setLoading }) => {
 					</p>
 				</div>
 			</div>
+			<button
+				className="button-skip mx-auto text-gray-400 absolute bottom-10 right-10 font-bold font-sans p-4 text-center bg-indigo-800 rounded-xl shadow-2xl hover:text-white"
+				onClick={closeLoader}
+			>
+				Skip
+			</button>
 			<div className="welcome-screen w-full none" ref={welcomeScreenRef}>
 				<div className="text-gray-400 font-cool text-8xl text-center">
-					<Typewriter loop={1} typeSpeed={100} cursor="." words={["Welcome"]} />
+					<Typewriter loop={2} typeSpeed={100} cursor="|" words={["Welcome"]} />
 				</div>
 			</div>
 		</div>

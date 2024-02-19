@@ -5,6 +5,7 @@ import colors from "tailwindcss/colors";
 import GridLines from "react-gridlines";
 import { FaBars, FaList } from "react-icons/fa";
 import { IoCloseCircle, IoLogoStackoverflow } from "react-icons/io5";
+import useSound from "use-sound";
 
 const projects = [
 	{
@@ -89,21 +90,36 @@ const ProjectsGallery = () => {
 	const frameRef = useRef(null);
 	const bar = useRef(null);
 	const [active, setActive] = useState(projects[0]);
+	const [play] = useSound("./sound-clips/sound-keyboard.mp3", { volume: 0.6 });
 
 	const [show, setShow] = useState(false);
 
+	useEffect(() => {
+		gsap.fromTo(
+			".project-bg-image",
+			{ skewX: "-2deg", transformOrigin: "center center" },
+			{
+				skewX: "2deg",
+				rotation: 360,
+				duration: 300,
+				transformOrigin: "center center",
+				repeat: -1,
+				yoyo: true,
+			}
+		);
+	}, []);
+
 	return (
 		<div className="min-h-screen w-full py-10 flex flex-col justify-center items-center bg-black bg-opacity-95">
-			<GridLines
-				lineColor={colors.gray[400]}
-				className="h-full w-full absolute top-0 right-0 left-0 bottom-0 transform opacity-5"
-			/>
 			<div>
 				<img
 					src="./gridlines.svg"
 					width={"100%"}
 					height={"100%"}
-					className="fixed top-0 left-0 bottom-0 right-0 z-0 opacity-5 rotate-45 skew-x-6"
+					className="project-bg-image fixed top-0 left-0 bottom-0 right-0 z-0 opacity-5 rotate-45 skew-x-6 rounded-full border-4 border-dotted border-gray-100 sm:none block"
+					style={{
+						perspective: "3d 1000px",
+					}}
 				/>
 			</div>
 			<div className="flex flex-row justify-around items-center w-full h-full">
@@ -113,9 +129,10 @@ const ProjectsGallery = () => {
 							key={index}
 							className="relative w-full my-5"
 							onMouseOver={() => {
+								play();
 								setTimeout(() => {
 									setActive(project);
-								}, 500);
+								}, 200);
 							}}
 						>
 							<div
@@ -174,7 +191,7 @@ const ProjectsGallery = () => {
 			</div>
 			<div className={classes.mobileProjectsListContainer}>
 				{show && (
-					<div className="mobile-projects-list bg-blackBg bg-opacity-90 h-60 overflow-y-scroll m-10 rounded-xl">
+					<div className="mobile-projects-list bg-blackBg bg-opacity-90 h-60 overflow-y-scroll m-10 rounded-xl border border-dashed border-gray-700">
 						{projects.map((project, index) => (
 							<div
 								key={index}
@@ -277,7 +294,8 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: "0px 0px 40px rgb(150, 150, 200, 0.2)",
 		borderRadius: 20,
 		[theme.breakpoints.down("sm")]: {
-			width: "100%",
+			width: "95%",
+			margin: "auto",
 		},
 	},
 	iframe: {

@@ -150,14 +150,14 @@ const TechStack = ({ showAnimationButtons = false }) => {
 				lineColor={colors.gray[400]}
 				className="h-full absolute w-full transform rotate-5 opacity-5 z-100"
 			/>
-
 			<div>
-				<div className="white-smoke absolute top-0 left-0 right-0 bottom-0 mx-auto w-auto h-full flex flex-col justify-center items-center z-0 opacity-5 overflow-hidden">
+				<div className="white-smoke absolute top-0 left-0 right-0 bottom-0 mx-auto w-auto h-screen flex flex-col justify-center items-center z-0 opacity-5 overflow-hidden">
 					<img
 						src="./white-smoke.avif"
 						width={"100%"}
 						height={"100%"}
 						alt="White Smoke"
+						className="h-full w-full"
 					/>
 				</div>
 				<div

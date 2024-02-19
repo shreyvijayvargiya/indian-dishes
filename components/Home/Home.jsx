@@ -17,7 +17,7 @@ const HomeComponent = () => {
 	const styles = useStyles();
 	const containerRef = useRef();
 
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const animatedCompRef = useRef();
 	const descCompRef = useRef();
 	const workExperienceCompRef = useRef();
@@ -34,7 +34,7 @@ const HomeComponent = () => {
 		tl.fromTo(
 			animatedCompRef.current,
 			{ opacity: 0, scale: 0 },
-			{ opacity: 1, scale: 1, delay: 1 }
+			{ opacity: 1, scale: 1 }
 		)
 			.fromTo(
 				animatedCompRef.current,
@@ -57,7 +57,7 @@ const HomeComponent = () => {
 
 	return (
 		<div
-			className={`w-full relative overflow-x-hidden bg-black bg-opacity-95 h-full ${styles.container}`}
+			className={`w-full relative overflow-x-hidden bg-black bg-opacity-95 h-screen ${styles.container}`}
 			style={{ scrollBehavior: "smooth" }}
 			ref={containerRef}
 		>
@@ -65,15 +65,21 @@ const HomeComponent = () => {
 				<TripLoader setLoading={setLoading} />
 			) : (
 				<div className="relative w-full h-screen">
+					<GridLines
+						lineColor={colors.gray[700]}
+						className="h-screen fixed w-full transform rotate-5 opacity-5 z-100"
+					/>
 					<div
-						className="absolute top-10 right-10 z-100"
+						className="fixed md:bottom-40 sm:top-5 xs:top-5 xxs:top-5 left-4  z-100"
 						onClick={() => setLoading(true)}
+						style={{ zIndex: 1000 }}
 					>
 						<PlayIcon />
 					</div>
 					<br />
 					<br />
-					<div className="w-full" ref={animatedCompRef}>
+					<br />
+					<div className="w-full " ref={animatedCompRef}>
 						<TextName />
 					</div>
 					<div ref={descCompRef} className="w-full">
